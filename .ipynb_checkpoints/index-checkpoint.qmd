@@ -1,5 +1,5 @@
 ---
-title: "ISLP2023"
+title: "Gangcheol"
 listing:
   contents: posts
   sort: [date desc, title]
