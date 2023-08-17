@@ -2,7 +2,7 @@ project:
   type: website
   output-dir : docs  
 website:
-  title: "ISLP2023"
+  title: "Gangcheol"
   page-navigation: true
   navbar:
     left:
