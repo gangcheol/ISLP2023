@@ -1,129 +1,143 @@
 [
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html",
-    "title": "Extra 00. tidydata",
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html",
+    "title": "00. 단순선형회귀분석",
     "section": "",
-    "text": "- 내가 생각하는 데이터 분석의 단계\n\n데이터의 기본 정보 (df.info 등등)을 확인\n데이터를 tidy하게 바꾼 후 EDA(탐색적 자료 분석), 통계 분석(t-test) 등등 수행\ntidy데이터를 바탕으로 모델링 수행\n결과 요약 및 해석 -&gt; 결과에 대한 자료 작성 시에도 tidy한 데이터가 사용됨\n\n- 금일 발표 요약\n\ntidy 데이터의 정의\ntidy 데이터를 활용하지 않은 시각화 (matplitlib)\ntidy 데이터를 활용한 시각화 (seaborn, ggplot, plotly 등등…)\n심슨의 역설"
+    "text": "지도학습 : 우리가 무언가 예측하고자 하는 변수가 존재 (ex : 판매율, 주가 등등)\n\n회귀 : 예측하고자 하는 변수가 연속형 변수(오늘 소개하려는 단순선형회귀분석)\n분류 : 예측하고자 하는 변수가 범주형 변수(채무 이행, 불이행 문제)\n\n비지도학습 : 예측하고자 하는 타겟변수가 없고 주어진 변수들을 통해 성격이 유사한 녀석들끼리 그룹을 형성하게끔 만든다."
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#데이터-생성-tidy-x",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#데이터-생성-tidy-x",
-    "title": "Extra 00. tidydata",
-    "section": "데이터 생성 (tidy : (x))",
-    "text": "데이터 생성 (tidy : (x))\n\n\nCode\nmale_w = np.random.randint(60,100,10000) + np.random.randn(10000)\nfemale_w = np.random.randint(40,80,10000) + np.random.randn(10000)\nmale_h = (np.random.randint(160,200,10000) + np.random.randn(10000))/100\nfemale_h = (np.random.randint(140,180,10000) + np.random.randn(10000))/100\n\n\nbmi_m =  male_w/(male_h**2)\nbmi_f =  female_w/(female_h**2)\n\nbins = [-np.Inf, 18.5,23,25,np.Inf]\nlabels = [\"저체중\",\"정상\",\"과체중\",\"비만\"]\n\ndf = pd.DataFrame([male_w,female_w,male_h,female_h,bmi_m,bmi_f]).T\n\ndf.columns = [\"male_w\",\"female_w\",\"male_h\",\"female_h\",\"bmi_m\",\"bmi_f\"]\n\n\ndf[\"bmi_label_M\"] = pd.cut(df.bmi_m, bins = bins, labels =labels)\ndf[\"bmi_label_F\"] = pd.cut(df.bmi_f, bins = bins, labels =labels)\n\n\nbins_m = [-np.Inf, 1.60,1.70,1.80,1.90,np.Inf]\nlabels = [\"매우 작은키\",\"작은키\",\"보통\",\"큰키\",\"매우 큰키\"]\n\nbins_f = [-np.Inf, 1.40,1.50,1.60,1.70,np.Inf]\n\n\ndf[\"h_label_M\"] = pd.cut(df.male_h, bins = bins_m, labels =labels)\ndf[\"h_label_F\"] = pd.cut(df.female_h, bins = bins_f, labels =labels)\n\n\ndf.head()\n\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n72.570505\n53.415130\n1.773998\n1.671568\n23.059717\n19.116853\n과체중\n정상\n보통\n큰키\n\n\n1\n93.896500\n43.278004\n1.883459\n1.612035\n26.468980\n16.653995\n비만\n저체중\n큰키\n큰키\n\n\n2\n82.263387\n71.909528\n1.607014\n1.524727\n31.854236\n30.931608\n비만\n비만\n작은키\n보통\n\n\n3\n99.802621\n64.476794\n1.871943\n1.761914\n28.481097\n20.769874\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n78.356406\n42.978916\n1.658058\n1.694691\n28.501984\n14.964927\n비만\n저체중\n작은키\n큰키"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#데이터-생성",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#데이터-생성",
+    "title": "00. 단순선형회귀분석",
+    "section": "데이터 생성",
+    "text": "데이터 생성\n\n\nCode\nx   = np.linspace(20,38,1000)\nepsilon = np.random.normal(size=1000)\ny  =  10.2 + 2.2*x + epsilon\nyhat = 10.2+2.2*x\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.3)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=0.3)\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x22f0dcba790&gt;"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-1-matplotlib-tidy-x",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-1-matplotlib-tidy-x",
-    "title": "Extra 00. tidydata",
-    "section": "시각화 1 (matplotlib, tidy x)",
-    "text": "시각화 1 (matplotlib, tidy x)\n- 일단 남자와 여자의 BMI 지수를 비교하고 싶음\n- 데이터 구조\n\ndf.head()\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n72.570505\n53.415130\n1.773998\n1.671568\n23.059717\n19.116853\n과체중\n정상\n보통\n큰키\n\n\n1\n93.896500\n43.278004\n1.883459\n1.612035\n26.468980\n16.653995\n비만\n저체중\n큰키\n큰키\n\n\n2\n82.263387\n71.909528\n1.607014\n1.524727\n31.854236\n30.931608\n비만\n비만\n작은키\n보통\n\n\n3\n99.802621\n64.476794\n1.871943\n1.761914\n28.481097\n20.769874\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n78.356406\n42.978916\n1.658058\n1.694691\n28.501984\n14.964927\n비만\n저체중\n작은키\n큰키\n\n\n\n\n\n\n\n- 시각화\n\nplt.figure(figsize=(12,4))\nplt.plot(df.male_w,df.bmi_m,\".\",alpha=0.3)\nplt.plot(df.female_w,df.bmi_f,\".\",alpha=0.3)\nplt.legend([\"남\",\"여\"])\nplt.title(\"남자와 여자 몸무게에 따른 BMI\")\n\nText(0.5, 1.0, '남자와 여자 몸무게에 따른 BMI')"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-1",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-1",
+    "title": "00. 단순선형회귀분석",
+    "section": "최적의 \\(\\beta\\)를 구하는 방법 1",
+    "text": "최적의 \\(\\beta\\)를 구하는 방법 1\n\n구하고자 하는 법칙\n베타 추정치\n\n\\[\\hat {\\beta}_1 = \\frac {\\sum (x-\\bar x) (y -\\bar y)} {\\sum (x-\\bar x)^2}= \\frac{S_{xy}}{S_{xx}}\\]\n\\[\\hat {\\beta}_0 = \\bar {y} - \\hat{\\beta}_1\\bar{x}\\]\n\n# code-fold : true\nn = len(x)\nSxy = sum((x-np.mean(x))*(y-np.mean(y)) )\nSxx = sum((x-np.mean(x))**2)\n\nbeta1 = Sxy/Sxx\n\nbeta0 =  np.mean(y) - beta1*np.mean(x)\n\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.15)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=1.0)\nplt.plot(x,beta1*x+beta0,\".\",label = \"내가 만든 예측 모형\",alpha=0.1)\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x22f0dfda3d0&gt;\n\n\n\n\n\n\n구하고자 하는 법칙\n\n\\[\\hat{y} \\approx  2.2x + 10.2 \\]\n\nbeta1,beta0\n\n(2.2038453815489842, 10.072026912099155)"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-2-matplotlib.pyplot-tidy-x-subplot",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-2-matplotlib.pyplot-tidy-x-subplot",
-    "title": "Extra 00. tidydata",
-    "section": "시각화 2 (matplotlib.pyplot, tidy x, subplot)",
-    "text": "시각화 2 (matplotlib.pyplot, tidy x, subplot)\n\nfig, axes = plt.subplots(1,2,figsize=(12,4))\n\nax1,ax2 = axes\n\nax1.plot(df.male_w,df.bmi_m,\".b\",alpha=0.3)\nax1.set_title(\"남자 몸무게에 따른 BMI\")\nax2.plot(df.female_w,df.bmi_f,\".r\",alpha=0.3)\nax2.set_title(\"여자 몸무게에 따른 BMI\")\n\nText(0.5, 1.0, '여자 몸무게에 따른 BMI')"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-2-starstarstar",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-2-starstarstar",
+    "title": "00. 단순선형회귀분석",
+    "section": "최적의 \\(\\beta\\)를 구하는 방법 2 (\\(\\star\\star\\star\\))",
+    "text": "최적의 \\(\\beta\\)를 구하는 방법 2 (\\(\\star\\star\\star\\))\n- matrix 이용\n\\[\\hat {\\bf {\\beta}} = \\bf{(X^{\\top}X)^{-1}X^{\\top}Y}\\]\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_{11}  & x_{12} &\\dots & x_{1p} \\\\ 1  & x_{21}  & x_{22} &\\dots & x_{2p}  \\\\ \\dots & \\dots \\\\  1  & x_{n1}  & x_{n2} &\\dots & x_{np}\\end{bmatrix}  \\,\\,\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1  \\\\ \\dots \\\\ \\beta_n \\end{bmatrix} \\]\n- X 생성\n\nX = pd.DataFrame({\"intercept\" :  np.ones(len(x)),\n                             \"x1\" : x})\n\nY = y.reshape(-1,1)\n\nbeta = np.linalg.inv(X.T @ X) @ X.T @Y\nbeta\n\n\n\n\n\n\n\n\n0\n\n\n\n\n0\n10.072027\n\n\n1\n2.203845\n\n\n\n\n\n\n\n\n# code-fold : true\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.06)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=0.8)\nplt.plot(x,np.array(X) @ beta,\".\",label = \"내가 만든 예측 모형\",alpha=0.05)\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x22f14759c10&gt;"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#의문-1",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#의문-1",
-    "title": "Extra 00. tidydata",
-    "section": "의문 1",
-    "text": "의문 1\n- 아래의 데이터 구조를 살펴보자.\n\ndf.head()\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n72.570505\n53.415130\n1.773998\n1.671568\n23.059717\n19.116853\n과체중\n정상\n보통\n큰키\n\n\n1\n93.896500\n43.278004\n1.883459\n1.612035\n26.468980\n16.653995\n비만\n저체중\n큰키\n큰키\n\n\n2\n82.263387\n71.909528\n1.607014\n1.524727\n31.854236\n30.931608\n비만\n비만\n작은키\n보통\n\n\n3\n99.802621\n64.476794\n1.871943\n1.761914\n28.481097\n20.769874\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n78.356406\n42.978916\n1.658058\n1.694691\n28.501984\n14.964927\n비만\n저체중\n작은키\n큰키\n\n\n\n\n\n\n\n- 분석가들에게 시각화 및 모델링 시 편한것\n\n한 컬럼에 모든 데이터의 대한 특정 수치(몸무게면 몸무게, 키면 키)가 있으면 좋겠음\n그리고 또 다른 컬럼에는 그것의 범주(성별, BmI수준)을 알려주는 컬럼이 있었으면 좋겠음\n이게 편한 이유? 시각화 수행 시 아래의 긴 코드를 한 줄로 쓸 수 있다!! \\(\\to\\) (지금은 남,녀 두 개의 범주지만, 범주의 수가 늘어나면 코드 라인 수도 늘어난다.)\n\nplt.figure(figsize=(12,4))\nplt.plot(df.male_w,df.bmi_m,\".\",alpha=0.3)\nplt.plot(df.female_w,df.bmi_f,\".\",alpha=0.3)\nplt.legend([\"남\",\"여\"])\nplt.title(\"남자와 여자 몸무게에 따른 BMI\")\n\n또한, 모델링 수행시 입력데이터는 tidy한 형태로 들어가기 때문이다.(이미지, 텍스트 제외)"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#예측-성능-평가",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#예측-성능-평가",
+    "title": "00. 단순선형회귀분석",
+    "section": "예측 성능 평가",
+    "text": "예측 성능 평가\n\nnp.mean((y-yhat)**2)\n\n0.8927051412987645"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#tidydata-만들기",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#tidydata-만들기",
-    "title": "Extra 00. tidydata",
-    "section": "tidydata 만들기",
-    "text": "tidydata 만들기"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step-1.-전달할-x를-다음과-같이-전달",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step-1.-전달할-x를-다음과-같이-전달",
+    "title": "00. 단순선형회귀분석",
+    "section": "step 1. 전달할 x를 다음과 같이 전달",
+    "text": "step 1. 전달할 x를 다음과 같이 전달\n\ndesign = MS([\"x1\"])"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#인데스를-id로-변경",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#인데스를-id로-변경",
-    "title": "Extra 00. tidydata",
-    "section": "1. 인데스를 ID로 변경",
-    "text": "1. 인데스를 ID로 변경\n\ndf.reset_index(inplace=True)\n\n\ndf.rename(columns={\"index\" : \"ID\" },inplace=True)\n\n\ndf.head()\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n0\n72.570505\n53.415130\n1.773998\n1.671568\n23.059717\n19.116853\n과체중\n정상\n보통\n큰키\n\n\n1\n1\n93.896500\n43.278004\n1.883459\n1.612035\n26.468980\n16.653995\n비만\n저체중\n큰키\n큰키\n\n\n2\n2\n82.263387\n71.909528\n1.607014\n1.524727\n31.854236\n30.931608\n비만\n비만\n작은키\n보통\n\n\n3\n3\n99.802621\n64.476794\n1.871943\n1.761914\n28.481097\n20.769874\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n4\n78.356406\n42.978916\n1.658058\n1.694691\n28.501984\n14.964927\n비만\n저체중\n작은키\n큰키"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step-2.-컴퓨터가-이해할-수-있는-형태에-맞게-bfx를-생성",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step-2.-컴퓨터가-이해할-수-있는-형태에-맞게-bfx를-생성",
+    "title": "00. 단순선형회귀분석",
+    "section": "step 2. 컴퓨터가 이해할 수 있는 형태에 맞게 \\(\\bf{X}\\)를 생성",
+    "text": "step 2. 컴퓨터가 이해할 수 있는 형태에 맞게 \\(\\bf{X}\\)를 생성\n\n_X = design.fit_transform(X)\n\n\n_X\n\n\n\n\n\n\n\n\nintercept\nx1\n\n\n\n\n0\n1.0\n20.000000\n\n\n1\n1.0\n20.018018\n\n\n2\n1.0\n20.036036\n\n\n3\n1.0\n20.054054\n\n\n4\n1.0\n20.072072\n\n\n...\n...\n...\n\n\n995\n1.0\n37.927928\n\n\n996\n1.0\n37.945946\n\n\n997\n1.0\n37.963964\n\n\n998\n1.0\n37.981982\n\n\n999\n1.0\n38.000000\n\n\n\n\n1000 rows × 2 columns"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#df.meltweight-테이블-생성",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#df.meltweight-테이블-생성",
-    "title": "Extra 00. tidydata",
-    "section": "2. df.melt(weight) 테이블 생성",
-    "text": "2. df.melt(weight) 테이블 생성\n- 한 열에는 셩별(sex), 다른 한 열에는 무게(weight)를 표시\n\nweight = df.melt(id_vars=[\"ID\"],\n            value_vars=[\"male_w\",\"female_w\"],\n            var_name = \"sex\",value_name='weight')\n\nweight.sex = weight.sex.replace(\"male_w\",\"m\").replace(\"female_w\",\"f\")\nweight.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\n\n\n\n\n0\n0\nm\n72.570505\n\n\n1\n1\nm\n93.896500\n\n\n2\n2\nm\n82.263387\n\n\n3\n3\nm\n99.802621\n\n\n4\n4\nm\n78.356406\n\n\n\n\n\n\n\n\n생성한 테이블을 다시 돌릴려면?\n\n_t = weight.pivot(index=\"ID\",columns = \"sex\", values = \"weight\").head()\n_t.columns = [\"male_w\",\"male_f\"]\n_t.reset_index()\n\n\n\n\n\n\n\n\nID\nmale_w\nmale_f\n\n\n\n\n0\n0\n53.415130\n72.570505\n\n\n1\n1\n43.278004\n93.896500\n\n\n2\n2\n71.909528\n82.263387\n\n\n3\n3\n64.476794\n99.802621\n\n\n4\n4\n42.978916\n78.356406"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step3.-모델-적합",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step3.-모델-적합",
+    "title": "00. 단순선형회귀분석",
+    "section": "step3. 모델 적합",
+    "text": "step3. 모델 적합\n\nmodel = sm.OLS(y, _X)\nresults = model.fit()"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#df.meltbmi-테이블-생성",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#df.meltbmi-테이블-생성",
-    "title": "Extra 00. tidydata",
-    "section": "3. df.melt(BMI) 테이블 생성",
-    "text": "3. df.melt(BMI) 테이블 생성\n\nbmi = df.melt(id_vars=[\"ID\"],\n            value_vars=[\"bmi_f\",\"bmi_m\"],\n            var_name = \"sex\",value_name='bmi')\n\nbmi.sex = bmi.sex.replace(\"bmi_m\",\"m\").replace(\"bmi_f\",\"f\")\nbmi.head()\n\n\n\n\n\n\n\n\nID\nsex\nbmi\n\n\n\n\n0\n0\nf\n19.116853\n\n\n1\n1\nf\n16.653995\n\n\n2\n2\nf\n30.931608\n\n\n3\n3\nf\n20.769874\n\n\n4\n4\nf\n14.964927"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step4.-결과-확인",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step4.-결과-확인",
+    "title": "00. 단순선형회귀분석",
+    "section": "step4. 결과 확인",
+    "text": "step4. 결과 확인\n\nsummarize(results)\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n10.0720\n0.179\n56.28\n0.0\n\n\nx1\n2.2038\n0.006\n362.82\n0.0\n\n\n\n\n\n\n\n\nreport = results.summary()\nreport\n\n\nOLS Regression Results\n\n\nDep. Variable:\ny\nR-squared:\n0.992\n\n\nModel:\nOLS\nAdj. R-squared:\n0.992\n\n\nMethod:\nLeast Squares\nF-statistic:\n1.316e+05\n\n\nDate:\nMon, 04 Sep 2023\nProb (F-statistic):\n0.00\n\n\nTime:\n10:37:22\nLog-Likelihood:\n-1417.0\n\n\nNo. Observations:\n1000\nAIC:\n2838.\n\n\nDf Residuals:\n998\nBIC:\n2848.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n10.0720\n0.179\n56.280\n0.000\n9.721\n10.423\n\n\nx1\n2.2038\n0.006\n362.820\n0.000\n2.192\n2.216\n\n\n\n\n\n\nOmnibus:\n2.560\nDurbin-Watson:\n2.000\n\n\nProb(Omnibus):\n0.278\nJarque-Bera (JB):\n2.695\n\n\nSkew:\n0.025\nProb(JB):\n0.260\n\n\nKurtosis:\n3.249\nCond. No.\n167.\n\n\n\nNotes:[1] Standard Errors assume that the covariance matrix of the errors is correctly specified."
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#weight-테이블과-bmi-테이블-조인",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#weight-테이블과-bmi-테이블-조인",
-    "title": "Extra 00. tidydata",
-    "section": "4. weight 테이블과 bmi 테이블 조인",
-    "text": "4. weight 테이블과 bmi 테이블 조인\n\ndf1 = pd.merge(weight,bmi, \n         left_on=['ID','sex'], right_on=['ID','sex'])\n\n\ndf1.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\nbmi\n\n\n\n\n0\n0\nm\n72.570505\n23.059717\n\n\n1\n1\nm\n93.896500\n26.468980\n\n\n2\n2\nm\n82.263387\n31.854236\n\n\n3\n3\nm\n99.802621\n28.481097\n\n\n4\n4\nm\n78.356406\n28.501984"
+    "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step5.-결과-시각화",
+    "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step5.-결과-시각화",
+    "title": "00. 단순선형회귀분석",
+    "section": "step5. 결과 시각화",
+    "text": "step5. 결과 시각화\n\nx = _X[\"x1\"]\nyhat = results.predict()\n\n\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x22f159998d0&gt;"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-3plotlytidy-o",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-3plotlytidy-o",
-    "title": "Extra 00. tidydata",
-    "section": "5. 시각화 3(plotly,tidy (o))",
-    "text": "5. 시각화 3(plotly,tidy (o))\n\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\")"
-  },
-  {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-4plotlytidy-o",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#시각화-4plotlytidy-o",
-    "title": "Extra 00. tidydata",
-    "section": "6. 시각화 4(plotly,tidy (o))",
-    "text": "6. 시각화 4(plotly,tidy (o))\n\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\",facet_col=df1.sex)"
-  },
-  {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#데이터-비교",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#데이터-비교",
-    "title": "Extra 00. tidydata",
-    "section": "7. 데이터 비교",
-    "text": "7. 데이터 비교\n1 tidy (x)\n\ndf.iloc[:,[0,1,2,5,6]].head()\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\nbmi_m\nbmi_f\n\n\n\n\n0\n0\n72.570505\n53.415130\n23.059717\n19.116853\n\n\n1\n1\n93.896500\n43.278004\n26.468980\n16.653995\n\n\n2\n2\n82.263387\n71.909528\n31.854236\n30.931608\n\n\n3\n3\n99.802621\n64.476794\n28.481097\n20.769874\n\n\n4\n4\n78.356406\n42.978916\n28.501984\n14.964927\n\n\n\n\n\n\n\n2 tidy (o)\n\ndf1.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\nbmi\n\n\n\n\n0\n0\nm\n72.570505\n23.059717\n\n\n1\n1\nm\n93.896500\n26.468980\n\n\n2\n2\nm\n82.263387\n31.854236\n\n\n3\n3\nm\n99.802621\n28.481097\n\n\n4\n4\nm\n78.356406\n28.501984"
-  },
-  {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#코드-비교",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#코드-비교",
-    "title": "Extra 00. tidydata",
-    "section": "8. 코드 비교",
-    "text": "8. 코드 비교\n1 tidy(x)\nplt.figure(figsize=(12,4))\nplt.plot(df.male_w,df.bmi_m,\".\",alpha=0.3)\nplt.plot(df.female_w,df.bmi_f,\".\",alpha=0.3)\nplt.legend([\"남\",\"여\"])\nplt.title(\"남자와 여자 몸무게에 따른 BMI\")\nfig, axes = plt.subplots(1,2,figsize=(12,4))\nax1,ax2 = axes\nax1.plot(df.male_w,df.bmi_m,\".b\",alpha=0.3)\nax1.set_title(\"남자 몸무게에 따른 BMI\")\nax2.plot(df.female_w,df.bmi_f,\".r\",alpha=0.3)\nax2.set_title(\"여자 몸무게에 따른 BMI\")\n2 tidy (o)\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\")\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\",facet_col=df1.sex)"
-  },
-  {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#다차원-plot-height-label",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#다차원-plot-height-label",
-    "title": "Extra 00. tidydata",
-    "section": "9. 다차원 plot (+height label)",
-    "text": "9. 다차원 plot (+height label)\n\ndf.head()\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n0\n72.570505\n53.415130\n1.773998\n1.671568\n23.059717\n19.116853\n과체중\n정상\n보통\n큰키\n\n\n1\n1\n93.896500\n43.278004\n1.883459\n1.612035\n26.468980\n16.653995\n비만\n저체중\n큰키\n큰키\n\n\n2\n2\n82.263387\n71.909528\n1.607014\n1.524727\n31.854236\n30.931608\n비만\n비만\n작은키\n보통\n\n\n3\n3\n99.802621\n64.476794\n1.871943\n1.761914\n28.481097\n20.769874\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n4\n78.356406\n42.978916\n1.658058\n1.694691\n28.501984\n14.964927\n비만\n저체중\n작은키\n큰키\n\n\n\n\n\n\n\n\nh = df.melt(id_vars=[\"ID\"],\n            value_vars=[\"h_label_M\",\"h_label_F\"],\n            var_name = \"sex\",value_name='h')\n\nh.sex = h.sex.replace(\"h_label_M\",\"m\").replace(\"h_label_F\",\"f\")\nh.head()\n\n\n\n\n\n\n\n\nID\nsex\nh\n\n\n\n\n0\n0\nm\n보통\n\n\n1\n1\nm\n큰키\n\n\n2\n2\nm\n작은키\n\n\n3\n3\nm\n큰키\n\n\n4\n4\nm\n작은키\n\n\n\n\n\n\n\n\ndf2 = pd.merge(df1,h, \n         left_on=['ID','sex'], right_on=['ID','sex'])\n\n\ndf2.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\nbmi\nh\n\n\n\n\n0\n0\nm\n72.570505\n23.059717\n보통\n\n\n1\n1\nm\n93.896500\n26.468980\n큰키\n\n\n2\n2\nm\n82.263387\n31.854236\n작은키\n\n\n3\n3\nm\n99.802621\n28.481097\n큰키\n\n\n4\n4\nm\n78.356406\n28.501984\n작은키\n\n\n\n\n\n\n\n\nfig = df2.plot(x=\"weight\",y=\"bmi\",color=\"sex\",facet_col = \"h\",\n             facet_row=\"sex\",kind= \"scatter\",backend = \"plotly\",height=400, width=1000,opacity=0.2)\n\nfig.update_yaxes(matches=None)\nfig.show()"
-  },
-  {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#summary-및-개인적인-생각",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#summary-및-개인적인-생각",
-    "title": "Extra 00. tidydata",
-    "section": "summary 및 개인적인 생각",
-    "text": "summary 및 개인적인 생각\n1. 물론 데이터를 처음 로드하고 탐색하기 위해 matplotlib를 이용하여 untidy한 데이터를 살펴본다.\n2. 그러나 후에 분석을 하고 그 결과를 시각화할 때는 tidy하지 못한 데이터로 할때 예쁜 그래프를 그리기 어렵다…(이건 개인적인 생각)\n3. 그리고 데이터를 3,4개의 차원(기준)에 따라 그래프를 그릴 때 untidy한 데이터로 어떻게 그릴지 접근조차 어렵다.(물론 가능한 분도 계시겠지만 거기까지 생각하고 싶지 않다.)\n4. 또한, 모델링 수행 수행시 tidy한 데이터가 들어가기 때문에 melt,groupby 등을 이용한 전처리는 필수적으로 갖추어야될 역량임.\n5. 이 부분은 스터디원 분들이 너무 겁먹지 않으셨으면 좋겠다. 하기 싫어도 매번 해야되서 언젠가 몸이 기억하고 반응할 거다."
-  },
-  {
-    "objectID": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#ex2-전북대학교의-합격률-to-남녀-불평등",
-    "href": "posts/00. linear regression/2023-08-28-Extra 00. tidydata.html#ex2-전북대학교의-합격률-to-남녀-불평등",
-    "title": "Extra 00. tidydata",
-    "section": "ex2) 전북대학교의 합격률 \\(\\to\\) 남녀 불평등?",
-    "text": "ex2) 전북대학교의 합격률 \\(\\to\\) 남녀 불평등?\n\n시각화 1 : 남녀 전체 합격률 비율 시각화\n- 아래와 같은 대학합격률 데이터가 있다고 하자.\n\nDEP : 학과\nSTATE : 합격 여부\nGEN : 성별\nCOUNT : 빈도\n\n\n\nCode\nDEP=(['A1']*2+['A2']*2+['B1']*2+['B2']*2)*2 \nGEN=['M']*8+['F']*8\nSTATE=['PASS','FAIL']*8\nCOUNT=[1,9,2,8,80,20,85,15,5,5,5,5,9,1,9,1]\n\ndf=pd.DataFrame({'DEP':DEP,'STATE':STATE,'GEN':GEN,'COUNT':COUNT})\ndf\n\n\n\n\n\n\n\n\n\nDEP\nSTATE\nGEN\nCOUNT\n\n\n\n\n0\nA1\nPASS\nM\n1\n\n\n1\nA1\nFAIL\nM\n9\n\n\n2\nA2\nPASS\nM\n2\n\n\n3\nA2\nFAIL\nM\n8\n\n\n4\nB1\nPASS\nM\n80\n\n\n5\nB1\nFAIL\nM\n20\n\n\n6\nB2\nPASS\nM\n85\n\n\n7\nB2\nFAIL\nM\n15\n\n\n8\nA1\nPASS\nF\n5\n\n\n9\nA1\nFAIL\nF\n5\n\n\n10\nA2\nPASS\nF\n5\n\n\n11\nA2\nFAIL\nF\n5\n\n\n12\nB1\nPASS\nF\n9\n\n\n13\nB1\nFAIL\nF\n1\n\n\n14\nB2\nPASS\nF\n9\n\n\n15\nB2\nFAIL\nF\n1\n\n\n\n\n\n\n\n\n\nCode\nt_g_c = df.groupby([\"GEN\",\"STATE\"],as_index=False)[[\"COUNT\"]].sum().\\\n            rename(columns = {\"COUNY\" : \"sum\"})\ngs = t_g_c.groupby(\"GEN\")[\"COUNT\"].sum()\ngs = list(np.repeat(gs,2))\nt_g_c[\"prop\"] = t_g_c[\"COUNT\"]/gs\nt_g_c\n\n\n\n\n\n\n\n\n\nGEN\nSTATE\nCOUNT\nprop\n\n\n\n\n0\nF\nFAIL\n12\n0.300000\n\n\n1\nF\nPASS\n28\n0.700000\n\n\n2\nM\nFAIL\n52\n0.236364\n\n\n3\nM\nPASS\n168\n0.763636\n\n\n\n\n\n\n\n\n\nCode\nfig = t_g_c.loc[t_g_c.STATE == \"PASS\"].\\\n        plot(x= \"GEN\", y=\"prop\",kind=\"bar\",\n            title=\"남녀 전북대학교의 합격률\",backend= \"plotly\",color=\"GEN\",\n             color_discrete_sequence=[\"red\",\"blue\"],height=500,width=700)\nfig.update_yaxes(range=[0.6, 0.8])\nfig.show()\n\n\n\n                                                \n\n\n- 전북대학교는 남녀 불평등인 학교인가?\n\n\n시각화 2 : (학과별, 성별) 합격률 비교\n\n\nCode\nt = df.groupby([\"DEP\",\"GEN\"],\n               as_index=False)[[\"COUNT\"]].sum().\\\n                rename(columns = {\"COUNT\":\"SUM\"}).merge(df)\nt[\"prop\"] = t.COUNT/t.SUM\nt\n\n\n\n\n\n\n\n\n\nDEP\nGEN\nSUM\nSTATE\nCOUNT\nprop\n\n\n\n\n0\nA1\nF\n10\nPASS\n5\n0.50\n\n\n1\nA1\nF\n10\nFAIL\n5\n0.50\n\n\n2\nA1\nM\n10\nPASS\n1\n0.10\n\n\n3\nA1\nM\n10\nFAIL\n9\n0.90\n\n\n4\nA2\nF\n10\nPASS\n5\n0.50\n\n\n5\nA2\nF\n10\nFAIL\n5\n0.50\n\n\n6\nA2\nM\n10\nPASS\n2\n0.20\n\n\n7\nA2\nM\n10\nFAIL\n8\n0.80\n\n\n8\nB1\nF\n10\nPASS\n9\n0.90\n\n\n9\nB1\nF\n10\nFAIL\n1\n0.10\n\n\n10\nB1\nM\n100\nPASS\n80\n0.80\n\n\n11\nB1\nM\n100\nFAIL\n20\n0.20\n\n\n12\nB2\nF\n10\nPASS\n9\n0.90\n\n\n13\nB2\nF\n10\nFAIL\n1\n0.10\n\n\n14\nB2\nM\n100\nPASS\n85\n0.85\n\n\n15\nB2\nM\n100\nFAIL\n15\n0.15\n\n\n\n\n\n\n\n\nfig = t.loc[t.STATE == \"PASS\",:].plot(x=\"GEN\", y=\"prop\", kind = \"bar\",backend = \"plotly\",\n          color= \"GEN\",color_discrete_sequence = [\"red\",\"blue\"],\n        facet_col=\"DEP\",facet_col_wrap=2,height=500,width=700)\n\nfig.update_yaxes(matches=None)\nfig.show()\n\n\n                                                \n\n\n- 실상은 그렇지 않다!\n\n\nsummary\n- 어떤 현상에 대해서 설명할 때 단순히 이분법적인 사고로 바라보면 안된다.\n\n위 예제처럼 잘못된 오해를 불러올 수 있는 상황이 발생할 수 있지 않은가?\n실제로 학과별 남녀 합격률을 조사한 결과 여학생의 비율이 더 많은 것을 확인했다.\n이 같은 현상을 심슨의 역설 이라고 하며 모델링 과정에서도 굉장히 중요한 부분을 차지한다."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ISLP2023",
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html",
+    "title": "00. Simple Linear Regression",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nAug 28, 2023\n\n\nExtra 00. tidydata\n\n\nGC \n\n\n\n\nAug 18, 2023\n\n\n00. Simple Linear Regression\n\n\nGC \n\n\n\n\n\n\nNo matching items"
+    "text": "- 코랩환경에서 아래 순서대로 진행해야 ISLP 패키지 설치시 오류가 발생하지 않는다.\n\n드라이브 마운트\n현재 작업중인 경로로 이동\n패키지 import\n\nfrom google.colab import drive\ndrive.mount('/content/drive')\ncd /content/drive/MyDrive/Colab Notebooks/ISLP/Linear Regression\n\n#pip install ISLP\n\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom ISLP import load_data\n\nimport statsmodels.api as sm\n\nfrom statsmodels.stats.outliers_influence \\\nimport variance_inflation_factor as VIF\nfrom statsmodels.stats.anova import anova_lm\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현1",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현1",
+    "title": "00. Simple Linear Regression",
+    "section": "표현1",
+    "text": "표현1\n\\[\\hat {y} = \\hat {\\beta}_1x + \\hat {\\beta}_0\\]"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현-2-starstarstar",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현-2-starstarstar",
+    "title": "00. Simple Linear Regression",
+    "section": "표현 2 (\\(\\star\\star\\star\\))",
+    "text": "표현 2 (\\(\\star\\star\\star\\))\n- 표현 2가 자주 쓰이니 잘 알아두자.\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1 \\end{bmatrix} \\]"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#데이터-로드",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#데이터-로드",
+    "title": "00. Simple Linear Regression",
+    "section": "데이터 로드",
+    "text": "데이터 로드\n- 아래의 데이터를 살펴보자.\n\nBoston data : 보스턴 시의 주택 가격에 대한 데이터 정보\n\ncrim : 자치시 별 1인당 범죄율\nzn : 25,000 평방피트르 초과하는 거주지역의 비율\nindus : 비소매상업지역이 점유하고 있는 토지의 비율\nchas : 찰스강에 대한 더미변수 (강의 경계에 위치한 경우는 1, 아니면 0)\nnos : 10ppm당 농축 일산화 질소\nrm : 주택 1가구당 평균 방의 개수\nage : 1940년 이전에 건축된 소유주택의 비율\ndis : 5개의 보스턴 직업센터까지의 접근성 지수\nrad : 방사형 도로까지의 접근성 지수\ntax : 10,000 달러 당 재산 세율\nptratio : 자치시별 학생/교사 비율\nlstat : 모집단의 하위 계층의 비율\nmedv : 본인 소유의 주택가격(중앙값) (단위 : $ 1,000)\n\n\n\nBoston = load_data(\"Boston\")\nBoston.columns\n#len(Boston.columns)\n\nIndex(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',\n       'ptratio', 'lstat', 'medv'],\n      dtype='object')"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#xy-생성",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#xy-생성",
+    "title": "00. Simple Linear Regression",
+    "section": "X,y 생성",
+    "text": "X,y 생성\n\\[\\bf X = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\]\n\nlstat 변수를 예측변수로, medv변수를 반응변수로 사용\n\n\nX = pd.DataFrame({\"intercept\" : np.ones(Boston.shape[0]),\n                  \"lstat\" : Boston[\"lstat\"]})\ny = Boston[\"medv\"]\nX.head()\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n\n- OLS : Ordinary Least Squares의 약자로, 주어진 데이터에서 오차의 제곱을 최소화하는 \\(\\beta_i\\)를 추정한다."
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#모델-적합",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#모델-적합",
+    "title": "00. Simple Linear Regression",
+    "section": "모델 적합",
+    "text": "모델 적합\n\nmodel = sm.OLS(y,X)\nresults = model.fit()\n\n\ns_result = summarize(results)\n\n\ns_result\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n34.5538\n0.563\n61.415\n0.0\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.0\n\n\n\n\n\n\n\n- 적합된 모델을 해석하면 다음과 같다.\n\\[\\hat {\\text{medv}} = -0.95 \\times \\text{lstat} + 34\n.5538\\]"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#시각화",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#시각화",
+    "title": "00. Simple Linear Regression",
+    "section": "시각화",
+    "text": "시각화\n\nx = Boston[\"lstat\"]\nyhat = results.predict()\n\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x28355668350&gt;"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#modelspec-bf-x를-선언하는-또-다른-방법",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#modelspec-bf-x를-선언하는-또-다른-방법",
+    "title": "00. Simple Linear Regression",
+    "section": "ModelSpec() : \\(\\bf X\\)를 선언하는 또 다른 방법",
+    "text": "ModelSpec() : \\(\\bf X\\)를 선언하는 또 다른 방법\n- 우리는 앞서 다음과 같은 module을 import 했다\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)\n- ModelSpec이라는 모듈을 MS로 사용할 것으로 지칭\n- 이 모듈은 예측변수 \\(x\\)를 컴퓨터가 이해할 수 있게끔 변환해준다.\n- step1. 전달할 \\(x\\)를 다음과 같이 전달\n\ndesign = MS(['lstat'])\n\n- step2. 컴퓨터가 이해할 수 있는 형태에 맞게 \\(x\\)를 변환 \\(\\to\\) 주어진 \\(x\\)를 매트릭스 형태로 변환해줌\n\nX = design.fit_transform(Boston)\n\n\nX.head()\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n\n\n모델 적합\n\nmodel = sm.OLS(y, X)\nresults = model.fit()\n\n\n\n모델 요약\n\nreport = results.summary()\n\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSun, 03 Sep 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n19:16:47\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 이런식으로 위의 표에 대한 데이터도 확인할 수 있음\n\nreport.tables[0].data\n\n[['Dep. Variable:', 'medv', '  R-squared:         ', '   0.544'],\n ['Model:', 'OLS', '  Adj. R-squared:    ', '   0.543'],\n ['Method:', 'Least Squares', '  F-statistic:       ', '   601.6'],\n ['Date:', 'Sun, 03 Sep 2023', '  Prob (F-statistic):', '5.08e-88'],\n ['Time:', '19:16:47', '  Log-Likelihood:    ', ' -1641.5'],\n ['No. Observations:', '   506', '  AIC:               ', '   3287.'],\n ['Df Residuals:', '   504', '  BIC:               ', '   3295.'],\n ['Df Model:', '     1', '                     ', ' '],\n ['Covariance Type:', 'nonrobust', '                     ', ' ']]\n\n\n- 추정된 회귀계수값 확인\n\nresults.params\n\nintercept    34.553841\nlstat        -0.950049\ndtype: float64\n\n\n\n\n모델 해석1 (모델의 유의성)\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSun, 03 Sep 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n19:16:47\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 결정계수 (\\(R^2\\)) 값을 살펴보니 약 54%의 설명력을 가진 모델이다.\n- 또한, F통계량에 근거한 p-value 값을 살펴보았을 때 주어진 표본으로 부터 추출된 모형은 통계적으로 유의하다.\n\n\n모델 해석2 (예측변수의 유의성)\n\nreport.tables[1]\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n34.5538\n0.563\n61.415\n0.000\n33.448\n35.659\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.000\n-1.026\n-0.874\n\n\n\n\n\n- lstat의 coef \\(\\to\\) 즉, 회귀계수에 대한 유의성 검정결과\n\np-value값을 살펴본 결과 유의수준 0.05에서 유의성을 만족한다. 따라서 lstat의 회귀계수는 통계적으로 유의하다.\n\n\n\n시각화\n\nyhat = results.predict()\nx = X[\"lstat\"]\n\n- 적합된 \\((x,\\hat y)\\)와 \\((x,y)\\)를 시각화한 결과 몇몇 이상치를 제외하고 잘 예측하고 있는것 같다.\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x283559cf750&gt;"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#test-data에-대한-예측",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#test-data에-대한-예측",
+    "title": "00. Simple Linear Regression",
+    "section": "test data에 대한 예측",
+    "text": "test data에 대한 예측\n- 임의의 데이터 생성\n\nnew_df = pd.DataFrame({'lstat':[5, 10, 15]})\nnewX = design.fit_transform(new_df)\nnewX\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n5\n\n\n1\n1.0\n10\n\n\n2\n1.0\n15\n\n\n\n\n\n\n\n- 예측\n\nnew_predictions = results.get_prediction(newX)\nnew_predictions.predicted_mean ## 예측값 확인\n\narray([29.80359411, 25.05334734, 20.30310057])\n\n\n- 예측값에 대한 신뢰구간 (유의수준 = 0.05)\n\nnew_predictions.conf_int(alpha=0.05)\n\narray([[29.00741194, 30.59977628],\n       [24.47413202, 25.63256267],\n       [19.73158815, 20.87461299]])\n\n\n- 예측값에 대한 예측구간 (유의수준 = 0.05)\n\nnew_predictions.conf_int(obs=True, alpha=0.05)\n\narray([[17.56567478, 42.04151344],\n       [12.82762635, 37.27906833],\n       [ 8.0777421 , 32.52845905]])"
+  },
+  {
+    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#fitted-value-vs-residual",
+    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html#fitted-value-vs-residual",
+    "title": "00. Simple Linear Regression",
+    "section": "fitted value vs residual",
+    "text": "fitted value vs residual\n\\[\\text{resid} = y-\\hat y\\]\n\nfv = results.fittedvalues ## 적합치\nre = results.resid ## 잔차\n\n\nfrom scipy import stats\n\n\n# code-fold : true\nfig,axes = plt.subplots(1,2,figsize=(12,6))\n\nax1,ax2 = axes\nax1.plot(fv,re,\"o\",alpha=0.3)\nax1.axhline(0,c=\"k\",ls =\"--\") ## c=k 검은색, ls= linestyle\nax1.set_xlabel(\"fitted value\")\nax1.set_ylabel(\"Residual\")\nax1.set_title(\"fitted value vs Residual\")\n\n_ = stats.probplot(re,plot=ax2)\nax2.set_ylabel(\"standard residual\")\nax2.set_title(\"qqplot\")\n\nText(0.5, 1.0, 'qqplot')\n\n\n\n\n\n\n잔차 해석\n\n잔차 plot을 살펴본 결과 : fitted value가 커질수록 잔차의 분산도 커지고 있다. \\(\\to\\) 잔차가 등분산성을 만족하지 못하고 있다.\n\n반응변수에 변환을 취하거나, 가중최소 제곱법을 이용해 해결해야한다.\n\nqqplot을 그려본결과 왼쪽 꼬리는 이론적으로 나와야할 값보다. 큰값을 가진다.\n오른쪽 꼬리는 마찬가지이다.\n즉, 잔차는 정규성 가정에 위배되는 것처럼 보인다."
   },
   {
     "objectID": "about.html#education",
@@ -161,73 +175,129 @@
     "text": "Conctact\n- rkdcjf8232@gmail.com"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html",
-    "title": "00. Simple Linear Regression",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ISLP2023",
     "section": "",
-    "text": "- 코랩환경에서 아래 순서대로 진행해야 ISLP 패키지 설치시 오류가 발생하지 않는다.\n\n드라이브 마운트\n현재 작업중인 경로로 이동\n패키지 import\n\n\nfrom google.colab import drive\ndrive.mount('/content/drive')\n\nDrive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount(\"/content/drive\", force_remount=True).\n\n\n\ncd /content/drive/MyDrive/Colab Notebooks/ISLP/Linear Regression\n\n/content/drive/MyDrive/Colab Notebooks/ISLP/Linear Regression\n\n\n\n#pip install ISLP\n\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nfrom ISLP import load_data\n\nimport statsmodels.api as sm\n\nfrom statsmodels.stats.outliers_influence \\\nimport variance_inflation_factor as VIF\nfrom statsmodels.stats.anova import anova_lm\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)"
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nSep 3, 2023\n\n\n00. Simple Linear Regression\n\n\nGC \n\n\n\n\nSep 3, 2023\n\n\n00. 단순선형회귀분석\n\n\nGC \n\n\n\n\nAug 28, 2023\n\n\nExtra 00. tidydata\n\n\nGC \n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현1",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현1",
-    "title": "00. Simple Linear Regression",
-    "section": "표현1",
-    "text": "표현1\n\\[\\hat {y} = \\hat {\\beta}_1x + \\hat {\\beta}_0\\]"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html",
+    "title": "Extra 00. tidydata",
+    "section": "",
+    "text": "- 내가 생각하는 데이터 분석의 단계\n\n데이터의 기본 정보 (df.info 등등)을 확인\n데이터를 tidy하게 바꾼 후 EDA(탐색적 자료 분석), 통계 분석(t-test) 등등 수행\ntidy데이터를 바탕으로 모델링 수행\n결과 요약 및 해석 -&gt; 결과에 대한 자료 작성 시에도 tidy한 데이터가 사용됨\n\n- 금일 발표 요약\n\ntidy 데이터의 정의\ntidy 데이터를 활용하지 않은 시각화 (matplitlib)\ntidy 데이터를 활용한 시각화 (seaborn, ggplot, plotly 등등…)\n심슨의 역설"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현-2-starstarstar",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#표현-2-starstarstar",
-    "title": "00. Simple Linear Regression",
-    "section": "표현 2 (\\(\\star\\star\\star\\))",
-    "text": "표현 2 (\\(\\star\\star\\star\\))\n- 표현 2가 자주 쓰이니 잘 알아두자.\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1 \\end{bmatrix} \\]"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#데이터-생성-tidy-x",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#데이터-생성-tidy-x",
+    "title": "Extra 00. tidydata",
+    "section": "데이터 생성 (tidy : (x))",
+    "text": "데이터 생성 (tidy : (x))\n\n\nCode\nmale_w = np.random.randint(60,100,10000) + np.random.randn(10000)\nfemale_w = np.random.randint(40,80,10000) + np.random.randn(10000)\nmale_h = (np.random.randint(160,200,10000) + np.random.randn(10000))/100\nfemale_h = (np.random.randint(140,180,10000) + np.random.randn(10000))/100\n\n\nbmi_m =  male_w/(male_h**2)\nbmi_f =  female_w/(female_h**2)\n\nbins = [-np.Inf, 18.5,23,25,np.Inf]\nlabels = [\"저체중\",\"정상\",\"과체중\",\"비만\"]\n\ndf = pd.DataFrame([male_w,female_w,male_h,female_h,bmi_m,bmi_f]).T\n\ndf.columns = [\"male_w\",\"female_w\",\"male_h\",\"female_h\",\"bmi_m\",\"bmi_f\"]\n\n\ndf[\"bmi_label_M\"] = pd.cut(df.bmi_m, bins = bins, labels =labels)\ndf[\"bmi_label_F\"] = pd.cut(df.bmi_f, bins = bins, labels =labels)\n\n\nbins_m = [-np.Inf, 1.60,1.70,1.80,1.90,np.Inf]\nlabels = [\"매우 작은키\",\"작은키\",\"보통\",\"큰키\",\"매우 큰키\"]\n\nbins_f = [-np.Inf, 1.40,1.50,1.60,1.70,np.Inf]\n\n\ndf[\"h_label_M\"] = pd.cut(df.male_h, bins = bins_m, labels =labels)\ndf[\"h_label_F\"] = pd.cut(df.female_h, bins = bins_f, labels =labels)\n\n\ndf.head()\n\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n95.512228\n77.760589\n1.747844\n1.555205\n31.264669\n32.150229\n비만\n비만\n보통\n보통\n\n\n1\n78.657688\n65.837765\n1.648885\n1.572286\n28.930805\n26.632491\n비만\n비만\n작은키\n보통\n\n\n2\n92.135422\n41.169597\n1.756829\n1.611968\n29.851614\n15.843971\n비만\n저체중\n보통\n큰키\n\n\n3\n85.688058\n55.415655\n1.750162\n1.560285\n27.974579\n22.762752\n비만\n정상\n보통\n보통\n\n\n4\n83.454618\n43.582328\n1.625592\n1.502553\n31.581097\n19.304156\n비만\n정상\n작은키\n보통"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#데이터-로드",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#데이터-로드",
-    "title": "00. Simple Linear Regression",
-    "section": "데이터 로드",
-    "text": "데이터 로드\n- 아래의 데이터를 살펴보자.\n\nBoston data : 보스턴 시의 주택 가격에 대한 데이터 정보\n\ncrim : 자치시 별 1인당 범죄율\nzn : 25,000 평방피트르 초과하는 거주지역의 비율\nindus : 비소매상업지역이 점유하고 있는 토지의 비율\nchas : 찰스강에 대한 더미변수 (강의 경계에 위치한 경우는 1, 아니면 0)\nnos : 10ppm당 농축 일산화 질소\nrm : 주택 1가구당 평균 방의 개수\nage : 1940년 이전에 건축된 소유주택의 비율\ndis : 5개의 보스턴 직업센터까지의 접근성 지수\nrad : 방사형 도로까지의 접근성 지수\ntax : 10,000 달러 당 재산 세율\nptratio : 자치시별 학생/교사 비율\nlstat : 모집단의 하위 계층의 비율\nmedv : 본인 소유의 주택가격(중앙값) (단위 : $ 1,000)\n\n\n\nBoston = load_data(\"Boston\")\nBoston.columns\n#len(Boston.columns)\n\nIndex(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',\n       'ptratio', 'lstat', 'medv'],\n      dtype='object')"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-1-matplotlib-tidy-x",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-1-matplotlib-tidy-x",
+    "title": "Extra 00. tidydata",
+    "section": "시각화 1 (matplotlib, tidy x)",
+    "text": "시각화 1 (matplotlib, tidy x)\n- 일단 남자와 여자의 BMI 지수를 비교하고 싶음\n- 데이터 구조\n\ndf.head()\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n69.401280\n59.315255\n1.625395\n1.588538\n26.269360\n23.505598\n비만\n과체중\n작은키\n보통\n\n\n1\n96.582571\n71.060495\n1.754996\n1.704732\n31.357869\n24.452105\n비만\n과체중\n보통\n매우 큰키\n\n\n2\n64.515219\n73.489190\n1.891025\n1.616301\n18.041283\n28.130585\n저체중\n비만\n큰키\n큰키\n\n\n3\n96.048789\n56.877694\n1.831055\n1.723334\n28.647643\n19.151515\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n91.834611\n69.049447\n1.726567\n1.726978\n30.806303\n23.151891\n비만\n과체중\n보통\n매우 큰키\n\n\n\n\n\n\n\n- 시각화\n\nplt.figure(figsize=(12,4))\nplt.plot(df.male_w,df.bmi_m,\".\",alpha=0.3)\nplt.plot(df.female_w,df.bmi_f,\".\",alpha=0.3)\nplt.legend([\"남\",\"여\"])\nplt.title(\"남자와 여자 몸무게에 따른 BMI\")\n\nText(0.5, 1.0, '남자와 여자 몸무게에 따른 BMI')"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#xy-생성",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#xy-생성",
-    "title": "00. Simple Linear Regression",
-    "section": "X,y 생성",
-    "text": "X,y 생성\n\\[\\bf X = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\]\n\nlstat 변수를 예측변수로, medv변수를 반응변수로 사용\n\n\nX = pd.DataFrame({\"intercept\" : np.ones(Boston.shape[0]),\n                  \"lstat\" : Boston[\"lstat\"]})\ny = Boston[\"medv\"]\nX.head()\n\n\n  \n    \n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n    \n  \n\n\n- OLS : Ordinary Least Squares의 약자로, 주어진 데이터에서 오차의 제곱을 최소화하는 \\(\\beta_i\\)를 추정한다."
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-2-matplotlib.pyplot-tidy-x-subplot",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-2-matplotlib.pyplot-tidy-x-subplot",
+    "title": "Extra 00. tidydata",
+    "section": "시각화 2 (matplotlib.pyplot, tidy x, subplot)",
+    "text": "시각화 2 (matplotlib.pyplot, tidy x, subplot)\n\nfig, axes = plt.subplots(1,2,figsize=(12,4))\n\nax1,ax2 = axes\n\nax1.plot(df.male_w,df.bmi_m,\".b\",alpha=0.3)\nax1.set_title(\"남자 몸무게에 따른 BMI\")\nax2.plot(df.female_w,df.bmi_f,\".r\",alpha=0.3)\nax2.set_title(\"여자 몸무게에 따른 BMI\")\n\nText(0.5, 1.0, '여자 몸무게에 따른 BMI')"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#모델-적합",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#모델-적합",
-    "title": "00. Simple Linear Regression",
-    "section": "모델 적합",
-    "text": "모델 적합\n\nmodel = sm.OLS(y,X)\nresults = model.fit()\n\n\ns_result = summarize(results)\n\n\ns_result\n\n\n  \n    \n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n34.5538\n0.563\n61.415\n0.0\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.0\n\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n    \n  \n\n\n- 적합된 모델을 해석하면 다음과 같다.\n\\[\\hat {\\text{medv}} = -0.95 \\times \\text{lstat} + 34\n.5538\\]"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#의문-1",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#의문-1",
+    "title": "Extra 00. tidydata",
+    "section": "의문 1",
+    "text": "의문 1\n- 아래의 데이터 구조를 살펴보자.\n\ndf.head()\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n72.570505\n53.415130\n1.773998\n1.671568\n23.059717\n19.116853\n과체중\n정상\n보통\n큰키\n\n\n1\n93.896500\n43.278004\n1.883459\n1.612035\n26.468980\n16.653995\n비만\n저체중\n큰키\n큰키\n\n\n2\n82.263387\n71.909528\n1.607014\n1.524727\n31.854236\n30.931608\n비만\n비만\n작은키\n보통\n\n\n3\n99.802621\n64.476794\n1.871943\n1.761914\n28.481097\n20.769874\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n78.356406\n42.978916\n1.658058\n1.694691\n28.501984\n14.964927\n비만\n저체중\n작은키\n큰키\n\n\n\n\n\n\n\n- 분석가들에게 시각화 및 모델링 시 편한것\n\n한 컬럼에 모든 데이터의 대한 특정 수치(몸무게면 몸무게, 키면 키)가 있으면 좋겠음\n그리고 또 다른 컬럼에는 그것의 범주(성별, BmI수준)을 알려주는 컬럼이 있었으면 좋겠음\n이게 편한 이유? 시각화 수행 시 아래의 긴 코드를 한 줄로 쓸 수 있다!! \\(\\to\\) (지금은 남,녀 두 개의 범주지만, 범주의 수가 늘어나면 코드 라인 수도 늘어난다.)\n\nplt.figure(figsize=(12,4))\nplt.plot(df.male_w,df.bmi_m,\".\",alpha=0.3)\nplt.plot(df.female_w,df.bmi_f,\".\",alpha=0.3)\nplt.legend([\"남\",\"여\"])\nplt.title(\"남자와 여자 몸무게에 따른 BMI\")\n\n또한, 모델링 수행시 입력데이터는 tidy한 형태로 들어가기 때문이다.(이미지, 텍스트 제외)"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#시각화",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#시각화",
-    "title": "00. Simple Linear Regression",
-    "section": "시각화",
-    "text": "시각화\n\nx = Boston[\"lstat\"]\nyhat = results.predict()\n\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x79df6f668a90&gt;"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#tidydata-만들기",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#tidydata-만들기",
+    "title": "Extra 00. tidydata",
+    "section": "tidydata 만들기",
+    "text": "tidydata 만들기"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#modelspec-bf-x를-선언하는-또-다른-방법",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#modelspec-bf-x를-선언하는-또-다른-방법",
-    "title": "00. Simple Linear Regression",
-    "section": "ModelSpec() : \\(\\bf X\\)를 선언하는 또 다른 방법",
-    "text": "ModelSpec() : \\(\\bf X\\)를 선언하는 또 다른 방법\n- 우리는 앞서 다음과 같은 module을 import 했다\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)\n- ModelSpec이라는 모듈을 MS로 사용할 것으로 지칭\n- 이 모듈은 예측변수 \\(x\\)를 컴퓨터가 이해할 수 있게끔 변환해준다.\n- step1. 전달할 \\(x\\)를 다음과 같이 전달\n\ndesign = MS(['lstat'])\n\n- step2. 컴퓨터가 이해할 수 있는 형태에 맞게 \\(x\\)를 변환 \\(\\to\\) 주어진 \\(x\\)를 매트릭스 형태로 변환해줌\n\nX = design.fit_transform(Boston)\n\n\nX.head()\n\n\n  \n    \n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n    \n  \n\n\n\n모델 적합\n\nmodel = sm.OLS(y, X)\nresults = model.fit()\n\n\n\n모델 요약\n\nreport = results.summary()\n\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSat, 19 Aug 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n04:11:50\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 이런식으로 위의 표에 대한 데이터도 확인할 수 있음\n\nreport.tables[0].data\n\n[['Dep. Variable:', 'medv', '  R-squared:         ', '   0.544'],\n ['Model:', 'OLS', '  Adj. R-squared:    ', '   0.543'],\n ['Method:', 'Least Squares', '  F-statistic:       ', '   601.6'],\n ['Date:', 'Sat, 19 Aug 2023', '  Prob (F-statistic):', '5.08e-88'],\n ['Time:', '04:11:50', '  Log-Likelihood:    ', ' -1641.5'],\n ['No. Observations:', '   506', '  AIC:               ', '   3287.'],\n ['Df Residuals:', '   504', '  BIC:               ', '   3295.'],\n ['Df Model:', '     1', '                     ', ' '],\n ['Covariance Type:', 'nonrobust', '                     ', ' ']]\n\n\n- 추정된 회귀계수값 확인\n\nresults.params\n\nintercept    34.553841\nlstat        -0.950049\ndtype: float64\n\n\n\n\n모델 해석1 (모델의 유의성)\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSat, 19 Aug 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n04:11:50\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 결정계수 (\\(R^2\\)) 값을 살펴보니 약 54%의 설명력을 가진 모델이다.\n- 또한, F통계량에 근거한 p-value 값을 살펴보았을 때 주어진 표본으로 부터 추출된 모형은 통계적으로 유의하다.\n\n\n모델 해석2 (예측변수의 유의성)\n\nreport.tables[1]\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n34.5538\n0.563\n61.415\n0.000\n33.448\n35.659\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.000\n-1.026\n-0.874\n\n\n\n\n\n- lstat의 coef \\(\\to\\) 즉, 회귀계수에 대한 유의성 검정결과\n\np-value값을 살펴본 결과 유의수준 0.05에서 유의성을 만족한다. 따라서 lstat의 회귀계수는 통계적으로 유의하다.\n\n\n\n시각화\n\nyhat = results.predict()\nx = X[\"lstat\"]\n\n- 적합된 \\((x,\\hat y)\\)와 \\((x,y)\\)를 시각화한 결과 몇몇 이상치를 제외하고 잘 예측하고 있는것 같다.\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x79df6f514ee0&gt;"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#인데스를-id로-변경",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#인데스를-id로-변경",
+    "title": "Extra 00. tidydata",
+    "section": "1. 인데스를 ID로 변경",
+    "text": "1. 인데스를 ID로 변경\n\ndf.head()\n\n\n\n\n\n\n\n\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n95.512228\n77.760589\n1.747844\n1.555205\n31.264669\n32.150229\n비만\n비만\n보통\n보통\n\n\n1\n78.657688\n65.837765\n1.648885\n1.572286\n28.930805\n26.632491\n비만\n비만\n작은키\n보통\n\n\n2\n92.135422\n41.169597\n1.756829\n1.611968\n29.851614\n15.843971\n비만\n저체중\n보통\n큰키\n\n\n3\n85.688058\n55.415655\n1.750162\n1.560285\n27.974579\n22.762752\n비만\n정상\n보통\n보통\n\n\n4\n83.454618\n43.582328\n1.625592\n1.502553\n31.581097\n19.304156\n비만\n정상\n작은키\n보통\n\n\n\n\n\n\n\n\ndf.reset_index(inplace=True)\n\n\ndf.head()\n\n\n\n\n\n\n\n\nindex\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n0\n95.512228\n77.760589\n1.747844\n1.555205\n31.264669\n32.150229\n비만\n비만\n보통\n보통\n\n\n1\n1\n78.657688\n65.837765\n1.648885\n1.572286\n28.930805\n26.632491\n비만\n비만\n작은키\n보통\n\n\n2\n2\n92.135422\n41.169597\n1.756829\n1.611968\n29.851614\n15.843971\n비만\n저체중\n보통\n큰키\n\n\n3\n3\n85.688058\n55.415655\n1.750162\n1.560285\n27.974579\n22.762752\n비만\n정상\n보통\n보통\n\n\n4\n4\n83.454618\n43.582328\n1.625592\n1.502553\n31.581097\n19.304156\n비만\n정상\n작은키\n보통\n\n\n\n\n\n\n\n\ndf.rename(columns={\"index\" : \"ID\" },inplace=True)\n\n\ndf.head()\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n0\n95.512228\n77.760589\n1.747844\n1.555205\n31.264669\n32.150229\n비만\n비만\n보통\n보통\n\n\n1\n1\n78.657688\n65.837765\n1.648885\n1.572286\n28.930805\n26.632491\n비만\n비만\n작은키\n보통\n\n\n2\n2\n92.135422\n41.169597\n1.756829\n1.611968\n29.851614\n15.843971\n비만\n저체중\n보통\n큰키\n\n\n3\n3\n85.688058\n55.415655\n1.750162\n1.560285\n27.974579\n22.762752\n비만\n정상\n보통\n보통\n\n\n4\n4\n83.454618\n43.582328\n1.625592\n1.502553\n31.581097\n19.304156\n비만\n정상\n작은키\n보통"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#test-data에-대한-예측",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#test-data에-대한-예측",
-    "title": "00. Simple Linear Regression",
-    "section": "test data에 대한 예측",
-    "text": "test data에 대한 예측\n- 임의의 데이터 생성\n\nnew_df = pd.DataFrame({'lstat':[5, 10, 15]})\nnewX = design.fit_transform(new_df)\nnewX\n\n\n  \n    \n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n5\n\n\n1\n1.0\n10\n\n\n2\n1.0\n15\n\n\n\n\n\n\n    \n\n  \n    \n\n  \n    \n  \n    \n\n  \n\n    \n  \n\n\n\n  \n\n\n    \n        \n    \n\n  \n\n\n\n  \n\n    \n  \n\n\n- 예측\n\nnew_predictions = results.get_prediction(newX)\nnew_predictions.predicted_mean ## 예측값 확인\n\narray([29.80359411, 25.05334734, 20.30310057])\n\n\n- 예측값에 대한 신뢰구간 (유의수준 = 0.05)\n\nnew_predictions.conf_int(alpha=0.05)\n\narray([[29.00741194, 30.59977628],\n       [24.47413202, 25.63256267],\n       [19.73158815, 20.87461299]])\n\n\n- 예측값에 대한 예측구간 (유의수준 = 0.05)\n\nnew_predictions.conf_int(obs=True, alpha=0.05)\n\narray([[17.56567478, 42.04151344],\n       [12.82762635, 37.27906833],\n       [ 8.0777421 , 32.52845905]])"
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#df.meltweight-테이블-생성",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#df.meltweight-테이블-생성",
+    "title": "Extra 00. tidydata",
+    "section": "2. df.melt(weight) 테이블 생성",
+    "text": "2. df.melt(weight) 테이블 생성\n- 한 열에는 셩별(sex), 다른 한 열에는 무게(weight)를 표시\n\ndf.loc[:,[\"ID\",\"male_w\",\"female_w\"]].head(4)\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\n\n\n\n\n0\n0\n95.512228\n77.760589\n\n\n1\n1\n78.657688\n65.837765\n\n\n2\n2\n92.135422\n41.169597\n\n\n3\n3\n85.688058\n55.415655\n\n\n\n\n\n\n\n\ndf.loc[:,[\"ID\",\"male_w\",\"female_w\"]].\\\n        melt(id_vars=[\"ID\"],\n        value_vars = [\"male_w\",\"female_w\"],\n        var_name = \"sex\",value_name =\"weight\")\n\n\n\n\n\n\n\n\nID\nsex\nweight\n\n\n\n\n0\n0\nmale_w\n95.512228\n\n\n1\n1\nmale_w\n78.657688\n\n\n2\n2\nmale_w\n92.135422\n\n\n3\n3\nmale_w\n85.688058\n\n\n4\n4\nmale_w\n83.454618\n\n\n...\n...\n...\n...\n\n\n19995\n9995\nfemale_w\n72.715375\n\n\n19996\n9996\nfemale_w\n78.467711\n\n\n19997\n9997\nfemale_w\n67.947894\n\n\n19998\n9998\nfemale_w\n51.354418\n\n\n19999\n9999\nfemale_w\n48.809833\n\n\n\n\n20000 rows × 3 columns\n\n\n\n\nweight = df.melt(id_vars=[\"ID\"],\n            value_vars=[\"male_w\",\"female_w\"],\n            var_name = \"sex\",value_name='weight')\n\nweight.sex = weight.sex.replace(\"male_w\",\"m\").replace(\"female_w\",\"f\")\nweight.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\n\n\n\n\n0\n0\nm\n69.401280\n\n\n1\n1\nm\n96.582571\n\n\n2\n2\nm\n64.515219\n\n\n3\n3\nm\n96.048789\n\n\n4\n4\nm\n91.834611\n\n\n\n\n\n\n\n\n생성한 테이블을 다시 돌릴려면?\n\n_t = weight.pivot(index=\"ID\",columns = \"sex\", values = \"weight\").head()\n_t.columns = [\"male_w\",\"male_f\"]\n_t.reset_index()\n\n\n\n\n\n\n\n\nID\nmale_w\nmale_f\n\n\n\n\n0\n0\n59.315255\n69.401280\n\n\n1\n1\n71.060495\n96.582571\n\n\n2\n2\n73.489190\n64.515219\n\n\n3\n3\n56.877694\n96.048789\n\n\n4\n4\n69.049447\n91.834611"
   },
   {
-    "objectID": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#fitted-value-vs-residual",
-    "href": "posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html#fitted-value-vs-residual",
-    "title": "00. Simple Linear Regression",
-    "section": "fitted value vs residual",
-    "text": "fitted value vs residual\n\\[\\text{resid} = y-\\hat y\\]\n\nfv = results.fittedvalues ## 적합치\nre = results.resid ## 잔차\n\n\nfrom scipy import stats\n\n\nfig,axes = plt.subplots(1,2,figsize=(12,6))\n\nax1,ax2 = axes\nax1.plot(fv,re,\"o\",alpha=0.3)\nax1.axhline(0,c=\"k\",ls =\"--\") ## c=k 검은색, ls= linestyle\nax1.set_xlabel(\"fitted value\")\nax1.set_ylabel(\"Residual\")\nax1.set_title(\"fitted value vs Residual\")\n\n_ = stats.probplot(re,plot=ax2)\nax2.set_ylabel(\"standard residual\")\nax2.set_title(\"qqplot\")\n\nText(0.5, 1.0, 'qqplot')\n\n\n\n\n\n\n잔차 해석\n\n잔차 plot을 살펴본 결과 : fitted value가 커질수록 잔차의 분산도 커지고 있다. \\(\\to\\) 잔차가 등분산성을 만족하지 못하고 있다.\n\n반응변수에 변환을 취하거나, 가중최소 제곱법을 이용해 해결해야한다.\n\nqqplot을 그려본결과 왼쪽 꼬리는 이론적으로 나와야할 값보다. 큰값을 가진다.\n오른쪽 꼬리는 마찬가지이다.\n즉, 잔차는 정규성 가정에 위배되는 것처럼 보인다."
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#df.meltbmi-테이블-생성",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#df.meltbmi-테이블-생성",
+    "title": "Extra 00. tidydata",
+    "section": "3. df.melt(BMI) 테이블 생성",
+    "text": "3. df.melt(BMI) 테이블 생성\n\nbmi = df.melt(id_vars=[\"ID\"],\n            value_vars=[\"bmi_f\",\"bmi_m\"],\n            var_name = \"sex\",value_name='bmi')\n\nbmi.sex = bmi.sex.replace(\"bmi_m\",\"m\").replace(\"bmi_f\",\"f\")\nbmi.head()\n\n\n\n\n\n\n\n\nID\nsex\nbmi\n\n\n\n\n0\n0\nf\n23.505598\n\n\n1\n1\nf\n24.452105\n\n\n2\n2\nf\n28.130585\n\n\n3\n3\nf\n19.151515\n\n\n4\n4\nf\n23.151891"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#weight-테이블과-bmi-테이블-조인",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#weight-테이블과-bmi-테이블-조인",
+    "title": "Extra 00. tidydata",
+    "section": "4. weight 테이블과 bmi 테이블 조인",
+    "text": "4. weight 테이블과 bmi 테이블 조인\n\ndf1 = pd.merge(weight,bmi, \n         left_on=['ID','sex'], right_on=['ID','sex'])\n\n\ndf1.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\nbmi\n\n\n\n\n0\n0\nm\n69.401280\n26.269360\n\n\n1\n1\nm\n96.582571\n31.357869\n\n\n2\n2\nm\n64.515219\n18.041283\n\n\n3\n3\nm\n96.048789\n28.647643\n\n\n4\n4\nm\n91.834611\n30.806303"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-3plotlytidy-o",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-3plotlytidy-o",
+    "title": "Extra 00. tidydata",
+    "section": "5. 시각화 3(plotly,tidy (o))",
+    "text": "5. 시각화 3(plotly,tidy (o))\n\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\")"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-4plotlytidy-o",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#시각화-4plotlytidy-o",
+    "title": "Extra 00. tidydata",
+    "section": "6. 시각화 4(plotly,tidy (o))",
+    "text": "6. 시각화 4(plotly,tidy (o))\n\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\",facet_col=df1.sex)"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#데이터-비교",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#데이터-비교",
+    "title": "Extra 00. tidydata",
+    "section": "7. 데이터 비교",
+    "text": "7. 데이터 비교\n1 tidy (x)\n\ndf.iloc[:,[0,1,2,5,6]].head()\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\nbmi_m\nbmi_f\n\n\n\n\n0\n0\n69.401280\n59.315255\n26.269360\n23.505598\n\n\n1\n1\n96.582571\n71.060495\n31.357869\n24.452105\n\n\n2\n2\n64.515219\n73.489190\n18.041283\n28.130585\n\n\n3\n3\n96.048789\n56.877694\n28.647643\n19.151515\n\n\n4\n4\n91.834611\n69.049447\n30.806303\n23.151891\n\n\n\n\n\n\n\n2 tidy (o)\n\ndf1.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\nbmi\n\n\n\n\n0\n0\nm\n69.401280\n26.269360\n\n\n1\n1\nm\n96.582571\n31.357869\n\n\n2\n2\nm\n64.515219\n18.041283\n\n\n3\n3\nm\n96.048789\n28.647643\n\n\n4\n4\nm\n91.834611\n30.806303"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#코드-비교",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#코드-비교",
+    "title": "Extra 00. tidydata",
+    "section": "8. 코드 비교",
+    "text": "8. 코드 비교\n1 tidy(x)\nplt.figure(figsize=(12,4))\nplt.plot(df.male_w,df.bmi_m,\".\",alpha=0.3)\nplt.plot(df.female_w,df.bmi_f,\".\",alpha=0.3)\nplt.legend([\"남\",\"여\"])\nplt.title(\"남자와 여자 몸무게에 따른 BMI\")\nfig, axes = plt.subplots(1,2,figsize=(12,4))\nax1,ax2 = axes\nax1.plot(df.male_w,df.bmi_m,\".b\",alpha=0.3)\nax1.set_title(\"남자 몸무게에 따른 BMI\")\nax2.plot(df.female_w,df.bmi_f,\".r\",alpha=0.3)\nax2.set_title(\"여자 몸무게에 따른 BMI\")\n2 tidy (o)\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\")\ndf1.plot(x=\"weight\", y= \"bmi\",backend=\"plotly\",kind=\"scatter\",\n                color= \"sex\", title= \"남녀 몸무게에 따른 BMI\",facet_col=df1.sex)"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#다차원-plot-height-label",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#다차원-plot-height-label",
+    "title": "Extra 00. tidydata",
+    "section": "9. 다차원 plot (+height label)",
+    "text": "9. 다차원 plot (+height label)\n\ndf.head()\n\n\n\n\n\n\n\n\nID\nmale_w\nfemale_w\nmale_h\nfemale_h\nbmi_m\nbmi_f\nbmi_label_M\nbmi_label_F\nh_label_M\nh_label_F\n\n\n\n\n0\n0\n69.401280\n59.315255\n1.625395\n1.588538\n26.269360\n23.505598\n비만\n과체중\n작은키\n보통\n\n\n1\n1\n96.582571\n71.060495\n1.754996\n1.704732\n31.357869\n24.452105\n비만\n과체중\n보통\n매우 큰키\n\n\n2\n2\n64.515219\n73.489190\n1.891025\n1.616301\n18.041283\n28.130585\n저체중\n비만\n큰키\n큰키\n\n\n3\n3\n96.048789\n56.877694\n1.831055\n1.723334\n28.647643\n19.151515\n비만\n정상\n큰키\n매우 큰키\n\n\n4\n4\n91.834611\n69.049447\n1.726567\n1.726978\n30.806303\n23.151891\n비만\n과체중\n보통\n매우 큰키\n\n\n\n\n\n\n\n\nh = df.melt(id_vars=[\"ID\"],\n            value_vars=[\"h_label_M\",\"h_label_F\"],\n            var_name = \"sex\",value_name='h')\n\nh.sex = h.sex.replace(\"h_label_M\",\"m\").replace(\"h_label_F\",\"f\")\nh.head()\n\n\n\n\n\n\n\n\nID\nsex\nh\n\n\n\n\n0\n0\nm\n작은키\n\n\n1\n1\nm\n보통\n\n\n2\n2\nm\n큰키\n\n\n3\n3\nm\n큰키\n\n\n4\n4\nm\n보통\n\n\n\n\n\n\n\n\ndf2 = pd.merge(df1,h, \n         left_on=['ID','sex'], right_on=['ID','sex'])\n\n\ndf2.head()\n\n\n\n\n\n\n\n\nID\nsex\nweight\nbmi\nh\n\n\n\n\n0\n0\nm\n69.401280\n26.269360\n작은키\n\n\n1\n1\nm\n96.582571\n31.357869\n보통\n\n\n2\n2\nm\n64.515219\n18.041283\n큰키\n\n\n3\n3\nm\n96.048789\n28.647643\n큰키\n\n\n4\n4\nm\n91.834611\n30.806303\n보통\n\n\n\n\n\n\n\n\nfig = df2.plot(x=\"weight\",y=\"bmi\",color=\"sex\",facet_col = \"h\",\n             facet_row=\"sex\",kind= \"scatter\",backend = \"plotly\",height=400, width=1000,opacity=0.2)\n\nfig.update_yaxes(matches=None)\nfig.show()"
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#summary-및-개인적인-생각",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#summary-및-개인적인-생각",
+    "title": "Extra 00. tidydata",
+    "section": "summary 및 개인적인 생각",
+    "text": "summary 및 개인적인 생각\n1. 물론 데이터를 처음 로드하고 탐색하기 위해 matplotlib를 이용하여 untidy한 데이터를 살펴본다.\n2. 그러나 후에 분석을 하고 그 결과를 시각화할 때는 tidy하지 못한 데이터로 할때 예쁜 그래프를 그리기 어렵다…(이건 개인적인 생각)\n3. 그리고 데이터를 3,4개의 차원(기준)에 따라 그래프를 그릴 때 untidy한 데이터로 어떻게 그릴지 접근조차 어렵다.(물론 가능한 분도 계시겠지만 거기까지 생각하고 싶지 않다.)\n4. 또한, 모델링 수행 수행시 tidy한 데이터가 들어가기 때문에 melt,groupby 등을 이용한 전처리는 필수적으로 갖추어야될 역량임.\n5. 이 부분은 스터디원 분들이 너무 겁먹지 않으셨으면 좋겠다. 하기 싫어도 매번 해야되서 언젠가 몸이 기억하고 반응할 거다."
+  },
+  {
+    "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html#ex2-전북대학교의-합격률-to-남녀-불평등",
+    "href": "posts/study/2023-08-28-Extra 00. tidydata.html#ex2-전북대학교의-합격률-to-남녀-불평등",
+    "title": "Extra 00. tidydata",
+    "section": "ex2) 전북대학교의 합격률 \\(\\to\\) 남녀 불평등?",
+    "text": "ex2) 전북대학교의 합격률 \\(\\to\\) 남녀 불평등?\n\n시각화 1 : 남녀 전체 합격률 비율 시각화\n- 아래와 같은 대학합격률 데이터가 있다고 하자.\n\nDEP : 학과\nSTATE : 합격 여부\nGEN : 성별\nCOUNT : 빈도\n\n\n\nCode\nDEP=(['A1']*2+['A2']*2+['B1']*2+['B2']*2)*2 \nGEN=['M']*8+['F']*8\nSTATE=['PASS','FAIL']*8\nCOUNT=[1,9,2,8,80,20,85,15,5,5,5,5,9,1,9,1]\n\ndf=pd.DataFrame({'DEP':DEP,'STATE':STATE,'GEN':GEN,'COUNT':COUNT})\ndf\n\n\n\n\n\n\n\n\n\nDEP\nSTATE\nGEN\nCOUNT\n\n\n\n\n0\nA1\nPASS\nM\n1\n\n\n1\nA1\nFAIL\nM\n9\n\n\n2\nA2\nPASS\nM\n2\n\n\n3\nA2\nFAIL\nM\n8\n\n\n4\nB1\nPASS\nM\n80\n\n\n5\nB1\nFAIL\nM\n20\n\n\n6\nB2\nPASS\nM\n85\n\n\n7\nB2\nFAIL\nM\n15\n\n\n8\nA1\nPASS\nF\n5\n\n\n9\nA1\nFAIL\nF\n5\n\n\n10\nA2\nPASS\nF\n5\n\n\n11\nA2\nFAIL\nF\n5\n\n\n12\nB1\nPASS\nF\n9\n\n\n13\nB1\nFAIL\nF\n1\n\n\n14\nB2\nPASS\nF\n9\n\n\n15\nB2\nFAIL\nF\n1\n\n\n\n\n\n\n\n\n\nCode\nt_g_c = df.groupby([\"GEN\",\"STATE\"],as_index=False)[[\"COUNT\"]].sum().\\\n            rename(columns = {\"COUNY\" : \"sum\"})\ngs = t_g_c.groupby(\"GEN\")[\"COUNT\"].sum()\ngs = list(np.repeat(gs,2))\nt_g_c[\"prop\"] = t_g_c[\"COUNT\"]/gs\nt_g_c\n\n\n\n\n\n\n\n\n\nGEN\nSTATE\nCOUNT\nprop\n\n\n\n\n0\nF\nFAIL\n12\n0.300000\n\n\n1\nF\nPASS\n28\n0.700000\n\n\n2\nM\nFAIL\n52\n0.236364\n\n\n3\nM\nPASS\n168\n0.763636\n\n\n\n\n\n\n\n\n\nCode\nfig = t_g_c.loc[t_g_c.STATE == \"PASS\"].\\\n        plot(x= \"GEN\", y=\"prop\",kind=\"bar\",\n            title=\"남녀 전북대학교의 합격률\",backend= \"plotly\",color=\"GEN\",\n             color_discrete_sequence=[\"red\",\"blue\"],height=500,width=700)\nfig.update_yaxes(range=[0.6, 0.8])\nfig.show()\n\n\n\n                                                \n\n\n- 전북대학교는 남녀 불평등인 학교인가?\n\n\n시각화 2 : (학과별, 성별) 합격률 비교\n\n\nCode\nt = df.groupby([\"DEP\",\"GEN\"],\n               as_index=False)[[\"COUNT\"]].sum().\\\n                rename(columns = {\"COUNT\":\"SUM\"}).merge(df)\nt[\"prop\"] = t.COUNT/t.SUM\nt\n\n\n\n\n\n\n\n\n\nDEP\nGEN\nSUM\nSTATE\nCOUNT\nprop\n\n\n\n\n0\nA1\nF\n10\nPASS\n5\n0.50\n\n\n1\nA1\nF\n10\nFAIL\n5\n0.50\n\n\n2\nA1\nM\n10\nPASS\n1\n0.10\n\n\n3\nA1\nM\n10\nFAIL\n9\n0.90\n\n\n4\nA2\nF\n10\nPASS\n5\n0.50\n\n\n5\nA2\nF\n10\nFAIL\n5\n0.50\n\n\n6\nA2\nM\n10\nPASS\n2\n0.20\n\n\n7\nA2\nM\n10\nFAIL\n8\n0.80\n\n\n8\nB1\nF\n10\nPASS\n9\n0.90\n\n\n9\nB1\nF\n10\nFAIL\n1\n0.10\n\n\n10\nB1\nM\n100\nPASS\n80\n0.80\n\n\n11\nB1\nM\n100\nFAIL\n20\n0.20\n\n\n12\nB2\nF\n10\nPASS\n9\n0.90\n\n\n13\nB2\nF\n10\nFAIL\n1\n0.10\n\n\n14\nB2\nM\n100\nPASS\n85\n0.85\n\n\n15\nB2\nM\n100\nFAIL\n15\n0.15\n\n\n\n\n\n\n\n\nfig = t.loc[t.STATE == \"PASS\",:].plot(x=\"GEN\", y=\"prop\", kind = \"bar\",backend = \"plotly\",\n          color= \"GEN\",color_discrete_sequence = [\"red\",\"blue\"],\n        facet_col=\"DEP\",facet_col_wrap=2,height=500,width=700)\n\nfig.update_yaxes(matches=None)\nfig.show()\n\n\n                                                \n\n\n- 실상은 그렇지 않다!\n\n\nsummary\n- 어떤 현상에 대해서 설명할 때 단순히 이분법적인 사고로 바라보면 안된다.\n\n위 예제처럼 잘못된 오해를 불러올 수 있는 상황이 발생할 수 있지 않은가?\n실제로 학과별 남녀 합격률을 조사한 결과 여학생의 비율이 더 많은 것을 확인했다.\n이 같은 현상을 심슨의 역설 이라고 하며 모델링 과정에서도 굉장히 중요한 부분을 차지한다."
   }
 ]

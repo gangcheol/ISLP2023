@@ -2,8 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/00. linear regression/2023-08-28-Extra 00. tidydata.html",
-      "/posts/00. linear regression/2023-08-18-00. Simple Linear Regression.html"
+      "/posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html",
+      "/posts/study/2023-09-03-00. 단순선형회귀분석.html",
+      "/posts/study/2023-08-28-Extra 00. tidydata.html"
     ]
   }
 ]
