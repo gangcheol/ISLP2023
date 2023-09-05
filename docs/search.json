@@ -11,28 +11,28 @@
     "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#데이터-생성",
     "title": "00. 단순선형회귀분석",
     "section": "데이터 생성",
-    "text": "데이터 생성\n\n\nCode\nx   = np.linspace(20,38,1000)\nepsilon = np.random.normal(size=1000)\ny  =  10.2 + 2.2*x + epsilon\nyhat = 10.2+2.2*x\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.3)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=0.3)\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x22f0dcba790&gt;"
+    "text": "데이터 생성\n\n\nCode\nx   = np.linspace(20,38,1000)\nepsilon = np.random.normal(size=1000)\ny  =  10.2 + 2.2*x + epsilon\nyhat = 10.2+2.2*x\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.3)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=0.3)\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x19d7584a150&gt;"
   },
   {
     "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-1",
     "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-1",
     "title": "00. 단순선형회귀분석",
     "section": "최적의 \\(\\beta\\)를 구하는 방법 1",
-    "text": "최적의 \\(\\beta\\)를 구하는 방법 1\n\n구하고자 하는 법칙\n베타 추정치\n\n\\[\\hat {\\beta}_1 = \\frac {\\sum (x-\\bar x) (y -\\bar y)} {\\sum (x-\\bar x)^2}= \\frac{S_{xy}}{S_{xx}}\\]\n\\[\\hat {\\beta}_0 = \\bar {y} - \\hat{\\beta}_1\\bar{x}\\]\n\n# code-fold : true\nn = len(x)\nSxy = sum((x-np.mean(x))*(y-np.mean(y)) )\nSxx = sum((x-np.mean(x))**2)\n\nbeta1 = Sxy/Sxx\n\nbeta0 =  np.mean(y) - beta1*np.mean(x)\n\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.15)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=1.0)\nplt.plot(x,beta1*x+beta0,\".\",label = \"내가 만든 예측 모형\",alpha=0.1)\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x22f0dfda3d0&gt;\n\n\n\n\n\n\n구하고자 하는 법칙\n\n\\[\\hat{y} \\approx  2.2x + 10.2 \\]\n\nbeta1,beta0\n\n(2.2038453815489842, 10.072026912099155)"
+    "text": "최적의 \\(\\beta\\)를 구하는 방법 1\n\n구하고자 하는 법칙\n베타 추정치\n\n\\[\\hat {\\beta}_1 = \\frac {\\sum (x-\\bar x) (y -\\bar y)} {\\sum (x-\\bar x)^2}= \\frac{S_{xy}}{S_{xx}}\\]\n\\[\\hat {\\beta}_0 = \\bar {y} - \\hat{\\beta}_1\\bar{x}\\]\n\n\nCode\nn = len(x)\nSxy = sum((x-np.mean(x))*(y-np.mean(y)) )\nSxx = sum((x-np.mean(x))**2)\n\nbeta1 = Sxy/Sxx\n\nbeta0 =  np.mean(y) - beta1*np.mean(x)\n\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.15)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=1.0)\nplt.plot(x,beta1*x+beta0,\".\",label = \"내가 만든 예측 모형\",alpha=0.1)\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x19d76b11450&gt;\n\n\n\n\n\n\n구하고자 하는 법칙\n\n\\[\\hat{y} \\approx  2.2x + 10.2 \\]\n\nbeta1,beta0\n\n(2.201391988948589, 10.18755888066763)"
   },
   {
     "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-2-starstarstar",
     "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#최적의-beta를-구하는-방법-2-starstarstar",
     "title": "00. 단순선형회귀분석",
     "section": "최적의 \\(\\beta\\)를 구하는 방법 2 (\\(\\star\\star\\star\\))",
-    "text": "최적의 \\(\\beta\\)를 구하는 방법 2 (\\(\\star\\star\\star\\))\n- matrix 이용\n\\[\\hat {\\bf {\\beta}} = \\bf{(X^{\\top}X)^{-1}X^{\\top}Y}\\]\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_{11}  & x_{12} &\\dots & x_{1p} \\\\ 1  & x_{21}  & x_{22} &\\dots & x_{2p}  \\\\ \\dots & \\dots \\\\  1  & x_{n1}  & x_{n2} &\\dots & x_{np}\\end{bmatrix}  \\,\\,\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1  \\\\ \\dots \\\\ \\beta_n \\end{bmatrix} \\]\n- X 생성\n\nX = pd.DataFrame({\"intercept\" :  np.ones(len(x)),\n                             \"x1\" : x})\n\nY = y.reshape(-1,1)\n\nbeta = np.linalg.inv(X.T @ X) @ X.T @Y\nbeta\n\n\n\n\n\n\n\n\n0\n\n\n\n\n0\n10.072027\n\n\n1\n2.203845\n\n\n\n\n\n\n\n\n# code-fold : true\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.06)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=0.8)\nplt.plot(x,np.array(X) @ beta,\".\",label = \"내가 만든 예측 모형\",alpha=0.05)\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x22f14759c10&gt;"
+    "text": "최적의 \\(\\beta\\)를 구하는 방법 2 (\\(\\star\\star\\star\\))\n- matrix 이용\n\\[\\hat {\\bf {\\beta}} = \\bf{(X^{\\top}X)^{-1}X^{\\top}Y}\\]\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_{11}  & x_{12} &\\dots & x_{1p} \\\\ 1  & x_{21}  & x_{22} &\\dots & x_{2p}  \\\\ \\dots & \\dots \\\\  1  & x_{n1}  & x_{n2} &\\dots & x_{np}\\end{bmatrix}  \\,\\,\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1  \\\\ \\dots \\\\ \\beta_n \\end{bmatrix} \\]\n- X 생성\n\nX = pd.DataFrame({\"intercept\" :  np.ones(len(x)),\n                             \"x1\" : x})\n\nY = y.reshape(-1,1)\n\nbeta = np.linalg.inv(X.T @ X) @ X.T @Y\nbeta\n\n\n\n\n\n\n\n\n0\n\n\n\n\n0\n10.187559\n\n\n1\n2.201392\n\n\n\n\n\n\n\n\n\nCode\nplt.plot(x,y,\".\",label = \"실제 데이터\",alpha=0.06)\nplt.plot(x,yhat,\".\",label = \"목표 모형\",alpha=0.8)\nplt.plot(x,np.array(X) @ beta,\".\",label = \"내가 만든 예측 모형\",alpha=0.05)\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x19d78d3da50&gt;"
   },
   {
     "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#예측-성능-평가",
     "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#예측-성능-평가",
     "title": "00. 단순선형회귀분석",
     "section": "예측 성능 평가",
-    "text": "예측 성능 평가\n\nnp.mean((y-yhat)**2)\n\n0.8927051412987645"
+    "text": "예측 성능 평가\n\nnp.mean((y-yhat)**2)\n\n0.9182134409556464"
   },
   {
     "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step-1.-전달할-x를-다음과-같이-전달",
@@ -60,14 +60,14 @@
     "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step4.-결과-확인",
     "title": "00. 단순선형회귀분석",
     "section": "step4. 결과 확인",
-    "text": "step4. 결과 확인\n\nsummarize(results)\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n10.0720\n0.179\n56.28\n0.0\n\n\nx1\n2.2038\n0.006\n362.82\n0.0\n\n\n\n\n\n\n\n\nreport = results.summary()\nreport\n\n\nOLS Regression Results\n\n\nDep. Variable:\ny\nR-squared:\n0.992\n\n\nModel:\nOLS\nAdj. R-squared:\n0.992\n\n\nMethod:\nLeast Squares\nF-statistic:\n1.316e+05\n\n\nDate:\nMon, 04 Sep 2023\nProb (F-statistic):\n0.00\n\n\nTime:\n10:37:22\nLog-Likelihood:\n-1417.0\n\n\nNo. Observations:\n1000\nAIC:\n2838.\n\n\nDf Residuals:\n998\nBIC:\n2848.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n10.0720\n0.179\n56.280\n0.000\n9.721\n10.423\n\n\nx1\n2.2038\n0.006\n362.820\n0.000\n2.192\n2.216\n\n\n\n\n\n\nOmnibus:\n2.560\nDurbin-Watson:\n2.000\n\n\nProb(Omnibus):\n0.278\nJarque-Bera (JB):\n2.695\n\n\nSkew:\n0.025\nProb(JB):\n0.260\n\n\nKurtosis:\n3.249\nCond. No.\n167.\n\n\n\nNotes:[1] Standard Errors assume that the covariance matrix of the errors is correctly specified."
+    "text": "step4. 결과 확인\n\nsummarize(results)\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n10.1876\n0.172\n59.320\n0.0\n\n\nx1\n2.2014\n0.006\n377.663\n0.0\n\n\n\n\n\n\n\n\nreport = results.summary()\nreport\n\n\nOLS Regression Results\n\n\nDep. Variable:\ny\nR-squared:\n0.993\n\n\nModel:\nOLS\nAdj. R-squared:\n0.993\n\n\nMethod:\nLeast Squares\nF-statistic:\n1.426e+05\n\n\nDate:\nTue, 05 Sep 2023\nProb (F-statistic):\n0.00\n\n\nTime:\n17:10:55\nLog-Likelihood:\n-1375.8\n\n\nNo. Observations:\n1000\nAIC:\n2756.\n\n\nDf Residuals:\n998\nBIC:\n2765.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n10.1876\n0.172\n59.320\n0.000\n9.851\n10.525\n\n\nx1\n2.2014\n0.006\n377.663\n0.000\n2.190\n2.213\n\n\n\n\n\n\nOmnibus:\n0.621\nDurbin-Watson:\n1.956\n\n\nProb(Omnibus):\n0.733\nJarque-Bera (JB):\n0.493\n\n\nSkew:\n0.004\nProb(JB):\n0.782\n\n\nKurtosis:\n3.108\nCond. No.\n167.\n\n\n\nNotes:[1] Standard Errors assume that the covariance matrix of the errors is correctly specified."
   },
   {
     "objectID": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step5.-결과-시각화",
     "href": "posts/study/2023-09-03-00. 단순선형회귀분석.html#step5.-결과-시각화",
     "title": "00. 단순선형회귀분석",
     "section": "step5. 결과 시각화",
-    "text": "step5. 결과 시각화\n\nx = _X[\"x1\"]\nyhat = results.predict()\n\n\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x22f159998d0&gt;"
+    "text": "step5. 결과 시각화\n\nx = _X[\"x1\"]\nyhat = results.predict()\n\n\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x19d78ed9dd0&gt;"
   },
   {
     "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html",

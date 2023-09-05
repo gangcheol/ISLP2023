@@ -312,6 +312,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step4.-결과-확인" id="toc-step4.-결과-확인" class="nav-link" data-scroll-target="#step4.-결과-확인">step4. 결과 확인</a></li>
   <li><a href="#step5.-결과-시각화" id="toc-step5.-결과-시각화" class="nav-link" data-scroll-target="#step5.-결과-시각화">step5. 결과 시각화</a></li>
   </ul></li>
+  <li><a href="#extra-1.-결정계수" id="toc-extra-1.-결정계수" class="nav-link" data-scroll-target="#extra-1.-결정계수">Extra 1. 결정계수</a></li>
+  <li><a href="#extra-2.-평가지표" id="toc-extra-2.-평가지표" class="nav-link" data-scroll-target="#extra-2.-평가지표">Extra 2. 평가지표</a></li>
+  <li><a href="#참고" id="toc-참고" class="nav-link" data-scroll-target="#참고">참고…</a></li>
   </ul>
 </nav>
     </div>
@@ -334,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import" class="level1">
 <h1>import</h1>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -357,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="상황극-아이스크림과-온도" class="level1">
 <h1>상황극 : 아이스크림과 온도</h1>
-<p><code>-</code> 상황극 <span class="math inline">\(\to\)</span> 날이 더울수로 아이스 아메리카노의 판매량이 증가함</p>
+<p><code>-</code> 상황극 <span class="math inline">\(\to\)</span> 날이 더울수록로 아이스 아메리카노의 판매량이 증가함</p>
 <ul>
 <li>이를 바탕으로 일기예보의 온도자료를 이용하여 다음과 같은 세계의 법칙이 있다고 가정하자.</li>
 </ul>
@@ -369,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math display">\[\text{아이스 아메리카노} \approx  2.2 \times \text{온도} + 10.2 \]</span></p>
 <section id="데이터-생성" class="level2">
 <h2 class="anchored" data-anchor-id="데이터-생성">데이터 생성</h2>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>x   <span class="op">=</span> np.linspace(<span class="dv">20</span>,<span class="dv">38</span>,<span class="dv">1000</span>)</span>
@@ -380,8 +383,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6"></a>plt.plot(x,yhat,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"목표 모형"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb2-7"><a href="#cb2-7"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="25">
-<pre><code>&lt;matplotlib.legend.Legend at 0x22f0dcba790&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>&lt;matplotlib.legend.Legend at 0x19d7584a150&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="2023-09-03-00. 단순선형회귀분석_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
@@ -396,22 +399,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><span class="math display">\[\hat {\beta}_1 = \frac {\sum (x-\bar x) (y -\bar y)} {\sum (x-\bar x)^2}= \frac{S_{xy}}{S_{xx}}\]</span></p>
 <p><span class="math display">\[\hat {\beta}_0 = \bar {y} - \hat{\beta}_1\bar{x}\]</span></p>
-<div class="cell" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># code-fold : true</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>n <span class="op">=</span> <span class="bu">len</span>(x)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>Sxy <span class="op">=</span> <span class="bu">sum</span>((x<span class="op">-</span>np.mean(x))<span class="op">*</span>(y<span class="op">-</span>np.mean(y)) )</span>
-<span id="cb4-4"><a href="#cb4-4"></a>Sxx <span class="op">=</span> <span class="bu">sum</span>((x<span class="op">-</span>np.mean(x))<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a>beta1 <span class="op">=</span> Sxy<span class="op">/</span>Sxx</span>
-<span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a>beta0 <span class="op">=</span>  np.mean(y) <span class="op">-</span> beta1<span class="op">*</span>np.mean(x)</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>plt.plot(x,y,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"실제 데이터"</span>,alpha<span class="op">=</span><span class="fl">0.15</span>)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>plt.plot(x,yhat,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"목표 모형"</span>,alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb4-12"><a href="#cb4-12"></a>plt.plot(x,beta1<span class="op">*</span>x<span class="op">+</span>beta0,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"내가 만든 예측 모형"</span>,alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
-<pre><code>&lt;matplotlib.legend.Legend at 0x22f0dfda3d0&gt;</code></pre>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>Sxy <span class="op">=</span> <span class="bu">sum</span>((x<span class="op">-</span>np.mean(x))<span class="op">*</span>(y<span class="op">-</span>np.mean(y)) )</span>
+<span id="cb4-3"><a href="#cb4-3"></a>Sxx <span class="op">=</span> <span class="bu">sum</span>((x<span class="op">-</span>np.mean(x))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>beta1 <span class="op">=</span> Sxy<span class="op">/</span>Sxx</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>beta0 <span class="op">=</span>  np.mean(y) <span class="op">-</span> beta1<span class="op">*</span>np.mean(x)</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>plt.plot(x,y,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"실제 데이터"</span>,alpha<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>plt.plot(x,yhat,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"목표 모형"</span>,alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>plt.plot(x,beta1<span class="op">*</span>x<span class="op">+</span>beta0,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"내가 만든 예측 모형"</span>,alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;matplotlib.legend.Legend at 0x19d76b11450&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="2023-09-03-00. 단순선형회귀분석_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
@@ -421,10 +426,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>구하고자 하는 법칙</li>
 </ul>
 <p><span class="math display">\[\hat{y} \approx  2.2x + 10.2 \]</span></p>
-<div class="cell" data-execution_count="42">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a>beta1,beta0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>(2.2038453815489842, 10.072026912099155)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(2.201391988948589, 10.18755888066763)</code></pre>
 </div>
 </div>
 </section>
@@ -435,7 +440,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math display">\[\bf \hat Y = X \hat {\boldsymbol{\beta}} = \begin{bmatrix}
 1  &amp; x_{11}  &amp; x_{12} &amp;\dots &amp; x_{1p} \\ 1  &amp; x_{21}  &amp; x_{22} &amp;\dots &amp; x_{2p}  \\ \dots &amp; \dots \\  1  &amp; x_{n1}  &amp; x_{n2} &amp;\dots &amp; x_{np}\end{bmatrix}  \,\,\begin{bmatrix} \hat \beta_0  \\ \hat \beta_1  \\ \dots \\ \beta_n \end{bmatrix} \]</span></p>
 <p><code>-</code> X 생성</p>
-<div class="cell" data-execution_count="43">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">"intercept"</span> :  np.ones(<span class="bu">len</span>(x)),</span>
 <span id="cb8-2"><a href="#cb8-2"></a>                             <span class="st">"x1"</span> : x})</span>
 <span id="cb8-3"><a href="#cb8-3"></a></span>
@@ -443,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-5"><a href="#cb8-5"></a></span>
 <span id="cb8-6"><a href="#cb8-6"></a>beta <span class="op">=</span> np.linalg.inv(X.T <span class="op">@</span> X) <span class="op">@</span> X.T <span class="op">@</span>Y</span>
 <span id="cb8-7"><a href="#cb8-7"></a>beta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -457,11 +462,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>10.072027</td>
+<td>10.187559</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>2.203845</td>
+<td>2.201392</td>
 </tr>
 </tbody>
 </table>
@@ -469,14 +474,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="52">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># code-fold : true</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>plt.plot(x,y,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"실제 데이터"</span>,alpha<span class="op">=</span><span class="fl">0.06</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>plt.plot(x,yhat,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"목표 모형"</span>,alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a>plt.plot(x,np.array(X) <span class="op">@</span> beta,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"내가 만든 예측 모형"</span>,alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
-<span id="cb9-5"><a href="#cb9-5"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="52">
-<pre><code>&lt;matplotlib.legend.Legend at 0x22f14759c10&gt;</code></pre>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>plt.plot(x,y,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"실제 데이터"</span>,alpha<span class="op">=</span><span class="fl">0.06</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>plt.plot(x,yhat,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"목표 모형"</span>,alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>plt.plot(x,np.array(X) <span class="op">@</span> beta,<span class="st">"."</span>,label <span class="op">=</span> <span class="st">"내가 만든 예측 모형"</span>,alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>&lt;matplotlib.legend.Legend at 0x19d78d3da50&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="2023-09-03-00. 단순선형회귀분석_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
@@ -485,10 +492,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="예측-성능-평가" class="level2">
 <h2 class="anchored" data-anchor-id="예측-성능-평가">예측 성능 평가</h2>
-<div class="cell" data-tags="[]" data-execution_count="17">
+<div class="cell" data-tags="[]" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>np.mean((y<span class="op">-</span>yhat)<span class="op">**</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>0.8927051412987645</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>0.9182134409556464</code></pre>
 </div>
 </div>
 <hr>
@@ -496,11 +503,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="교재-구현-1" class="level1">
 <h1>교재 구현 1</h1>
-<div class="cell" data-tags="[]" data-execution_count="20">
+<div class="cell" data-tags="[]" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> OLS : Ordinary Least Squares의 약자로, 주어진 데이터에서 오차의 제곱을 최소화하는 를 <span class="math inline">\(\beta_i\)</span>추정한다.</p>
-<div class="cell" data-tags="[]" data-execution_count="53">
+<div class="cell" data-tags="[]" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">"intercept"</span> :  np.ones(<span class="bu">len</span>(x)),</span>
 <span id="cb14-2"><a href="#cb14-2"></a>                             <span class="st">"x1"</span> : x})</span>
 <span id="cb14-3"><a href="#cb14-3"></a></span>
@@ -508,9 +515,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-5"><a href="#cb14-5"></a>results <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="math display">\[\hat{y} \approx  2.2x + 10.2 \]</span></p>
-<div class="cell" data-tags="[]" data-execution_count="106">
+<div class="cell" data-tags="[]" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>results.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="106">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
@@ -518,43 +525,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td data-quarto-table-cell-role="th">Dep. Variable:</td>
 <td>y</td>
 <td data-quarto-table-cell-role="th">R-squared:</td>
-<td>0.992</td>
+<td>0.993</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Model:</td>
 <td>OLS</td>
 <td data-quarto-table-cell-role="th">Adj. R-squared:</td>
-<td>0.992</td>
+<td>0.993</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Method:</td>
 <td>Least Squares</td>
 <td data-quarto-table-cell-role="th">F-statistic:</td>
-<td>1.316e+05</td>
+<td>1.426e+05</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Mon, 04 Sep 2023</td>
+<td>Tue, 05 Sep 2023</td>
 <td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
 <td>0.00</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>11:20:02</td>
+<td>17:10:54</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
-<td>-1417.0</td>
+<td>-1375.8</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">No. Observations:</td>
 <td>1000</td>
 <td data-quarto-table-cell-role="th">AIC:</td>
-<td>2838.</td>
+<td>2756.</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Df Residuals:</td>
 <td>998</td>
 <td data-quarto-table-cell-role="th">BIC:</td>
-<td>2848.</td>
+<td>2765.</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Df Model:</td>
@@ -583,21 +590,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">intercept</td>
-<td>10.0720</td>
-<td>0.179</td>
-<td>56.280</td>
+<td>10.1876</td>
+<td>0.172</td>
+<td>59.320</td>
 <td>0.000</td>
-<td>9.721</td>
-<td>10.423</td>
+<td>9.851</td>
+<td>10.525</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">x1</td>
-<td>2.2038</td>
+<td>2.2014</td>
 <td>0.006</td>
-<td>362.820</td>
+<td>377.663</td>
 <td>0.000</td>
-<td>2.192</td>
-<td>2.216</td>
+<td>2.190</td>
+<td>2.213</td>
 </tr>
 </tbody>
 </table>
@@ -605,25 +612,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Omnibus:</td>
-<td>2.560</td>
+<td>0.621</td>
 <td data-quarto-table-cell-role="th">Durbin-Watson:</td>
-<td>2.000</td>
+<td>1.956</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
-<td>0.278</td>
+<td>0.733</td>
 <td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
-<td>2.695</td>
+<td>0.493</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Skew:</td>
-<td>0.025</td>
+<td>0.004</td>
 <td data-quarto-table-cell-role="th">Prob(JB):</td>
-<td>0.260</td>
+<td>0.782</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Kurtosis:</td>
-<td>3.249</td>
+<td>3.108</td>
 <td data-quarto-table-cell-role="th">Cond. No.</td>
 <td>167.</td>
 </tr>
@@ -634,14 +641,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="결과-시각화" class="level3">
 <h3 class="anchored" data-anchor-id="결과-시각화">결과 시각화</h3>
-<div class="cell" data-tags="[]" data-execution_count="61">
+<div class="cell" data-tags="[]" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>yhat <span class="op">=</span> results.predict()</span>
 <span id="cb16-2"><a href="#cb16-2"></a></span>
 <span id="cb16-3"><a href="#cb16-3"></a>plt.plot(x,y,<span class="st">"o"</span>,label <span class="op">=</span> <span class="vs">r"$(x,y)$"</span>,alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb16-4"><a href="#cb16-4"></a>plt.plot(x,yhat,<span class="st">"--"</span>,label <span class="op">=</span> <span class="vs">r"$(x,\hat </span><span class="sc">{y}</span><span class="vs">)$"</span>)</span>
 <span id="cb16-5"><a href="#cb16-5"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="61">
-<pre><code>&lt;matplotlib.legend.Legend at 0x22f158c1c10&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>&lt;matplotlib.legend.Legend at 0x19d78da6690&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="2023-09-03-00. 단순선형회귀분석_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
@@ -651,18 +658,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="교재-구현2-ms" class="level1">
 <h1>교재 구현2 (MS)</h1>
-<div class="cell" data-tags="[]" data-execution_count="66">
+<div class="cell" data-tags="[]" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
 <span id="cb18-2"><a href="#cb18-2"></a>summarize,poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-tags="[]" data-execution_count="81">
+<div class="cell" data-tags="[]" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">"intercept"</span> :  np.ones(<span class="bu">len</span>(x)),</span>
 <span id="cb19-2"><a href="#cb19-2"></a>                             <span class="st">"x1"</span> : x,</span>
 <span id="cb19-3"><a href="#cb19-3"></a>                              <span class="st">"x2"</span> : <span class="dv">2</span><span class="op">*</span>x})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-tags="[]" data-execution_count="82">
+<div class="cell" data-tags="[]" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="82">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -714,18 +721,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="step-1.-전달할-x를-다음과-같이-전달" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.-전달할-x를-다음과-같이-전달">step 1. 전달할 <code>x</code>를 다음과 같이 전달</h2>
-<div class="cell" data-tags="[]" data-execution_count="83">
+<div class="cell" data-tags="[]" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>design <span class="op">=</span> MS([<span class="st">"x1"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-2.-컴퓨터가-이해할-수-있는-형태에-맞게-bfx를-생성" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.-컴퓨터가-이해할-수-있는-형태에-맞게-bfx를-생성">step 2. 컴퓨터가 이해할 수 있는 형태에 맞게 <span class="math inline">\(\bf{X}\)</span>를 생성</h2>
-<div class="cell" data-tags="[]" data-execution_count="84">
+<div class="cell" data-tags="[]" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>_X <span class="op">=</span> design.fit_transform(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-tags="[]" data-execution_count="85">
+<div class="cell" data-tags="[]" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>_X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="85">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div>
 
 
@@ -803,16 +810,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step3.-모델-적합" class="level2">
 <h2 class="anchored" data-anchor-id="step3.-모델-적합">step3. 모델 적합</h2>
-<div class="cell" data-tags="[]" data-execution_count="97">
+<div class="cell" data-tags="[]" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>model <span class="op">=</span> sm.OLS(y, _X)</span>
 <span id="cb24-2"><a href="#cb24-2"></a>results <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step4.-결과-확인" class="level2">
 <h2 class="anchored" data-anchor-id="step4.-결과-확인">step4. 결과 확인</h2>
-<div class="cell" data-tags="[]" data-execution_count="98">
+<div class="cell" data-tags="[]" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>summarize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="98">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
 
@@ -829,16 +836,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">intercept</td>
-<td>10.0720</td>
-<td>0.179</td>
-<td>56.28</td>
+<td>10.1876</td>
+<td>0.172</td>
+<td>59.320</td>
 <td>0.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">x1</td>
-<td>2.2038</td>
+<td>2.2014</td>
 <td>0.006</td>
-<td>362.82</td>
+<td>377.663</td>
 <td>0.0</td>
 </tr>
 </tbody>
@@ -847,10 +854,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-tags="[]" data-execution_count="99">
+<div class="cell" data-tags="[]" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>report <span class="op">=</span> results.summary()</span>
 <span id="cb26-2"><a href="#cb26-2"></a>report</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="99">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
@@ -858,43 +865,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td data-quarto-table-cell-role="th">Dep. Variable:</td>
 <td>y</td>
 <td data-quarto-table-cell-role="th">R-squared:</td>
-<td>0.992</td>
+<td>0.993</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Model:</td>
 <td>OLS</td>
 <td data-quarto-table-cell-role="th">Adj. R-squared:</td>
-<td>0.992</td>
+<td>0.993</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Method:</td>
 <td>Least Squares</td>
 <td data-quarto-table-cell-role="th">F-statistic:</td>
-<td>1.316e+05</td>
+<td>1.426e+05</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Mon, 04 Sep 2023</td>
+<td>Tue, 05 Sep 2023</td>
 <td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
 <td>0.00</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>10:37:22</td>
+<td>17:10:55</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
-<td>-1417.0</td>
+<td>-1375.8</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">No. Observations:</td>
 <td>1000</td>
 <td data-quarto-table-cell-role="th">AIC:</td>
-<td>2838.</td>
+<td>2756.</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Df Residuals:</td>
 <td>998</td>
 <td data-quarto-table-cell-role="th">BIC:</td>
-<td>2848.</td>
+<td>2765.</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Df Model:</td>
@@ -923,21 +930,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">intercept</td>
-<td>10.0720</td>
-<td>0.179</td>
-<td>56.280</td>
+<td>10.1876</td>
+<td>0.172</td>
+<td>59.320</td>
 <td>0.000</td>
-<td>9.721</td>
-<td>10.423</td>
+<td>9.851</td>
+<td>10.525</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">x1</td>
-<td>2.2038</td>
+<td>2.2014</td>
 <td>0.006</td>
-<td>362.820</td>
+<td>377.663</td>
 <td>0.000</td>
-<td>2.192</td>
-<td>2.216</td>
+<td>2.190</td>
+<td>2.213</td>
 </tr>
 </tbody>
 </table>
@@ -945,25 +952,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Omnibus:</td>
-<td>2.560</td>
+<td>0.621</td>
 <td data-quarto-table-cell-role="th">Durbin-Watson:</td>
-<td>2.000</td>
+<td>1.956</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
-<td>0.278</td>
+<td>0.733</td>
 <td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
-<td>2.695</td>
+<td>0.493</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Skew:</td>
-<td>0.025</td>
+<td>0.004</td>
 <td data-quarto-table-cell-role="th">Prob(JB):</td>
-<td>0.260</td>
+<td>0.782</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Kurtosis:</td>
-<td>3.249</td>
+<td>3.108</td>
 <td data-quarto-table-cell-role="th">Cond. No.</td>
 <td>167.</td>
 </tr>
@@ -975,24 +982,155 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step5.-결과-시각화" class="level2">
 <h2 class="anchored" data-anchor-id="step5.-결과-시각화">step5. 결과 시각화</h2>
-<div class="cell" data-tags="[]" data-execution_count="102">
+<div class="cell" data-tags="[]" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>x <span class="op">=</span> _X[<span class="st">"x1"</span>]</span>
 <span id="cb27-2"><a href="#cb27-2"></a>yhat <span class="op">=</span> results.predict()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-tags="[]" data-execution_count="103">
+<div class="cell" data-tags="[]" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>plt.plot(x,y,<span class="st">"o"</span>,label <span class="op">=</span> <span class="vs">r"$(x,y)$"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb28-2"><a href="#cb28-2"></a>plt.plot(x,yhat,<span class="st">"--"</span>,label <span class="op">=</span> <span class="vs">r"$(x,\hat </span><span class="sc">{y}</span><span class="vs">)$"</span>)</span>
 <span id="cb28-3"><a href="#cb28-3"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="103">
-<pre><code>&lt;matplotlib.legend.Legend at 0x22f159998d0&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>&lt;matplotlib.legend.Legend at 0x19d78ed9dd0&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="2023-09-03-00. 단순선형회귀분석_files/figure-html/cell-23-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-
-
+<hr>
 </section>
+</section>
+<section id="extra-1.-결정계수" class="level1">
+<h1>Extra 1. 결정계수</h1>
+<div class="cell" data-execution_count="58">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>plt.plot(x,y,<span class="st">"o"</span>,label <span class="op">=</span> <span class="vs">r"$(x,y)$"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a>plt.plot(x,yhat,<span class="st">"--"</span>,label <span class="op">=</span> <span class="vs">r"$(x,\hat </span><span class="sc">{y}</span><span class="vs">)$"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>plt.axhline(np.mean(y),color<span class="op">=</span> <span class="st">"r"</span>,label <span class="op">=</span> <span class="vs">r"$\bar </span><span class="sc">{y}</span><span class="vs">$"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="58">
+<pre><code>&lt;matplotlib.legend.Legend at 0x19d7bc10150&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2023-09-03-00. 단순선형회귀분석_files/figure-html/cell-24-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p><span class="math display">\[SST = SSE + SSR\]</span></p>
+<p><span class="math display">\[\sum {(y-\bar {y})^2} = \sum {(y-\hat  {y})^2} + \sum {(\hat  {y}- \bar {y})^2}   \]</span></p>
+<p><span class="math display">\[\text{총 편차 제곱합} = \text {잔차 제곱합} + \text {회귀 제곱합}\]</span></p>
+<p><span class="math display">\[R^2 = \frac{SSR}{SST}\]</span></p>
+<div class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>R2 <span class="op">=</span><span class="bu">sum</span>((yhat<span class="op">-</span>np.mean(y))<span class="op">**</span><span class="dv">2</span>)<span class="op">/</span><span class="bu">sum</span>((y<span class="op">-</span>np.mean(y))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a>R2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="57">
+<pre><code>0.9930514460665987</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>report.tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.993</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.993</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>1.426e+05</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 05 Sep 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>17:10:55</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-1375.8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>1000</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>2756.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>998</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>2765.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>1</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+<section id="extra-2.-평가지표" class="level1">
+<h1>Extra 2. 평가지표</h1>
+<p><img src="cm.png" class="img-fluid"></p>
+<p><code>-</code> 정확도</p>
+<div class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>(<span class="dv">9644</span><span class="op">+</span> <span class="dv">81</span> )<span class="op">/</span><span class="dv">10000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="59">
+<pre><code>0.9725</code></pre>
+</div>
+</div>
+<p><code>-</code> 근데….???</p>
+<div class="cell" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>(<span class="dv">252</span><span class="op">/</span><span class="dv">333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="64">
+<pre><code>0.7567567567567568</code></pre>
+</div>
+</div>
+<p><code>-</code> 정밀도 : 모델의 건방짐 <span class="math inline">\(\to\)</span> 모델이 참이라고 예측한 것 중에 실제 참인 거의 비율</p>
+<div class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>(<span class="dv">81</span><span class="op">/</span><span class="dv">104</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="69">
+<pre><code>0.7788461538461539</code></pre>
+</div>
+</div>
+<p><code>-</code> 재현율 : 모델(감독관) 관점 (실제 참인 것 중에 모델이 참이라고 예측한 것의 비율)</p>
+<div class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a>(<span class="dv">81</span><span class="op">/</span><span class="dv">333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="70">
+<pre><code>0.24324324324324326</code></pre>
+</div>
+</div>
+</section>
+<section id="참고" class="level1">
+<h1>참고…</h1>
+<p><code>-</code> <a href="https://gangcheol.github.io/mysite/posts/Lecture/STBD/2022-03-08-(1%EC%A3%BC%EC%B0%A8).html#extra">회귀계수 추정</a></p>
+
+
 </section>
 
 </main> <!-- /main -->
