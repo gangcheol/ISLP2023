@@ -70,95 +70,18 @@
     "text": "step5. 결과 시각화\n\nx = _X[\"x1\"]\nyhat = results.predict()\n\n\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n&lt;matplotlib.legend.Legend at 0x19d78ed9dd0&gt;"
   },
   {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html",
-    "title": "00. Linear Regression",
+    "objectID": "posts/2023-09-09-01. classification.html",
+    "href": "posts/2023-09-09-01. classification.html",
+    "title": "01. Classification",
     "section": "",
-    "text": "- 코랩환경에서 아래 순서대로 진행해야 ISLP 패키지 설치시 오류가 발생하지 않는다.\n\n드라이브 마운트\n현재 작업중인 경로로 이동\n패키지 import\n\nfrom google.colab import drive\ndrive.mount('/content/drive')\ncd /content/drive/MyDrive/Colab Notebooks/ISLP/Linear Regression\n\n#pip install ISLP\n\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport plotly.express as px\nimport plotly.io as pio\npio.renderers.default = \"plotly_mimetype+notebook_connected\"\n\nfrom ISLP import load_data\n\nimport statsmodels.api as sm\n\nfrom statsmodels.stats.outliers_influence \\\nimport variance_inflation_factor as VIF\nfrom statsmodels.stats.anova import anova_lm\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)"
+    "text": "Overview 1. MSE\n- 해당 책에서는 우리가 평소에 회귀분석에서 쓰던 \\(\\text {MSE}= \\frac {SSE}{n-(p+1)}\\) 이라고 표현하지 않는다.\n- 교재에서 말하는 \\(\\text{MSE}\\)란 다음과 같다.\n\\[\\text{MSE} = E[(\\hat y - y)^2]\\]\n- 즉, 예측값과 실제값의 차이를 제곱합으로 계산 후 평균을 내는것이다.\n- 이를 다시 나누어 보자\n\\[\\begin {align} E[(\\hat y - y)^2] &= Var(\\hat y) + \\text {bias}   \\\\\n                                                                &= E[(\\hat y - E(\\hat y ))^2] + E[(E(\\hat y) - y)^2] \\end {align}\\]"
   },
   {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#표현1.-단순선형회귀",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#표현1.-단순선형회귀",
-    "title": "00. Linear Regression",
-    "section": "표현1. 단순선형회귀",
-    "text": "표현1. 단순선형회귀\n\\[\\hat {y} = \\hat {\\beta}_1x + \\hat {\\beta}_0\\]"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#표현-2-starstarstar",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#표현-2-starstarstar",
-    "title": "00. Linear Regression",
-    "section": "표현 2 (\\(\\star\\star\\star\\))",
-    "text": "표현 2 (\\(\\star\\star\\star\\))\n- 표현 2가 자주 쓰이니 잘 알아두자.\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1 \\end{bmatrix} \\]"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#잔차residual",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#잔차residual",
-    "title": "00. Linear Regression",
-    "section": "잔차(residual)",
-    "text": "잔차(residual)\n- \\(\\hat y_i = \\hat{\\beta_1} + \\hat {\\beta}_0x_i\\)는 개별 관측치 \\(x_i\\)가 주어졌을때 \\(i\\) 번째 \\(y\\)의 추정치이다.\n- 잔차는 표본으로부터 추정된 예측값에서 실제값의 차이로 다음과 같이 정의한다.\n\\[e_i = \\hat {y}_i - y_i,  \\quad e_i \\sim N(0,\\sigma^2)\\]\n- 그리고 책에서는 잔차제곱합을 다음과 같이 표현하니 눈에 익혀두자\n\\[RSS =\\sum_{i=1}^{n} e_i\\]"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#회귀계수-추정-1.-단순선형회귀",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#회귀계수-추정-1.-단순선형회귀",
-    "title": "00. Linear Regression",
-    "section": "회귀계수 추정 1. 단순선형회귀",
-    "text": "회귀계수 추정 1. 단순선형회귀\n- 잔차제곱합을 최소로하는 \\((\\beta_0, \\beta_1)\\)은 다음과 같은 추정치로 구해진다.\n\\[\\hat{\\beta}_1= \\frac{\\sum (x-\\bar x)(y-\\bar  y)}{\\sum (x-\\bar x)^2}\\]\n\\[\\hat {\\beta}_0 = \\bar y - \\hat {\\beta}_1 \\bar x\\]"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#회귀계수-추정-2.-일반적인-추정",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#회귀계수-추정-2.-일반적인-추정",
-    "title": "00. Linear Regression",
-    "section": "회귀계수 추정 2. 일반적인 추정",
-    "text": "회귀계수 추정 2. 일반적인 추정\n\\[\\boldsymbol{\\hat \\beta} = \\bf{(X^{\\top}X)^{-1}X^{\\top}y}\\]\n회귀계수 추정 및 벡터미분"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#회귀계수의-신뢰구간",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#회귀계수의-신뢰구간",
-    "title": "00. Linear Regression",
-    "section": "회귀계수의 신뢰구간",
-    "text": "회귀계수의 신뢰구간\n\n표준오차\n- 정의 : 추정값인 표본평균들과 참값인 모평균과의 표준적인 차이\n- 보통 모집단의 평균 \\(\\mu\\)를 추정할 때 추정치의 표준오차는 다음과 같이 정의된다.\n\\[\\text {Var} (\\hat {\\mu}) = \\text{SE}(\\hat {\\mu}) ^2= \\frac {\\sigma^2}{ n}\\]\n- 여기서 \\(\\sigma\\)는 표본(\\(y_i\\))으로 부터 산출된 표준편차이다. (standard deviation)\n- 회귀계수의 표준편차\n\\[\\text{SE} (\\hat {\\beta}_0)^2 = \\sigma^2 \\left [ \\frac 1n + \\frac {\\bar x^2}{\\sum (x-x_i)^2}\\right],\\quad \\text{SE} (\\hat {\\beta}_0)^2  = \\frac {\\sigma^2}{\\sum (x-\\bar x)^2}\\]\n\n\n회귀계수의 유의성 검정\n- 유의수준 \\(\\alpha\\) 각 회귀계수의 유의성 가설은 다음과 같다.\n\\[H_0 : \\beta_i  = 0, \\quad H_1 : \\beta_i \\neq 0\\]\n- 이 가설에 대한 95% 신뢰구간은?\n\\[\\beta_i \\pm 1.96 \\cdot \\text {SE} (\\hat {\\beta}_i)\\]\n- 사용되는 검정통계량은 \\(t-statistic\\)이다.\n\\[t = \\frac {\\hat {\\beta}_i - 0}{\\text{SE}(\\hat {\\beta_i})} \\]\n\n\n모델평가\n1 RSE : estimation of the standard deviation of \\(\\varepsilon\\) : 잔차의 평균\n\n\\(p\\) : 예측변수의 개수\n\n\\[\\text{RSE} = \\sqrt {\\frac {1}{n-(p+1)} RSS}\\]\n2 결정 계수 : 적합한 모델이 데이터를 얼마나 잘 설명하는지 해석적 측면\n\\[R^2 = \\frac {\\text{TSS} - \\text{RSS}}{\\text{TSS}} =  1-\\frac{\\text{RSS}}{\\text{TSS}}\\]\n\\[R^2_{adj} = \\frac {\\text{TSS} - \\text{RSS)}\\,/\\,(n-(p+1)}{\\text{TSS}\\,/\\,(n-1)} =  1-\\frac{\\text{RSS}}{\\text{TSS}}\\] $$\n\\[\\text{TSS} = \\sum (y_i-\\bar y)^2\\]\n\n\n전체 모델의 유의성 검정\n- 가설 설정\n\\[H_0 : \\beta_1 = \\beta_1 = \\dots \\beta_p = 0, \\quad H_1  : \\text{not} H_0\\]\n- \\(F-statistic\\)\n\\[F = \\frac {(TSS - RSS)\\,/\\,p}{RSS\\,/\\,(n-(p+1))}\\]\n\n\nsummary\n- 정리하다보니 순서가 조금 엉켰지만! 회귀분석 순서는 아래의 순서로 기억하자.\n\n전체 모델에 대한 유의성 검정\n개별 변수에 대한 유의성 검정\n결정계수값 확인\n잔차분석 (이번 블로그에서는 위 내용은 생략)"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#데이터-로드",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#데이터-로드",
-    "title": "00. Linear Regression",
-    "section": "데이터 로드",
-    "text": "데이터 로드\n- 아래의 데이터를 살펴보자.\n\nBoston data : 보스턴 시의 주택 가격에 대한 데이터 정보\n\ncrim : 자치시 별 1인당 범죄율\nzn : 25,000 평방피트르 초과하는 거주지역의 비율\nindus : 비소매상업지역이 점유하고 있는 토지의 비율\nchas : 찰스강에 대한 더미변수 (강의 경계에 위치한 경우는 1, 아니면 0)\nnos : 10ppm당 농축 일산화 질소\nrm : 주택 1가구당 평균 방의 개수\nage : 1940년 이전에 건축된 소유주택의 비율\ndis : 5개의 보스턴 직업센터까지의 접근성 지수\nrad : 방사형 도로까지의 접근성 지수\ntax : 10,000 달러 당 재산 세율\nptratio : 자치시별 학생/교사 비율\nlstat : 모집단의 하위 계층의 비율\nmedv : 본인 소유의 주택가격(중앙값) (단위 : $ 1,000)\n\n\n\nBoston = load_data(\"Boston\")\nBoston.columns\n#len(Boston.columns)\n\nIndex(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',\n       'ptratio', 'lstat', 'medv'],\n      dtype='object')"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#xy-생성",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#xy-생성",
-    "title": "00. Linear Regression",
-    "section": "X,y 생성",
-    "text": "X,y 생성\n\\[\\bf X = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\]\n\nlstat 변수를 예측변수로, medv변수를 반응변수로 사용\n\n\nX = pd.DataFrame({\"intercept\" : np.ones(Boston.shape[0]),\n                  \"lstat\" : Boston[\"lstat\"]})\ny = Boston[\"medv\"]\nX.head()\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n\n- OLS : Ordinary Least Squares의 약자로, 주어진 데이터에서 오차의 제곱을 최소화하는 \\(\\beta_i\\)를 추정한다."
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#모델-적합",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#모델-적합",
-    "title": "00. Linear Regression",
-    "section": "모델 적합",
-    "text": "모델 적합\n\nmodel = sm.OLS(y,X)\nresults = model.fit()\n\n\ns_result = summarize(results)\n\n\ns_result\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n34.5538\n0.563\n61.415\n0.0\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.0\n\n\n\n\n\n\n\n- 적합된 모델을 해석하면 다음과 같다.\n\\[\\hat {\\text{medv}} = -0.95 \\times \\text{lstat} + 34\n.5538\\]"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#시각화",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#시각화",
-    "title": "00. Linear Regression",
-    "section": "시각화",
-    "text": "시각화\n\nx = Boston[\"lstat\"]\nyhat = results.predict()\n\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x163b69b88d0&gt;"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#modelspec-starstarstar",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#modelspec-starstarstar",
-    "title": "00. Linear Regression",
-    "section": "ModelSpec() (\\(\\star\\star\\star\\))",
-    "text": "ModelSpec() (\\(\\star\\star\\star\\))\n- 우리는 앞서 다음과 같은 module을 import 했다\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)\n- ModelSpec이라는 모듈을 MS로 사용할 것으로 지칭\n- 이 모듈은 예측변수 \\(x\\)를 컴퓨터가 이해할 수 있게끔 변환해준다.\n- step1. 전달할 \\(x\\)를 다음과 같이 전달\n\ndesign = MS(['lstat'])\n\n- step2. 컴퓨터가 이해할 수 있는 형태에 맞게 \\(x\\)를 변환 \\(\\to\\) 주어진 \\(x\\)를 매트릭스 형태로 변환해줌\n\nX = design.fit_transform(Boston)\n\n\nX.head()\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n\n\n모델 적합\n\nmodel = sm.OLS(y, X)\nresults = model.fit()\n\n\n\n모델 요약\n\nreport = results.summary()\n\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSat, 09 Sep 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n12:11:20\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 이런식으로 위의 표에 대한 데이터도 확인할 수 있음\n\nreport.tables[0].data\n\n[['Dep. Variable:', 'medv', '  R-squared:         ', '   0.544'],\n ['Model:', 'OLS', '  Adj. R-squared:    ', '   0.543'],\n ['Method:', 'Least Squares', '  F-statistic:       ', '   601.6'],\n ['Date:', 'Sat, 09 Sep 2023', '  Prob (F-statistic):', '5.08e-88'],\n ['Time:', '12:11:20', '  Log-Likelihood:    ', ' -1641.5'],\n ['No. Observations:', '   506', '  AIC:               ', '   3287.'],\n ['Df Residuals:', '   504', '  BIC:               ', '   3295.'],\n ['Df Model:', '     1', '                     ', ' '],\n ['Covariance Type:', 'nonrobust', '                     ', ' ']]\n\n\n- 추정된 회귀계수값 확인\n\nresults.params\n\nintercept    34.553841\nlstat        -0.950049\ndtype: float64\n\n\n\n\n모델 해석1 (모델의 유의성)\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSat, 09 Sep 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n12:11:20\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 결정계수 (\\(R^2\\)) 값을 살펴보니 약 54%의 설명력을 가진 모델이다.\n- 또한, F통계량에 근거한 p-value 값을 살펴보았을 때 주어진 표본으로 부터 추출된 모형은 통계적으로 유의하다.\n\n\n모델 해석2 (예측변수의 유의성)\n\nreport.tables[1]\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n34.5538\n0.563\n61.415\n0.000\n33.448\n35.659\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.000\n-1.026\n-0.874\n\n\n\n\n\n- lstat의 coef \\(\\to\\) 즉, 회귀계수에 대한 유의성 검정결과\n\np-value값을 살펴본 결과 유의수준 0.05에서 유의성을 만족한다. 따라서 lstat의 회귀계수는 통계적으로 유의하다.\n\n\n\n시각화\n\nyhat = results.predict()\nx = X[\"lstat\"]\n\n- 적합된 \\((x,\\hat y)\\)와 \\((x,y)\\)를 시각화한 결과 몇몇 이상치를 제외하고 잘 예측하고 있는것 같다.\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x163b6c7cd10&gt;"
-  },
-  {
-    "objectID": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#summary-lab",
-    "href": "posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html#summary-lab",
-    "title": "00. Linear Regression",
-    "section": "summary : Lab",
-    "text": "summary : Lab\n- 구구절절 말이 많았지만, 회귀모형 적합 시 아래의 step을 기억하자.\n\n# step 0. import\nimport statsmodels.api as sm\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)\n\n# step 1. x, y를 저장\nx = data.columns.drop(\"target\") \ny = data[\"target\"]\n\n# step 2.  matrix 형태의 X 생성\nX = MS(final).fit_transform(data)\n\n# step 3. 최소제곱법(OLS)를 이용하여 모델을 적합하겠다고 선언\nmodel = sm.OLS(y,X)\n\n# step 4. 모형에 대한 유의성 확인\nmodel.fit().summary().tables[0]\n\n# step 5. 개별 회귀계수에 대한 유의성 확인\nmodel.fit().summary().tables[1]"
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ISLP2023",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nSep 9, 2023\n\n\n00. Linear Regression\n\n\nGC \n\n\n\n\nSep 9, 2023\n\n\n01. Classification\n\n\nGC \n\n\n\n\nSep 3, 2023\n\n\n00. 단순선형회귀분석\n\n\nGC \n\n\n\n\nAug 28, 2023\n\n\nExtra 00. tidydata\n\n\nGC \n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html#education",
@@ -196,11 +119,95 @@
     "text": "Conctact\n- rkdcjf8232@gmail.com"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ISLP2023",
+    "objectID": "posts/2023-09-09-00. Linear Regression.html",
+    "href": "posts/2023-09-09-00. Linear Regression.html",
+    "title": "00. Linear Regression",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nSep 9, 2023\n\n\n00. Linear Regression\n\n\nGC \n\n\n\n\nSep 3, 2023\n\n\n00. 단순선형회귀분석\n\n\nGC \n\n\n\n\nAug 28, 2023\n\n\nExtra 00. tidydata\n\n\nGC \n\n\n\n\n\n\nNo matching items"
+    "text": "- 코랩환경에서 아래 순서대로 진행해야 ISLP 패키지 설치시 오류가 발생하지 않는다.\n\n드라이브 마운트\n현재 작업중인 경로로 이동\n패키지 import\n\nfrom google.colab import drive\ndrive.mount('/content/drive')\ncd /content/drive/MyDrive/Colab Notebooks/ISLP/Linear Regression\n\n#pip install ISLP\n\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport plotly.express as px\nimport plotly.io as pio\npio.renderers.default = \"plotly_mimetype+notebook_connected\"\n\nfrom ISLP import load_data\n\nimport statsmodels.api as sm\n\nfrom statsmodels.stats.outliers_influence \\\nimport variance_inflation_factor as VIF\nfrom statsmodels.stats.anova import anova_lm\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#표현1.-단순선형회귀",
+    "href": "posts/2023-09-09-00. Linear Regression.html#표현1.-단순선형회귀",
+    "title": "00. Linear Regression",
+    "section": "표현1. 단순선형회귀",
+    "text": "표현1. 단순선형회귀\n\\[\\hat {y} = \\hat {\\beta}_1x + \\hat {\\beta}_0\\]"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#표현-2-starstarstar",
+    "href": "posts/2023-09-09-00. Linear Regression.html#표현-2-starstarstar",
+    "title": "00. Linear Regression",
+    "section": "표현 2 (\\(\\star\\star\\star\\))",
+    "text": "표현 2 (\\(\\star\\star\\star\\))\n- 표현 2가 자주 쓰이니 잘 알아두자.\n\\[\\bf \\hat Y = X \\hat {\\boldsymbol{\\beta}} = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\begin{bmatrix} \\hat \\beta_0  \\\\ \\hat \\beta_1 \\end{bmatrix} \\]"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#잔차residual",
+    "href": "posts/2023-09-09-00. Linear Regression.html#잔차residual",
+    "title": "00. Linear Regression",
+    "section": "잔차(residual)",
+    "text": "잔차(residual)\n- \\(\\hat y_i = \\hat{\\beta_1} + \\hat {\\beta}_0x_i\\)는 개별 관측치 \\(x_i\\)가 주어졌을때 \\(i\\) 번째 \\(y\\)의 추정치이다.\n- 잔차는 표본으로부터 추정된 예측값에서 실제값의 차이로 다음과 같이 정의한다.\n\\[e_i = \\hat {y}_i - y_i,  \\quad e_i \\sim N(0,\\sigma^2)\\]\n- 그리고 책에서는 잔차제곱합을 다음과 같이 표현하니 눈에 익혀두자\n\\[RSS =\\sum_{i=1}^{n} e_i\\]"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#회귀계수-추정-1.-단순선형회귀",
+    "href": "posts/2023-09-09-00. Linear Regression.html#회귀계수-추정-1.-단순선형회귀",
+    "title": "00. Linear Regression",
+    "section": "회귀계수 추정 1. 단순선형회귀",
+    "text": "회귀계수 추정 1. 단순선형회귀\n- 잔차제곱합을 최소로하는 \\((\\beta_0, \\beta_1)\\)은 다음과 같은 추정치로 구해진다.\n\\[\\hat{\\beta}_1= \\frac{\\sum (x-\\bar x)(y-\\bar  y)}{\\sum (x-\\bar x)^2}\\]\n\\[\\hat {\\beta}_0 = \\bar y - \\hat {\\beta}_1 \\bar x\\]"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#회귀계수-추정-2.-일반적인-추정",
+    "href": "posts/2023-09-09-00. Linear Regression.html#회귀계수-추정-2.-일반적인-추정",
+    "title": "00. Linear Regression",
+    "section": "회귀계수 추정 2. 일반적인 추정",
+    "text": "회귀계수 추정 2. 일반적인 추정\n\\[\\boldsymbol{\\hat \\beta} = \\bf{(X^{\\top}X)^{-1}X^{\\top}y}\\]\n회귀계수 추정 및 벡터미분"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#회귀계수의-신뢰구간",
+    "href": "posts/2023-09-09-00. Linear Regression.html#회귀계수의-신뢰구간",
+    "title": "00. Linear Regression",
+    "section": "회귀계수의 신뢰구간",
+    "text": "회귀계수의 신뢰구간\n\n표준오차\n- 정의 : 추정값인 표본평균들과 참값인 모평균과의 표준적인 차이\n- 보통 모집단의 평균 \\(\\mu\\)를 추정할 때 추정치의 표준오차는 다음과 같이 정의된다.\n\\[\\text {Var} (\\hat {\\mu}) = \\text{SE}(\\hat {\\mu}) ^2= \\frac {\\sigma^2}{ n}\\]\n- 여기서 \\(\\sigma\\)는 표본(\\(y_i\\))으로 부터 산출된 표준편차이다. (standard deviation)\n- 회귀계수의 표준편차\n\\[\\text{SE} (\\hat {\\beta}_0)^2 = \\sigma^2 \\left [ \\frac 1n + \\frac {\\bar x^2}{\\sum (x-x_i)^2}\\right],\\quad \\text{SE} (\\hat {\\beta}_0)^2  = \\frac {\\sigma^2}{\\sum (x-\\bar x)^2}\\]\n\n\n회귀계수의 유의성 검정\n- 유의수준 \\(\\alpha\\) 각 회귀계수의 유의성 가설은 다음과 같다.\n\\[H_0 : \\beta_i  = 0, \\quad H_1 : \\beta_i \\neq 0\\]\n- 이 가설에 대한 95% 신뢰구간은?\n\\[\\beta_i \\pm 1.96 \\cdot \\text {SE} (\\hat {\\beta}_i)\\]\n- 사용되는 검정통계량은 \\(t-statistic\\)이다.\n\\[t = \\frac {\\hat {\\beta}_i - 0}{\\text{SE}(\\hat {\\beta_i})} \\]\n\n\n모델평가\n1 RSE : estimation of the standard deviation of \\(\\varepsilon\\) : 잔차의 평균\n\n\\(p\\) : 예측변수의 개수\n\n\\[\\text{RSE} = \\sqrt {\\frac {1}{n-(p+1)} RSS}\\]\n2 결정 계수 : 적합한 모델이 데이터를 얼마나 잘 설명하는지 해석적 측면\n\\[R^2 = \\frac {\\text{TSS} - \\text{RSS}}{\\text{TSS}} =  1-\\frac{\\text{RSS}}{\\text{TSS}}\\]\n\\[R^2_{adj} = \\frac {\\text{TSS} - \\text{RSS)}\\,/\\,(n-(p+1)}{\\text{TSS}\\,/\\,(n-1)} =  1-\\frac{\\text{RSS}}{\\text{TSS}}\\]\n\\[\\text{TSS} = \\sum (y_i-\\bar y)^2\\]\n\n\n전체 모델의 유의성 검정\n- 가설 설정\n\\[H_0 : \\beta_1 = \\beta_1 = \\dots \\beta_p = 0, \\quad H_1  : \\text{not} \\,\\,H_0\\]\n- \\(F-statistic\\)\n\\[F = \\frac {(TSS - RSS)\\,/\\,p}{RSS\\,/\\,(n-(p+1))}\\]\n\n\nsummary\n- 정리하다보니 순서가 조금 엉켰지만! 회귀분석 순서는 아래의 순서로 기억하자.\n\n전체 모델에 대한 유의성 검정\n개별 변수에 대한 유의성 검정\n결정계수값 확인\n잔차분석 (이번 블로그에서는 위 내용은 생략)"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#데이터-로드",
+    "href": "posts/2023-09-09-00. Linear Regression.html#데이터-로드",
+    "title": "00. Linear Regression",
+    "section": "데이터 로드",
+    "text": "데이터 로드\n- 아래의 데이터를 살펴보자.\n\nBoston data : 보스턴 시의 주택 가격에 대한 데이터 정보\n\ncrim : 자치시 별 1인당 범죄율\nzn : 25,000 평방피트르 초과하는 거주지역의 비율\nindus : 비소매상업지역이 점유하고 있는 토지의 비율\nchas : 찰스강에 대한 더미변수 (강의 경계에 위치한 경우는 1, 아니면 0)\nnos : 10ppm당 농축 일산화 질소\nrm : 주택 1가구당 평균 방의 개수\nage : 1940년 이전에 건축된 소유주택의 비율\ndis : 5개의 보스턴 직업센터까지의 접근성 지수\nrad : 방사형 도로까지의 접근성 지수\ntax : 10,000 달러 당 재산 세율\nptratio : 자치시별 학생/교사 비율\nlstat : 모집단의 하위 계층의 비율\nmedv : 본인 소유의 주택가격(중앙값) (단위 : $ 1,000)\n\n\n\nBoston = load_data(\"Boston\")\nBoston.columns\n#len(Boston.columns)\n\nIndex(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',\n       'ptratio', 'lstat', 'medv'],\n      dtype='object')"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#xy-생성",
+    "href": "posts/2023-09-09-00. Linear Regression.html#xy-생성",
+    "title": "00. Linear Regression",
+    "section": "X,y 생성",
+    "text": "X,y 생성\n\\[\\bf X = \\begin{bmatrix}\n1  & x_1 \\\\ 1 & x_2  \\\\ \\dots & \\dots \\\\  1  & x_n\\end{bmatrix}\\]\n\nlstat 변수를 예측변수로, medv변수를 반응변수로 사용\n\n\nX = pd.DataFrame({\"intercept\" : np.ones(Boston.shape[0]),\n                  \"lstat\" : Boston[\"lstat\"]})\ny = Boston[\"medv\"]\nX.head()\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n\n- OLS : Ordinary Least Squares의 약자로, 주어진 데이터에서 오차의 제곱을 최소화하는 \\(\\beta_i\\)를 추정한다."
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#모델-적합",
+    "href": "posts/2023-09-09-00. Linear Regression.html#모델-적합",
+    "title": "00. Linear Regression",
+    "section": "모델 적합",
+    "text": "모델 적합\n\nmodel = sm.OLS(y,X)\nresults = model.fit()\n\n\ns_result = summarize(results)\n\n\ns_result\n\n\n\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n\n\n\n\nintercept\n34.5538\n0.563\n61.415\n0.0\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.0\n\n\n\n\n\n\n\n- 적합된 모델을 해석하면 다음과 같다.\n\\[\\hat {\\text{medv}} = -0.95 \\times \\text{lstat} + 34\n.5538\\]"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#시각화",
+    "href": "posts/2023-09-09-00. Linear Regression.html#시각화",
+    "title": "00. Linear Regression",
+    "section": "시각화",
+    "text": "시각화\n\nx = Boston[\"lstat\"]\nyhat = results.predict()\n\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x163b69b88d0&gt;"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#modelspec-starstarstar",
+    "href": "posts/2023-09-09-00. Linear Regression.html#modelspec-starstarstar",
+    "title": "00. Linear Regression",
+    "section": "ModelSpec() (\\(\\star\\star\\star\\))",
+    "text": "ModelSpec() (\\(\\star\\star\\star\\))\n- 우리는 앞서 다음과 같은 module을 import 했다\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)\n- ModelSpec이라는 모듈을 MS로 사용할 것으로 지칭\n- 이 모듈은 예측변수 \\(x\\)를 컴퓨터가 이해할 수 있게끔 변환해준다.\n- step1. 전달할 \\(x\\)를 다음과 같이 전달\n\ndesign = MS(['lstat'])\n\n- step2. 컴퓨터가 이해할 수 있는 형태에 맞게 \\(x\\)를 변환 \\(\\to\\) 주어진 \\(x\\)를 매트릭스 형태로 변환해줌\n\nX = design.fit_transform(Boston)\n\n\nX.head()\n\n\n\n\n\n\n\n\nintercept\nlstat\n\n\n\n\n0\n1.0\n4.98\n\n\n1\n1.0\n9.14\n\n\n2\n1.0\n4.03\n\n\n3\n1.0\n2.94\n\n\n4\n1.0\n5.33\n\n\n\n\n\n\n\n\n모델 적합\n\nmodel = sm.OLS(y, X)\nresults = model.fit()\n\n\n\n모델 요약\n\nreport = results.summary()\n\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSat, 09 Sep 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n12:11:20\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 이런식으로 위의 표에 대한 데이터도 확인할 수 있음\n\nreport.tables[0].data\n\n[['Dep. Variable:', 'medv', '  R-squared:         ', '   0.544'],\n ['Model:', 'OLS', '  Adj. R-squared:    ', '   0.543'],\n ['Method:', 'Least Squares', '  F-statistic:       ', '   601.6'],\n ['Date:', 'Sat, 09 Sep 2023', '  Prob (F-statistic):', '5.08e-88'],\n ['Time:', '12:11:20', '  Log-Likelihood:    ', ' -1641.5'],\n ['No. Observations:', '   506', '  AIC:               ', '   3287.'],\n ['Df Residuals:', '   504', '  BIC:               ', '   3295.'],\n ['Df Model:', '     1', '                     ', ' '],\n ['Covariance Type:', 'nonrobust', '                     ', ' ']]\n\n\n- 추정된 회귀계수값 확인\n\nresults.params\n\nintercept    34.553841\nlstat        -0.950049\ndtype: float64\n\n\n\n\n모델 해석1 (모델의 유의성)\n\nreport.tables[0]\n\n\nOLS Regression Results\n\n\nDep. Variable:\nmedv\nR-squared:\n0.544\n\n\nModel:\nOLS\nAdj. R-squared:\n0.543\n\n\nMethod:\nLeast Squares\nF-statistic:\n601.6\n\n\nDate:\nSat, 09 Sep 2023\nProb (F-statistic):\n5.08e-88\n\n\nTime:\n12:11:20\nLog-Likelihood:\n-1641.5\n\n\nNo. Observations:\n506\nAIC:\n3287.\n\n\nDf Residuals:\n504\nBIC:\n3295.\n\n\nDf Model:\n1\n\n\n\n\nCovariance Type:\nnonrobust\n\n\n\n\n\n\n\n- 결정계수 (\\(R^2\\)) 값을 살펴보니 약 54%의 설명력을 가진 모델이다.\n- 또한, F통계량에 근거한 p-value 값을 살펴보았을 때 주어진 표본으로 부터 추출된 모형은 통계적으로 유의하다.\n\n\n모델 해석2 (예측변수의 유의성)\n\nreport.tables[1]\n\n\n\n\n\ncoef\nstd err\nt\nP&gt;|t|\n[0.025\n0.975]\n\n\nintercept\n34.5538\n0.563\n61.415\n0.000\n33.448\n35.659\n\n\nlstat\n-0.9500\n0.039\n-24.528\n0.000\n-1.026\n-0.874\n\n\n\n\n\n- lstat의 coef \\(\\to\\) 즉, 회귀계수에 대한 유의성 검정결과\n\np-value값을 살펴본 결과 유의수준 0.05에서 유의성을 만족한다. 따라서 lstat의 회귀계수는 통계적으로 유의하다.\n\n\n\n시각화\n\nyhat = results.predict()\nx = X[\"lstat\"]\n\n- 적합된 \\((x,\\hat y)\\)와 \\((x,y)\\)를 시각화한 결과 몇몇 이상치를 제외하고 잘 예측하고 있는것 같다.\n\n\nCode\nplt.plot(x,y,\"o\",label = r\"$(x,y)$\",alpha=0.3)\nplt.plot(x,yhat,\"--\",label = r\"$(x,\\hat {y})$\")\nplt.legend()\n\n\n&lt;matplotlib.legend.Legend at 0x163b6c7cd10&gt;"
+  },
+  {
+    "objectID": "posts/2023-09-09-00. Linear Regression.html#summary-lab",
+    "href": "posts/2023-09-09-00. Linear Regression.html#summary-lab",
+    "title": "00. Linear Regression",
+    "section": "summary : Lab",
+    "text": "summary : Lab\n- 구구절절 말이 많았지만, 회귀모형 적합 시 아래의 step을 기억하자.\n\n# step 0. import\nimport statsmodels.api as sm\nfrom ISLP.models import (ModelSpec as MS,\nsummarize,poly)\n\n# step 1. x, y를 저장\nx = data.columns.drop(\"target\") \ny = data[\"target\"]\n\n# step 2.  matrix 형태의 X 생성\nX = MS(final).fit_transform(data)\n\n# step 3. 최소제곱법(OLS)를 이용하여 모델을 적합하겠다고 선언\nmodel = sm.OLS(y,X)\n\n# step 4. 모형에 대한 유의성 확인\nmodel.fit().summary().tables[0]\n\n# step 5. 개별 회귀계수에 대한 유의성 확인\nmodel.fit().summary().tables[1]"
   },
   {
     "objectID": "posts/study/2023-08-28-Extra 00. tidydata.html",

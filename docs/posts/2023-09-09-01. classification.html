@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="GC">
+<meta name="dcterms.date" content="2023-09-09">
 
-<title>Gangcheol - About Me</title>
+<title>Gangcheol - 01. Classification</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./posts/2023-09-09-00. Linear Regression.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../posts/study/2023-08-28-Extra 00. tidydata.html" rel="next">
+<link href="../posts/2023-09-09-00. Linear Regression.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -60,8 +64,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -72,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Gangcheol</span>
     </a>
   </div>
@@ -120,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./about.html"><strong>About Me</strong></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">Posts</a></li><li class="breadcrumb-item"><a href="../posts/2023-09-09-01. classification.html">01. Classification</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -130,7 +136,40 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">01. Classification</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">분류</div>
+                <div class="quarto-category">로지스틱</div>
+                <div class="quarto-category">예측성능</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>GC </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 9, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -142,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./about.html" class="sidebar-item-text sidebar-link active">
+  <a href="../about.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><strong>About Me</strong></span></a>
   </div>
 </li>
@@ -157,13 +196,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/2023-09-09-00. Linear Regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../posts/2023-09-09-00. Linear Regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">00. Linear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/2023-09-09-01. classification.html" class="sidebar-item-text sidebar-link">
+  <a href="../posts/2023-09-09-01. classification.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">01. Classification</span></a>
   </div>
 </li>
@@ -178,13 +217,13 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/study/2023-08-28-Extra 00. tidydata.html" class="sidebar-item-text sidebar-link">
+  <a href="../posts/study/2023-08-28-Extra 00. tidydata.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Extra 00. tidydata</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/study/2023-09-03-00. 단순선형회귀분석.html" class="sidebar-item-text sidebar-link">
+  <a href="../posts/study/2023-09-03-00. 단순선형회귀분석.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">00. 단순선형회귀분석</span></a>
   </div>
 </li>
@@ -202,71 +241,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"></a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#overview-1.-mse" id="toc-overview-1.-mse" class="nav-link active" data-scroll-target="#overview-1.-mse">Overview 1. MSE</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<section id="section" class="level3">
-<h3 data-anchor-id="section"></h3>
-</section>
-<div class="quarto-about-jolla">
-  <img src="증명사진.jpg" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><strong>About Me</strong></h1>
-</div>
-<div class="quarto-title-meta">
-  </div>
-</header><div id="hero-heading">
-<section id="education" class="level2">
-<h2 data-anchor-id="education">Education</h2>
-<p><code>-</code> 전북대학교 통계학과 학사(부전공: 컴퓨터공학) 졸업 | 3.67 / 4.50 | 2015. 03 ~ 2021. 02</p>
-<p><code>-</code> 전북대학교 통계학과 석사 졸업 | 4.44 / 4.50 | 2021. 03 ~ 2023. 02</p>
-</section>
-<section id="experience" class="level2">
-<h2 data-anchor-id="experience">Experience</h2>
-<p><code>-</code> 국민연금공단 빅데이터부 현장실습 | 2020. 03 ~ 2020. 06</p>
-<p><code>-</code> 지역 문화산업 융복합 데이터 전문가 과정 | 과학기술정보통신부, 한국데이터산업진흥원 | 2021. 06 ~ 2021. 08</p>
-<p><code>-</code> 빅데이터 혁신공유대학사업 서포터즈 |전북대학교 빅데이터 현신공유대학사업| 2021. 07. 01 ~ 2021. 10. 31</p>
-<p><code>-</code> KT AIVLE School DX Consultant Track | KT | 2023. 08 ~</p>
-</section>
-<section id="publications" class="level2">
-<h2 data-anchor-id="publications">Publications</h2>
-<p><code>-</code> <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002773972">데이터 분석을 통한 지역별 고령친화도 시각화</a></p>
-<pre><code>`-` 김영선, 강민구, 이강철 등  | 문화융복합아카이빙연구소 | 2021. 10 | 기록관리/보존 </code></pre>
-<p><code>-</code> <a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002890029">핵심어 추출 및 데이터 증강기법을 이용한 텍스트 분류 모델 성능 개선</a></p>
-<pre><code>`-` 이강철, 안정용 | 한국자료분석학회 | 한국자료분석학회 | 2022. 10 | 통계학</code></pre>
-</section>
-<section id="certificate" class="level2">
-<h2 data-anchor-id="certificate">Certificate</h2>
-<p><code>-</code> 워드프로세서 | 대한상공회의소 | 19-19-017981 | 2019. 08. 30</p>
-<p><code>-</code> 데이터분석준전문가(ADsP) | 한국데이터진흥원 | ADsP-0223898 | 2019. 10. 01</p>
-<p><code>-</code> 사회조사분석사 2급 | 한국산업인력공단 | 19201142418N | 2019. 10. 01</p>
-</section>
-<section id="conctact" class="level2">
-<h2 data-anchor-id="conctact">Conctact</h2>
-<p><code>-</code> <a href="mailto:rkdcjf8232@gmail.com" class="email">rkdcjf8232@gmail.com</a></p>
-</section>
-</div> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://github.com/gangcheol/" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-</div>
-</div>
 
-<section id="section-1" class="level3">
-<h3 data-anchor-id="section-1"></h3>
-
+<section id="overview-1.-mse" class="level1">
+<h1>Overview 1. MSE</h1>
+<p><code>-</code> 해당 책에서는 우리가 평소에 회귀분석에서 쓰던 <span class="math inline">\(\text {MSE}= \frac {SSE}{n-(p+1)}\)</span> 이라고 표현하지 않는다.</p>
+<p><code>-</code> 교재에서 말하는 <span class="math inline">\(\text{MSE}\)</span>란 다음과 같다.</p>
+<p><span class="math display">\[\text{MSE} = E[(\hat y - y)^2]\]</span></p>
+<p><code>-</code> 즉, 예측값과 실제값의 차이를 제곱합으로 계산 후 평균을 내는것이다.</p>
+<p><code>-</code> 이를 다시 나누어 보자</p>
+<p><span class="math display">\[\begin {align} E[(\hat y - y)^2] &amp;= Var(\hat y) + \text {bias}   \\
+                                                                &amp;= E[(\hat y - E(\hat y ))^2] + E[(E(\hat y) - y)^2] \end {align}\]</span></p>
 
 
 </section>
@@ -292,6 +285,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -500,10 +500,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../posts/2023-09-09-00. Linear Regression.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">00. Linear Regression</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./posts/2023-09-09-00. Linear Regression.html" class="pagination-link">
-        <span class="nav-page-text">00. Linear Regression</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../posts/study/2023-08-28-Extra 00. tidydata.html" class="pagination-link">
+        <span class="nav-page-text">Extra 00. tidydata</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
