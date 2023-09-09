@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="GC">
-<meta name="dcterms.date" content="2023-09-03">
+<meta name="dcterms.date" content="2023-09-09">
 
-<title>Gangcheol - 00. Simple Linear Regression</title>
+<title>Gangcheol - 00. Linear Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Posts</li><li class="breadcrumb-item">ISLP</li><li class="breadcrumb-item"><a href="../../../posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html">00. linear regression</a></li><li class="breadcrumb-item"><a href="../../../posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html">00. Simple Linear Regression</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Posts</li><li class="breadcrumb-item">ISLP</li><li class="breadcrumb-item"><a href="../../../posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html">00. linear regression</a></li><li class="breadcrumb-item"><a href="../../../posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html">00. Linear Regression</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -176,7 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">00. Simple Linear Regression</h1>
+      <h1 class="title">00. Linear Regression</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">LR</div>
               </div>
@@ -196,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 3, 2023</p>
+        <p class="date">September 9, 2023</p>
       </div>
     </div>
     
@@ -249,8 +249,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/ISLP/00. linear regression/2023-08-18-00. Simple Linear Regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">00. Simple Linear Regression</span></a>
+  <a href="../../../posts/ISLP/00. linear regression/2023-08-18-00. Linear Regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">00. Linear Regression</span></a>
   </div>
 </li>
       </ul>
@@ -293,18 +293,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">import</a></li>
-  <li><a href="#단순선형회귀" id="toc-단순선형회귀" class="nav-link" data-scroll-target="#단순선형회귀">단순선형회귀</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a>
   <ul class="collapse">
-  <li><a href="#표현1" id="toc-표현1" class="nav-link" data-scroll-target="#표현1">표현1</a></li>
+  <li><a href="#표현1.-단순선형회귀" id="toc-표현1.-단순선형회귀" class="nav-link" data-scroll-target="#표현1.-단순선형회귀">표현1. 단순선형회귀</a></li>
   <li><a href="#표현-2-starstarstar" id="toc-표현-2-starstarstar" class="nav-link" data-scroll-target="#표현-2-starstarstar">표현 2 (<span class="math inline">\(\star\star\star\)</span>)</a></li>
+  <li><a href="#잔차residual" id="toc-잔차residual" class="nav-link" data-scroll-target="#잔차residual">잔차(residual)</a></li>
+  <li><a href="#회귀계수-추정-1.-단순선형회귀" id="toc-회귀계수-추정-1.-단순선형회귀" class="nav-link" data-scroll-target="#회귀계수-추정-1.-단순선형회귀">회귀계수 추정 1. 단순선형회귀</a></li>
+  <li><a href="#회귀계수-추정-2.-일반적인-추정" id="toc-회귀계수-추정-2.-일반적인-추정" class="nav-link" data-scroll-target="#회귀계수-추정-2.-일반적인-추정">회귀계수 추정 2. 일반적인 추정</a></li>
+  <li><a href="#회귀계수의-신뢰구간" id="toc-회귀계수의-신뢰구간" class="nav-link" data-scroll-target="#회귀계수의-신뢰구간">회귀계수의 신뢰구간</a>
+  <ul class="collapse">
+  <li><a href="#표준오차" id="toc-표준오차" class="nav-link" data-scroll-target="#표준오차">표준오차</a></li>
+  <li><a href="#회귀계수의-유의성-검정" id="toc-회귀계수의-유의성-검정" class="nav-link" data-scroll-target="#회귀계수의-유의성-검정">회귀계수의 유의성 검정</a></li>
+  <li><a href="#모델평가" id="toc-모델평가" class="nav-link" data-scroll-target="#모델평가">모델평가</a></li>
+  <li><a href="#전체-모델의-유의성-검정" id="toc-전체-모델의-유의성-검정" class="nav-link" data-scroll-target="#전체-모델의-유의성-검정">전체 모델의 유의성 검정</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">summary</a></li>
   </ul></li>
-  <li><a href="#lab" id="toc-lab" class="nav-link" data-scroll-target="#lab">Lab</a>
+  </ul></li>
+  <li><a href="#lab-1.-단순선형회귀" id="toc-lab-1.-단순선형회귀" class="nav-link" data-scroll-target="#lab-1.-단순선형회귀">Lab 1. 단순선형회귀</a>
   <ul class="collapse">
   <li><a href="#데이터-로드" id="toc-데이터-로드" class="nav-link" data-scroll-target="#데이터-로드">데이터 로드</a></li>
   <li><a href="#xy-생성" id="toc-xy-생성" class="nav-link" data-scroll-target="#xy-생성">X,y 생성</a></li>
   <li><a href="#모델-적합" id="toc-모델-적합" class="nav-link" data-scroll-target="#모델-적합">모델 적합</a></li>
   <li><a href="#시각화" id="toc-시각화" class="nav-link" data-scroll-target="#시각화">시각화</a></li>
-  <li><a href="#modelspec-bf-x를-선언하는-또-다른-방법" id="toc-modelspec-bf-x를-선언하는-또-다른-방법" class="nav-link" data-scroll-target="#modelspec-bf-x를-선언하는-또-다른-방법">ModelSpec() : <span class="math inline">\(\bf X\)</span>를 선언하는 또 다른 방법</a>
+  <li><a href="#modelspec-starstarstar" id="toc-modelspec-starstarstar" class="nav-link" data-scroll-target="#modelspec-starstarstar"><code>ModelSpec()</code> (<span class="math inline">\(\star\star\star\)</span>)</a>
   <ul class="collapse">
   <li><a href="#모델-적합-1" id="toc-모델-적합-1" class="nav-link" data-scroll-target="#모델-적합-1">모델 적합</a></li>
   <li><a href="#모델-요약" id="toc-모델-요약" class="nav-link" data-scroll-target="#모델-요약">모델 요약</a></li>
@@ -312,11 +323,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#모델-해석2-예측변수의-유의성" id="toc-모델-해석2-예측변수의-유의성" class="nav-link" data-scroll-target="#모델-해석2-예측변수의-유의성">모델 해석2 (예측변수의 유의성)</a></li>
   <li><a href="#시각화-1" id="toc-시각화-1" class="nav-link" data-scroll-target="#시각화-1">시각화</a></li>
   </ul></li>
-  <li><a href="#test-data에-대한-예측" id="toc-test-data에-대한-예측" class="nav-link" data-scroll-target="#test-data에-대한-예측">test data에 대한 예측</a></li>
-  <li><a href="#fitted-value-vs-residual" id="toc-fitted-value-vs-residual" class="nav-link" data-scroll-target="#fitted-value-vs-residual"><code>fitted value</code> vs <code>residual</code></a>
-  <ul class="collapse">
-  <li><a href="#잔차-해석" id="toc-잔차-해석" class="nav-link" data-scroll-target="#잔차-해석">잔차 해석</a></li>
   </ul></li>
+  <li><a href="#lab-2.-다중선형회귀" id="toc-lab-2.-다중선형회귀" class="nav-link" data-scroll-target="#lab-2.-다중선형회귀">Lab 2. 다중선형회귀</a></li>
+  <li><a href="#lab-3.-vif" id="toc-lab-3.-vif" class="nav-link" data-scroll-target="#lab-3.-vif">Lab 3. VIF</a></li>
+  <li><a href="#lab-4.-qualitative-predictors" id="toc-lab-4.-qualitative-predictors" class="nav-link" data-scroll-target="#lab-4.-qualitative-predictors">Lab 4. Qualitative Predictors</a>
+  <ul class="collapse">
+  <li><a href="#summary-lab" id="toc-summary-lab" class="nav-link" data-scroll-target="#summary-lab">summary : Lab</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -341,26 +353,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-executioninfo="{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418124654,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#pip install ISLP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:5583,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418133940,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="2">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:5583,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418133940,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="im">from</span> ISLP <span class="im">import</span> load_data</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
+<span id="cb4-6"><a href="#cb4-6"></a>pio.renderers.default <span class="op">=</span> <span class="st">"plotly_mimetype+notebook_connected"</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="im">from</span> statsmodels.stats.outliers_influence <span class="op">\</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="im">import</span> variance_inflation_factor <span class="im">as</span> VIF</span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="im">from</span> statsmodels.stats.anova <span class="im">import</span> anova_lm</span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
-<span id="cb4-12"><a href="#cb4-12"></a>summarize,poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="im">from</span> ISLP <span class="im">import</span> load_data</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="im">from</span> statsmodels.stats.outliers_influence <span class="op">\</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="im">import</span> variance_inflation_factor <span class="im">as</span> VIF</span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="im">from</span> statsmodels.stats.anova <span class="im">import</span> anova_lm</span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
+<span id="cb4-16"><a href="#cb4-16"></a>summarize,poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="단순선형회귀" class="level1">
-<h1>단순선형회귀</h1>
+<section id="overview" class="level1">
+<h1>Overview</h1>
 <p><code>-</code> 정의 : 한 개의 예측변수 <span class="math inline">\(x\)</span>를 이용하여 반응변수 <span class="math inline">\(y\)</span>를 예측하기 위한 모델링을 수행한다.</p>
-<section id="표현1" class="level2">
-<h2 class="anchored" data-anchor-id="표현1">표현1</h2>
+<section id="표현1.-단순선형회귀" class="level2">
+<h2 class="anchored" data-anchor-id="표현1.-단순선형회귀">표현1. 단순선형회귀</h2>
 <p><span class="math display">\[\hat {y} = \hat {\beta}_1x + \hat {\beta}_0\]</span></p>
 </section>
 <section id="표현-2-starstarstar" class="level2">
@@ -369,9 +385,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math display">\[\bf \hat Y = X \hat {\boldsymbol{\beta}} = \begin{bmatrix}
 1  &amp; x_1 \\ 1 &amp; x_2  \\ \dots &amp; \dots \\  1  &amp; x_n\end{bmatrix}\begin{bmatrix} \hat \beta_0  \\ \hat \beta_1 \end{bmatrix} \]</span></p>
 </section>
+<section id="잔차residual" class="level2">
+<h2 class="anchored" data-anchor-id="잔차residual">잔차(residual)</h2>
+<p><code>-</code> <span class="math inline">\(\hat y_i = \hat{\beta_1} + \hat {\beta}_0x_i\)</span>는 개별 관측치 <span class="math inline">\(x_i\)</span>가 주어졌을때 <span class="math inline">\(i\)</span> 번째 <span class="math inline">\(y\)</span>의 추정치이다.</p>
+<p><code>-</code> 잔차는 표본으로부터 추정된 예측값에서 실제값의 차이로 다음과 같이 정의한다.</p>
+<p><span class="math display">\[e_i = \hat {y}_i - y_i,  \quad e_i \sim N(0,\sigma^2)\]</span></p>
+<p><code>-</code> 그리고 책에서는 <code>잔차제곱합</code>을 다음과 같이 표현하니 눈에 익혀두자</p>
+<p><span class="math display">\[RSS =\sum_{i=1}^{n} e_i\]</span></p>
 </section>
-<section id="lab" class="level1">
-<h1>Lab</h1>
+<section id="회귀계수-추정-1.-단순선형회귀" class="level2">
+<h2 class="anchored" data-anchor-id="회귀계수-추정-1.-단순선형회귀">회귀계수 추정 1. 단순선형회귀</h2>
+<p><code>-</code> 잔차제곱합을 최소로하는 <span class="math inline">\((\beta_0, \beta_1)\)</span>은 다음과 같은 추정치로 구해진다.</p>
+<p><span class="math display">\[\hat{\beta}_1= \frac{\sum (x-\bar x)(y-\bar  y)}{\sum (x-\bar x)^2}\]</span></p>
+<p><span class="math display">\[\hat {\beta}_0 = \bar y - \hat {\beta}_1 \bar x\]</span></p>
+</section>
+<section id="회귀계수-추정-2.-일반적인-추정" class="level2">
+<h2 class="anchored" data-anchor-id="회귀계수-추정-2.-일반적인-추정">회귀계수 추정 2. 일반적인 추정</h2>
+<p><span class="math display">\[\boldsymbol{\hat \beta} = \bf{(X^{\top}X)^{-1}X^{\top}y}\]</span></p>
+<p><a href="https://gangcheol.github.io/mysite/posts/Lecture/STBD/2022-03-08-(1%EC%A3%BC%EC%B0%A8).html#extra">회귀계수 추정 및 벡터미분</a></p>
+</section>
+<section id="회귀계수의-신뢰구간" class="level2">
+<h2 class="anchored" data-anchor-id="회귀계수의-신뢰구간">회귀계수의 신뢰구간</h2>
+<section id="표준오차" class="level3">
+<h3 class="anchored" data-anchor-id="표준오차">표준오차</h3>
+<p><code>-</code> 정의 : 추정값인 표본평균들과 참값인 모평균과의 표준적인 차이</p>
+<p><code>-</code> 보통 모집단의 평균 <span class="math inline">\(\mu\)</span>를 추정할 때 추정치의 표준오차는 다음과 같이 정의된다.</p>
+<p><span class="math display">\[\text {Var} (\hat {\mu}) = \text{SE}(\hat {\mu}) ^2= \frac {\sigma^2}{ n}\]</span></p>
+<p><code>-</code> 여기서 <span class="math inline">\(\sigma\)</span>는 표본(<span class="math inline">\(y_i\)</span>)으로 부터 산출된 표준편차이다. (<strong>standard deviation</strong>)</p>
+<p><code>-</code> 회귀계수의 표준편차</p>
+<p><span class="math display">\[\text{SE} (\hat {\beta}_0)^2 = \sigma^2 \left [ \frac 1n + \frac {\bar x^2}{\sum (x-x_i)^2}\right],\quad \text{SE} (\hat {\beta}_0)^2  = \frac {\sigma^2}{\sum (x-\bar x)^2}\]</span></p>
+</section>
+<section id="회귀계수의-유의성-검정" class="level3">
+<h3 class="anchored" data-anchor-id="회귀계수의-유의성-검정">회귀계수의 유의성 검정</h3>
+<p><code>-</code> 유의수준 <span class="math inline">\(\alpha\)</span> 각 회귀계수의 유의성 가설은 다음과 같다.</p>
+<p><span class="math display">\[H_0 : \beta_i  = 0, \quad H_1 : \beta_i \neq 0\]</span></p>
+<p><code>-</code> 이 가설에 대한 95% 신뢰구간은?</p>
+<p><span class="math display">\[\beta_i \pm 1.96 \cdot \text {SE} (\hat {\beta}_i)\]</span></p>
+<p><code>-</code> 사용되는 검정통계량은 <span class="math inline">\(t-statistic\)</span>이다.</p>
+<p><span class="math display">\[t = \frac {\hat {\beta}_i - 0}{\text{SE}(\hat {\beta_i})} \]</span></p>
+</section>
+<section id="모델평가" class="level3">
+<h3 class="anchored" data-anchor-id="모델평가">모델평가</h3>
+<p><code>1</code> RSE : estimation of the standard deviation of <span class="math inline">\(\varepsilon\)</span> : 잔차의 평균</p>
+<ul>
+<li><span class="math inline">\(p\)</span> : 예측변수의 개수</li>
+</ul>
+<p><span class="math display">\[\text{RSE} = \sqrt {\frac {1}{n-(p+1)} RSS}\]</span></p>
+<p><code>2</code> 결정 계수 : 적합한 모델이 데이터를 얼마나 잘 설명하는지 해석적 측면</p>
+<p><span class="math display">\[R^2 = \frac {\text{TSS} - \text{RSS}}{\text{TSS}} =  1-\frac{\text{RSS}}{\text{TSS}}\]</span></p>
+<p><span class="math display">\[R^2_{adj} = \frac {\text{TSS} - \text{RSS)}\,/\,(n-(p+1)}{\text{TSS}\,/\,(n-1)} =  1-\frac{\text{RSS}}{\text{TSS}}\]</span> $$</p>
+<p><span class="math display">\[\text{TSS} = \sum (y_i-\bar y)^2\]</span></p>
+</section>
+<section id="전체-모델의-유의성-검정" class="level3">
+<h3 class="anchored" data-anchor-id="전체-모델의-유의성-검정">전체 모델의 유의성 검정</h3>
+<p><code>-</code> 가설 설정</p>
+<p><span class="math display">\[H_0 : \beta_1 = \beta_1 = \dots \beta_p = 0, \quad H_1  : \text{not} H_0\]</span></p>
+<p><code>-</code> <span class="math inline">\(F-statistic\)</span></p>
+<p><span class="math display">\[F = \frac {(TSS - RSS)\,/\,p}{RSS\,/\,(n-(p+1))}\]</span></p>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">summary</h3>
+<p><code>-</code> 정리하다보니 순서가 조금 엉켰지만! 회귀분석 순서는 아래의 순서로 기억하자.</p>
+<ol type="1">
+<li><p>전체 모델에 대한 유의성 검정</p></li>
+<li><p>개별 변수에 대한 유의성 검정</p></li>
+<li><p>결정계수값 확인</p></li>
+<li><p>잔차분석 (이번 블로그에서는 위 내용은 생략)</p></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="lab-1.-단순선형회귀" class="level1">
+<h1>Lab 1. 단순선형회귀</h1>
 <section id="데이터-로드" class="level2">
 <h2 class="anchored" data-anchor-id="데이터-로드">데이터 로드</h2>
 <p><code>-</code> 아래의 데이터를 살펴보자.</p>
@@ -393,11 +478,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>medv : 본인 소유의 주택가격(중앙값) (단위 : $ 1,000)</li>
 </ul></li>
 </ul>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:285,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418295016,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9149e5ae-7ea3-455e-ca53-0b3a5808dc6e" data-tags="[]" data-execution_count="3">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:285,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418295016,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9149e5ae-7ea3-455e-ca53-0b3a5808dc6e" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>Boston <span class="op">=</span> load_data(<span class="st">"Boston"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a>Boston.columns</span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#len(Boston.columns)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>Index(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',
        'ptratio', 'lstat', 'medv'],
       dtype='object')</code></pre>
@@ -411,12 +496,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>lstat</code> 변수를 예측변수로, <code>medv</code>변수를 반응변수로 사용</li>
 </ul>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:367,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418296890,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="f944789d-4e28-4573-d367-427f6d4879c0" data-tags="[]" data-execution_count="4">
+<div class="cell" data-executioninfo="{&quot;elapsed&quot;:367,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418296890,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="f944789d-4e28-4573-d367-427f6d4879c0" data-tags="[]" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">"intercept"</span> : np.ones(Boston.shape[<span class="dv">0</span>]),</span>
 <span id="cb7-2"><a href="#cb7-2"></a>                  <span class="st">"lstat"</span> : Boston[<span class="st">"lstat"</span>]})</span>
 <span id="cb7-3"><a href="#cb7-3"></a>y <span class="op">=</span> Boston[<span class="st">"medv"</span>]</span>
 <span id="cb7-4"><a href="#cb7-4"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -526,15 +611,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-3"><a href="#cb12-3"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;matplotlib.legend.Legend at 0x28355668350&gt;</code></pre>
+<pre><code>&lt;matplotlib.legend.Legend at 0x163b69b88d0&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-18-00. Simple Linear Regression_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+<p><img src="2023-08-18-00. Linear Regression_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
-<section id="modelspec-bf-x를-선언하는-또-다른-방법" class="level2">
-<h2 class="anchored" data-anchor-id="modelspec-bf-x를-선언하는-또-다른-방법">ModelSpec() : <span class="math inline">\(\bf X\)</span>를 선언하는 또 다른 방법</h2>
+<section id="modelspec-starstarstar" class="level2">
+<h2 class="anchored" data-anchor-id="modelspec-starstarstar"><code>ModelSpec()</code> (<span class="math inline">\(\star\star\star\)</span>)</h2>
 <p><code>-</code> 우리는 앞서 다음과 같은 module을 import 했다</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
 <span id="cb14-2"><a href="#cb14-2"></a>summarize,poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -632,13 +717,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Sun, 03 Sep 2023</td>
+<td>Sat, 09 Sep 2023</td>
 <td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
 <td>5.08e-88</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>19:16:47</td>
+<td>12:11:20</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
 <td>-1641.5</td>
 </tr>
@@ -677,8 +762,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[['Dep. Variable:', 'medv', '  R-squared:         ', '   0.544'],
  ['Model:', 'OLS', '  Adj. R-squared:    ', '   0.543'],
  ['Method:', 'Least Squares', '  F-statistic:       ', '   601.6'],
- ['Date:', 'Sun, 03 Sep 2023', '  Prob (F-statistic):', '5.08e-88'],
- ['Time:', '19:16:47', '  Log-Likelihood:    ', ' -1641.5'],
+ ['Date:', 'Sat, 09 Sep 2023', '  Prob (F-statistic):', '5.08e-88'],
+ ['Time:', '12:11:20', '  Log-Likelihood:    ', ' -1641.5'],
  ['No. Observations:', '   506', '  AIC:               ', '   3287.'],
  ['Df Residuals:', '   504', '  BIC:               ', '   3295.'],
  ['Df Model:', '     1', '                     ', ' '],
@@ -723,13 +808,13 @@ dtype: float64</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Sun, 03 Sep 2023</td>
+<td>Sat, 09 Sep 2023</td>
 <td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
 <td>5.08e-88</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>19:16:47</td>
+<td>12:11:20</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
 <td>-1641.5</td>
 </tr>
@@ -822,22 +907,28 @@ dtype: float64</code></pre>
 <span id="cb28-3"><a href="#cb28-3"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>&lt;matplotlib.legend.Legend at 0x283559cf750&gt;</code></pre>
+<pre><code>&lt;matplotlib.legend.Legend at 0x163b6c7cd10&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-18-00. Simple Linear Regression_files/figure-html/cell-22-output-2.png" class="img-fluid"></p>
+<p><img src="2023-08-18-00. Linear Regression_files/figure-html/cell-22-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="test-data에-대한-예측" class="level2">
-<h2 class="anchored" data-anchor-id="test-data에-대한-예측">test data에 대한 예측</h2>
-<p><code>-</code> 임의의 데이터 생성</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:6,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418447270,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="ee28e538-7a73-486d-953f-728113526577" data-tags="[]" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>new_df <span class="op">=</span> pd.DataFrame({<span class="st">'lstat'</span>:[<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>]})</span>
-<span id="cb30-2"><a href="#cb30-2"></a>newX <span class="op">=</span> design.fit_transform(new_df)</span>
-<span id="cb30-3"><a href="#cb30-3"></a>newX</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+</section>
+<section id="lab-2.-다중선형회귀" class="level1">
+<h1>Lab 2. 다중선형회귀</h1>
+<p><code>-</code> 이번에는 <code>lstat</code>, <code>age</code>를 예측 변수 <span class="math inline">\(\bf X\)</span>로 선언하고, 반응변수를 <code>medv</code>로 선언하고 개별 회귀계수의 유의성 검정</p>
+<ul>
+<li>음…. 모두 유의미하게 나왔음!</li>
+</ul>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>X <span class="op">=</span>MS([<span class="st">"lstat"</span>,<span class="st">"age"</span>]).fit_transform(Boston)</span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a>model1 <span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb30-4"><a href="#cb30-4"></a>results1 <span class="op">=</span> model1.fit()</span>
+<span id="cb30-5"><a href="#cb30-5"></a>summarize(results1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 
 
@@ -845,25 +936,33 @@ dtype: float64</code></pre>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">intercept</th>
-<th data-quarto-table-cell-role="th">lstat</th>
+<th data-quarto-table-cell-role="th">coef</th>
+<th data-quarto-table-cell-role="th">std err</th>
+<th data-quarto-table-cell-role="th">t</th>
+<th data-quarto-table-cell-role="th">P&gt;|t|</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>1.0</td>
-<td>5</td>
+<td data-quarto-table-cell-role="th">intercept</td>
+<td>33.2228</td>
+<td>0.731</td>
+<td>45.458</td>
+<td>0.000</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>1.0</td>
-<td>10</td>
+<td data-quarto-table-cell-role="th">lstat</td>
+<td>-1.0321</td>
+<td>0.048</td>
+<td>-21.416</td>
+<td>0.000</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>1.0</td>
-<td>15</td>
+<td data-quarto-table-cell-role="th">age</td>
+<td>0.0345</td>
+<td>0.012</td>
+<td>2.826</td>
+<td>0.005</td>
 </tr>
 </tbody>
 </table>
@@ -871,78 +970,612 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<p><code>-</code> 예측</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:300,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418450401,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9d35d037-b751-49be-e1f3-fefe111d3492" data-tags="[]" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>new_predictions <span class="op">=</span> results.get_prediction(newX)</span>
-<span id="cb31-2"><a href="#cb31-2"></a>new_predictions.predicted_mean <span class="co">## 예측값 확인</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="23">
-<pre><code>array([29.80359411, 25.05334734, 20.30310057])</code></pre>
+<p><code>-</code> 이번엔 반응변수를 제외한 모든 변수를 사용</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>terms <span class="op">=</span> Boston.columns.drop(<span class="st">"medv"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>Index(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',
+       'ptratio', 'lstat'],
+      dtype='object')</code></pre>
 </div>
 </div>
-<p><code>-</code> 예측값에 대한 신뢰구간 (유의수준 = 0.05)</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418451688,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="43473eeb-4c72-4941-84d2-01cb0c67d35c" data-tags="[]" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>new_predictions.conf_int(alpha<span class="op">=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="24">
-<pre><code>array([[29.00741194, 30.59977628],
-       [24.47413202, 25.63256267],
-       [19.73158815, 20.87461299]])</code></pre>
-</div>
-</div>
-<p><code>-</code> 예측값에 대한 예측구간 (유의수준 = 0.05)</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418452804,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="81249bd3-bb21-493f-e071-c84b606792f1" data-tags="[]" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>new_predictions.conf_int(obs<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
-<pre><code>array([[17.56567478, 42.04151344],
-       [12.82762635, 37.27906833],
-       [ 8.0777421 , 32.52845905]])</code></pre>
-</div>
-</div>
-</section>
-<section id="fitted-value-vs-residual" class="level2">
-<h2 class="anchored" data-anchor-id="fitted-value-vs-residual"><code>fitted value</code> vs <code>residual</code></h2>
-<p><span class="math display">\[\text{resid} = y-\hat y\]</span></p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:278,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418454983,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>fv <span class="op">=</span> results.fittedvalues <span class="co">## 적합치</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>re <span class="op">=</span> results.resid <span class="co">## 잔차</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418455898,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1648,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418458769,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="32fd9875-2773-4b90-b820-faa62198d176" data-tags="[]" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># code-fold : true</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>fig,axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>,figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
-<span id="cb39-3"><a href="#cb39-3"></a></span>
-<span id="cb39-4"><a href="#cb39-4"></a>ax1,ax2 <span class="op">=</span> axes</span>
-<span id="cb39-5"><a href="#cb39-5"></a>ax1.plot(fv,re,<span class="st">"o"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb39-6"><a href="#cb39-6"></a>ax1.axhline(<span class="dv">0</span>,c<span class="op">=</span><span class="st">"k"</span>,ls <span class="op">=</span><span class="st">"--"</span>) <span class="co">## c=k 검은색, ls= linestyle</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a>ax1.set_xlabel(<span class="st">"fitted value"</span>)</span>
-<span id="cb39-8"><a href="#cb39-8"></a>ax1.set_ylabel(<span class="st">"Residual"</span>)</span>
-<span id="cb39-9"><a href="#cb39-9"></a>ax1.set_title(<span class="st">"fitted value vs Residual"</span>)</span>
-<span id="cb39-10"><a href="#cb39-10"></a></span>
-<span id="cb39-11"><a href="#cb39-11"></a>_ <span class="op">=</span> stats.probplot(re,plot<span class="op">=</span>ax2)</span>
-<span id="cb39-12"><a href="#cb39-12"></a>ax2.set_ylabel(<span class="st">"standard residual"</span>)</span>
-<span id="cb39-13"><a href="#cb39-13"></a>ax2.set_title(<span class="st">"qqplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>X <span class="op">=</span> MS(terms).fit_transform(Boston)</span>
+<span id="cb33-2"><a href="#cb33-2"></a>model <span class="op">=</span> sm.OLS(y, X)</span>
+<span id="cb33-3"><a href="#cb33-3"></a></span>
+<span id="cb33-4"><a href="#cb33-4"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb33-5"><a href="#cb33-5"></a>summarize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
-<pre><code>Text(0.5, 1.0, 'qqplot')</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="2023-08-18-00. Simple Linear Regression_files/figure-html/cell-29-output-2.png" class="img-fluid"></p>
-</div>
-</div>
-<section id="잔차-해석" class="level3">
-<h3 class="anchored" data-anchor-id="잔차-해석">잔차 해석</h3>
-<ul>
-<li><p>잔차 plot을 살펴본 결과 : fitted value가 커질수록 잔차의 분산도 커지고 있다. <span class="math inline">\(\to\)</span> 잔차가 등분산성을 만족하지 못하고 있다.</p>
-<ul>
-<li>반응변수에 변환을 취하거나, 가중최소 제곱법을 이용해 해결해야한다.</li>
-</ul></li>
-<li><p>qqplot을 그려본결과 왼쪽 꼬리는 이론적으로 나와야할 값보다. 큰값을 가진다.</p></li>
-<li><p>오른쪽 꼬리는 마찬가지이다.</p></li>
-<li><p>즉, 잔차는 정규성 가정에 위배되는 것처럼 보인다.</p></li>
-</ul>
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">coef</th>
+<th data-quarto-table-cell-role="th">std err</th>
+<th data-quarto-table-cell-role="th">t</th>
+<th data-quarto-table-cell-role="th">P&gt;|t|</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">intercept</td>
+<td>41.6173</td>
+<td>4.936</td>
+<td>8.431</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">crim</td>
+<td>-0.1214</td>
+<td>0.033</td>
+<td>-3.678</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">zn</td>
+<td>0.0470</td>
+<td>0.014</td>
+<td>3.384</td>
+<td>0.001</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">indus</td>
+<td>0.0135</td>
+<td>0.062</td>
+<td>0.217</td>
+<td>0.829</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">chas</td>
+<td>2.8400</td>
+<td>0.870</td>
+<td>3.264</td>
+<td>0.001</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">nox</td>
+<td>-18.7580</td>
+<td>3.851</td>
+<td>-4.870</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">rm</td>
+<td>3.6581</td>
+<td>0.420</td>
+<td>8.705</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">age</td>
+<td>0.0036</td>
+<td>0.013</td>
+<td>0.271</td>
+<td>0.787</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">dis</td>
+<td>-1.4908</td>
+<td>0.202</td>
+<td>-7.394</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">rad</td>
+<td>0.2894</td>
+<td>0.067</td>
+<td>4.325</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">tax</td>
+<td>-0.0127</td>
+<td>0.004</td>
+<td>-3.337</td>
+<td>0.001</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ptratio</td>
+<td>-0.9375</td>
+<td>0.132</td>
+<td>-7.091</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">lstat</td>
+<td>-0.5520</td>
+<td>0.051</td>
+<td>-10.897</td>
+<td>0.000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>-</code> 모델 적합결과 : <code>indus, age</code> 변수를 제외하고 모든 변수의 회귀계수가 유의미하게 나왔다.</p>
+<p><code>-</code> 근데, 우리는 유의미하게 나오지 않은 변수를 제외하고 모델을 만들고 싶음.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>minus_age <span class="op">=</span> Boston.columns.drop([<span class="st">"medv"</span>,<span class="st">"age"</span>,<span class="st">"indus"</span>])</span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a>X <span class="op">=</span> MS(minus_age).fit_transform(Boston)</span>
+<span id="cb34-4"><a href="#cb34-4"></a></span>
+<span id="cb34-5"><a href="#cb34-5"></a>model1<span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb34-6"><a href="#cb34-6"></a>summarize(model1.fit())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">coef</th>
+<th data-quarto-table-cell-role="th">std err</th>
+<th data-quarto-table-cell-role="th">t</th>
+<th data-quarto-table-cell-role="th">P&gt;|t|</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">intercept</td>
+<td>41.4517</td>
+<td>4.903</td>
+<td>8.454</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">crim</td>
+<td>-0.1217</td>
+<td>0.033</td>
+<td>-3.696</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">zn</td>
+<td>0.0462</td>
+<td>0.014</td>
+<td>3.378</td>
+<td>0.001</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">chas</td>
+<td>2.8719</td>
+<td>0.863</td>
+<td>3.329</td>
+<td>0.001</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">nox</td>
+<td>-18.2624</td>
+<td>3.565</td>
+<td>-5.122</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">rm</td>
+<td>3.6730</td>
+<td>0.409</td>
+<td>8.978</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">dis</td>
+<td>-1.5160</td>
+<td>0.188</td>
+<td>-8.078</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">rad</td>
+<td>0.2839</td>
+<td>0.064</td>
+<td>4.440</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">tax</td>
+<td>-0.0123</td>
+<td>0.003</td>
+<td>-3.608</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ptratio</td>
+<td>-0.9310</td>
+<td>0.130</td>
+<td>-7.138</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">lstat</td>
+<td>-0.5465</td>
+<td>0.047</td>
+<td>-11.519</td>
+<td>0.000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>-</code> 적합결과 모두 유의미하게 나왔다.</p>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>model1.fit().summary().tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>medv</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.734</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.729</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>136.8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sat, 09 Sep 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>1.73e-135</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>12:32:49</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-1505.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>506</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>3032.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>495</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>3078.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>10</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
+<section id="lab-3.-vif" class="level1">
+<h1>Lab 3. VIF</h1>
+<p><code>-</code> 분산팽창지수(<span class="math inline">\(\text{VIF}\)</span>)는 다음과 같이 정의된다.</p>
+<p><span class="math display">\[\text{VIF}(\hat {\beta}_j) = \frac{1}{1- R^2_{X_j | X_{-j}}}\]</span></p>
+<p><code>-</code> 위 식을 해석하면 다음과 같다.</p>
+<ul>
+<li><p><span class="math inline">\(R^2_{X_j | X_{-j}}\)</span> : <span class="math inline">\(X_j\)</span>를 반응변수로, <span class="math inline">\(X_j\)</span>를 제외한 모든 변수들을 예측변수로 설정하였을 떄 산출되는 결정계수 값</p></li>
+<li><p>위 식에서 <span class="math inline">\(R^2_{X_j | X_{-j}}\)</span> 크다는 것은 분모값이 작아지므로 <span class="math inline">\(\text{VIF}(\hat {\beta}_j)\)</span>는 커지게된다.</p></li>
+<li><p>이말은, <span class="math inline">\(X_j\)</span>가 다른 변수들과의 연관성이 높아 다중공선성 문제가 의심된다는 것이다.</p></li>
+<li><p>보통 <code>5~ 10</code>을 초과하면 다중공선성의 문제가 있다고 본다.</p></li>
+</ul>
+<p><code>-</code> 코드 작성</p>
+<div class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># step 1.  X 생성</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a>term  <span class="op">=</span> Boston.columns.drop(<span class="st">"medv"</span>) </span>
+<span id="cb36-4"><a href="#cb36-4"></a>X <span class="op">=</span> MS(terms).fit_transform(Boston)</span>
+<span id="cb36-5"><a href="#cb36-5"></a>col <span class="op">=</span> X.columns</span>
+<span id="cb36-6"><a href="#cb36-6"></a></span>
+<span id="cb36-7"><a href="#cb36-7"></a><span class="co"># step 2.  각 예측변수의 분산팽창지수 계산</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a>pd.DataFrame({col[i]: [VIF(X,i)] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,X.shape[<span class="dv">1</span>])})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="76">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">crim</th>
+<th data-quarto-table-cell-role="th">zn</th>
+<th data-quarto-table-cell-role="th">indus</th>
+<th data-quarto-table-cell-role="th">chas</th>
+<th data-quarto-table-cell-role="th">nox</th>
+<th data-quarto-table-cell-role="th">rm</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">dis</th>
+<th data-quarto-table-cell-role="th">rad</th>
+<th data-quarto-table-cell-role="th">tax</th>
+<th data-quarto-table-cell-role="th">ptratio</th>
+<th data-quarto-table-cell-role="th">lstat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.767486</td>
+<td>2.298459</td>
+<td>3.987181</td>
+<td>1.071168</td>
+<td>4.369093</td>
+<td>1.912532</td>
+<td>3.088232</td>
+<td>3.954037</td>
+<td>7.445301</td>
+<td>9.002158</td>
+<td>1.79706</td>
+<td>2.870777</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>-</code> 음… 결과를 보니 <code>tax, rad</code>의 경우 분산팽창지수가 높게 나왔다.</p>
+<ul>
+<li><p>주성분 분석이나, 요인 분석을 통해 해당 변수를 합쳐서 해결하는 방안이 있다.</p></li>
+<li><p>Ridge, Lasso 회귀분석을 이용</p></li>
+<li><p>해당 변수를 제거 (<strong>그러나 해당 변수가 분석에서 중요한 경우가 있기 때문에, 연관성이 높은 변수들끼리 합쳐 평균을 내던지… 등등에 방법이 이용되나 이도 완벽하지 않음 </strong>)</p></li>
+</ul>
+</section>
+<section id="lab-4.-qualitative-predictors" class="level1">
+<h1>Lab 4. Qualitative Predictors</h1>
+<p><code>MS</code> 함수는 범주형 변수를 자동으로 <code>원핫 인코딩</code>을 수행해준다!! 얼마나 편한가~~</p>
+<div class="cell" data-execution_count="100">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>Carseats <span class="op">=</span> load_data(<span class="st">'Carseats'</span>)</span>
+<span id="cb37-2"><a href="#cb37-2"></a>Carseats.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="100">
+<pre><code>Index(['Sales', 'CompPrice', 'Income', 'Advertising', 'Population', 'Price',
+       'ShelveLoc', 'Age', 'Education', 'Urban', 'US'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="122">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>x <span class="op">=</span> <span class="bu">list</span>(Carseats.columns.drop(<span class="st">'Sales'</span>))</span>
+<span id="cb39-2"><a href="#cb39-2"></a>y <span class="op">=</span> Carseats[<span class="st">'Sales'</span>]</span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a>X <span class="op">=</span> MS(x).fit_transform(Carseats)</span>
+<span id="cb39-5"><a href="#cb39-5"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb39-6"><a href="#cb39-6"></a>model.fit().summary().tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="122">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>Sales</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.873</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.870</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>243.4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sat, 09 Sep 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>1.60e-166</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>13:08:45</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-568.99</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>400</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>1162.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>388</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>1210.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>11</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="123">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>model.fit().summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="123">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">intercept</td>
+<td>5.6606</td>
+<td>0.603</td>
+<td>9.380</td>
+<td>0.000</td>
+<td>4.474</td>
+<td>6.847</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CompPrice</td>
+<td>0.0928</td>
+<td>0.004</td>
+<td>22.378</td>
+<td>0.000</td>
+<td>0.085</td>
+<td>0.101</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Income</td>
+<td>0.0158</td>
+<td>0.002</td>
+<td>8.565</td>
+<td>0.000</td>
+<td>0.012</td>
+<td>0.019</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Advertising</td>
+<td>0.1231</td>
+<td>0.011</td>
+<td>11.066</td>
+<td>0.000</td>
+<td>0.101</td>
+<td>0.145</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Population</td>
+<td>0.0002</td>
+<td>0.000</td>
+<td>0.561</td>
+<td>0.575</td>
+<td>-0.001</td>
+<td>0.001</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Price</td>
+<td>-0.0954</td>
+<td>0.003</td>
+<td>-35.700</td>
+<td>0.000</td>
+<td>-0.101</td>
+<td>-0.090</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ShelveLoc[Good]</td>
+<td>4.8502</td>
+<td>0.153</td>
+<td>31.678</td>
+<td>0.000</td>
+<td>4.549</td>
+<td>5.151</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">ShelveLoc[Medium]</td>
+<td>1.9567</td>
+<td>0.126</td>
+<td>15.516</td>
+<td>0.000</td>
+<td>1.709</td>
+<td>2.205</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Age</td>
+<td>-0.0460</td>
+<td>0.003</td>
+<td>-14.472</td>
+<td>0.000</td>
+<td>-0.052</td>
+<td>-0.040</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Education</td>
+<td>-0.0211</td>
+<td>0.020</td>
+<td>-1.070</td>
+<td>0.285</td>
+<td>-0.060</td>
+<td>0.018</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Urban[Yes]</td>
+<td>0.1229</td>
+<td>0.113</td>
+<td>1.088</td>
+<td>0.277</td>
+<td>-0.099</td>
+<td>0.345</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">US[Yes]</td>
+<td>-0.1841</td>
+<td>0.150</td>
+<td>-1.229</td>
+<td>0.220</td>
+<td>-0.479</td>
+<td>0.111</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="summary-lab" class="level2">
+<h2 class="anchored" data-anchor-id="summary-lab">summary : Lab</h2>
+<p><code>-</code> 구구절절 말이 많았지만, 회귀모형 적합 시 아래의 step을 기억하자.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="co"># step 0. import</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
+<span id="cb41-5"><a href="#cb41-5"></a>summarize,poly)</span>
+<span id="cb41-6"><a href="#cb41-6"></a></span>
+<span id="cb41-7"><a href="#cb41-7"></a><span class="co"># step 1. x, y를 저장</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a>x <span class="op">=</span> data.columns.drop(<span class="st">"target"</span>) </span>
+<span id="cb41-9"><a href="#cb41-9"></a>y <span class="op">=</span> data[<span class="st">"target"</span>]</span>
+<span id="cb41-10"><a href="#cb41-10"></a></span>
+<span id="cb41-11"><a href="#cb41-11"></a><span class="co"># step 2.  matrix 형태의 X 생성</span></span>
+<span id="cb41-12"><a href="#cb41-12"></a>X <span class="op">=</span> MS(final).fit_transform(data)</span>
+<span id="cb41-13"><a href="#cb41-13"></a></span>
+<span id="cb41-14"><a href="#cb41-14"></a><span class="co"># step 3. 최소제곱법(OLS)를 이용하여 모델을 적합하겠다고 선언</span></span>
+<span id="cb41-15"><a href="#cb41-15"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb41-16"><a href="#cb41-16"></a></span>
+<span id="cb41-17"><a href="#cb41-17"></a><span class="co"># step 4. 모형에 대한 유의성 확인</span></span>
+<span id="cb41-18"><a href="#cb41-18"></a>model.fit().summary().tables[<span class="dv">0</span>]</span>
+<span id="cb41-19"><a href="#cb41-19"></a></span>
+<span id="cb41-20"><a href="#cb41-20"></a><span class="co"># step 5. 개별 회귀계수에 대한 유의성 확인</span></span>
+<span id="cb41-21"><a href="#cb41-21"></a>model.fit().summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
 </section>
 </section>
 
