@@ -74,7 +74,35 @@
     "href": "posts/2023-09-09-01. classification.html",
     "title": "01. Classification",
     "section": "",
-    "text": "Overview 1. MSE\n- 해당 책에서는 우리가 평소에 회귀분석에서 쓰던 \\(\\text {MSE}= \\frac {SSE}{n-(p+1)}\\) 이라고 표현하지 않는다.\n- 교재에서 말하는 \\(\\text{MSE}\\)란 다음과 같다.\n\\[\\text{MSE} = E[(\\hat y - y)^2]\\]\n- 즉, 예측값과 실제값의 차이를 제곱합으로 계산 후 평균을 내는것이다.\n- 이를 다시 나누어 보자\n\\[\\begin {align} E[(\\hat y - y)^2] &= Var(\\hat y) + \\text {bias}   \\\\\n                                                                &= E[(\\hat y - E(\\hat y ))^2] + E[(E(\\hat y) - y)^2] \\end {align}\\]"
+    "text": "- 해당 책에서는 우리가 평소에 회귀분석에서 쓰던 \\(\\text {MSE}= \\frac {SSE}{n-(p+1)}\\) 이라고 표현하지 않는다.\n- 교재에서 말하는 \\(\\text{MSE}\\)란 다음과 같다.\n\\[\\text{MSE} = E[(\\hat y - y)^2]\\]\n- 즉, 예측값과 실제값의 차이를 제곱합으로 계산 후 평균을 내는것이다.\n- 이를 다시 나누어 보자\n\\[\\begin {align} E[(\\hat y - y)^2] &= Var(\\hat y) + \\text {bias}^2   \\\\\n                                                                &= E[(\\hat y - E(\\hat y ))^2] + E[(E(\\hat y) - y)^2] + Var(\\varepsilon) \\end {align}\\]\n- \\(Var(\\hat y) \\, \\to \\,\\) 훈련자료의 변화에 \\(\\hat y\\)가 얼마나 민감하게 반응하는가?\n- \\(\\text {bias}^2\\) : 실제자료를 모형으로 얼마나 가깝게 근사할 수 있는가? (만약, \\(E(\\hat y) = y\\) 일 경우 해당 추정량은 불편추정량이다.)\n\n\\(Var(\\hat y),\\,\\text {bias}^2\\) 는 reducible error로 어떤 모델을 선택하느냐에 따라 줄일 수 있는 오차이다.\n\n- \\(Var(\\varepsilon)\\) : 어떤 모델을 사용하건 줄일 수 없는 오차\n- Flexibility : 모델 복잡도 측도\n\nFlexibility가 높아지면 \\(Var(\\hat y)\\) 는 높아지고, \\(\\text {bias}\\)는 낮아진다. (trade-off)\n이를 바꿔말하면 더 유연한(복잡한) 모형은 더 큰 분산을 가지고 더 단순한 모형일수록 큰 편의를 가진다.\n훈련 데이터로 모델 적합시, bias를 낮추기 위해 Var를 높여 모델 복잡도를 지나치게 높이는 것은 좋은 선택이 아니다.\n아래의 예시는 모형의 복잡도가 너무 높으면 평가 데이터에 대한 MSE가 오히려 과대추정되는 “과적합 문제” 를 보여주고 있다.\n\n\n\n\n\n\n\n\n\n- 실제로 위의 원데이터는 일반적인 선형모형으로 적합해도 괜찮을 것 같다.\n- 왼쪽그림에서 지나치게 복잡하게 적합된 초록색 선을 살펴보자.\n\n훈련 MSE(회색선) 는 3개의 모델 중 가장 낮으나, 과적합 이슈로 평가 MSE(빨간색선) 가 과대추정된 것을 볼 수 있다.\n\n\n\n\n\n\n\n- 위 데이터는 ex1과 달리 일반적인 선형회귀모형으로 적합하면 안될것 같은 느낌이 든다.\n- 파란색선은 중간 정도로 적합된 복잡한 모형이고, 초록색선은 지나치게 적합된 모형이다.\n\n오른쪽 그림을 살펴보면 파란색선으로 적합된 모형의 Test MSE가 가장 낮음을 볼 수 있다."
+  },
+  {
+    "objectID": "posts/2023-09-09-01. classification.html#ex1",
+    "href": "posts/2023-09-09-01. classification.html#ex1",
+    "title": "01. Classification",
+    "section": "",
+    "text": "- 실제로 위의 원데이터는 일반적인 선형모형으로 적합해도 괜찮을 것 같다.\n- 왼쪽그림에서 지나치게 복잡하게 적합된 초록색 선을 살펴보자.\n\n훈련 MSE(회색선) 는 3개의 모델 중 가장 낮으나, 과적합 이슈로 평가 MSE(빨간색선) 가 과대추정된 것을 볼 수 있다."
+  },
+  {
+    "objectID": "posts/2023-09-09-01. classification.html#ex2",
+    "href": "posts/2023-09-09-01. classification.html#ex2",
+    "title": "01. Classification",
+    "section": "",
+    "text": "- 위 데이터는 ex1과 달리 일반적인 선형회귀모형으로 적합하면 안될것 같은 느낌이 든다.\n- 파란색선은 중간 정도로 적합된 복잡한 모형이고, 초록색선은 지나치게 적합된 모형이다.\n\n오른쪽 그림을 살펴보면 파란색선으로 적합된 모형의 Test MSE가 가장 낮음을 볼 수 있다."
+  },
+  {
+    "objectID": "posts/2023-09-09-01. classification.html#summary",
+    "href": "posts/2023-09-09-01. classification.html#summary",
+    "title": "01. Classification",
+    "section": "summary",
+    "text": "summary\n1 정확도 : 전체에서 예측값과 실제값이 일치하는 비율\n2 정밀도 : 내가 참이라고 예측한 것 중에 실제로 참인 비율 (전, 이걸 모델의 건방짐이라고 외웠습니다.)\n3 재현율 : 실제 참인 것들 중에서 모델이 참이라고 예측한 비율 (회사의 입장)"
+  },
+  {
+    "objectID": "posts/2023-09-09-01. classification.html#로지스틱-회귀모형",
+    "href": "posts/2023-09-09-01. classification.html#로지스틱-회귀모형",
+    "title": "01. Classification",
+    "section": "1. 로지스틱 회귀모형",
+    "text": "1. 로지스틱 회귀모형"
   },
   {
     "objectID": "index.html",
