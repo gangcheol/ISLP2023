@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="GC">
-<meta name="dcterms.date" content="2023-09-09">
+<meta name="dcterms.date" content="2023-09-10">
 
 <title>Gangcheol - 01. Classification</title>
 <style>
@@ -97,6 +97,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -196,7 +199,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 9, 2023</p>
+        <p class="date">September 10, 2023</p>
       </div>
     </div>
     
@@ -262,6 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">00. 단순선형회귀분석</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/study/2023-09-12-01. tesorflow (1) .html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01. tensorflow (1)</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -287,7 +296,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification">Classification</a>
   <ul class="collapse">
-  <li><a href="#로지스틱-회귀모형" id="toc-로지스틱-회귀모형" class="nav-link" data-scroll-target="#로지스틱-회귀모형">1. 로지스틱 회귀모형</a></li>
+  <li><a href="#로지스틱-회귀모형" id="toc-로지스틱-회귀모형" class="nav-link" data-scroll-target="#로지스틱-회귀모형">1. 로지스틱 회귀모형</a>
+  <ul class="collapse">
+  <li><a href="#model-1.-이진분류" id="toc-model-1.-이진분류" class="nav-link" data-scroll-target="#model-1.-이진분류">model 1. 이진분류</a></li>
+  <li><a href="#모델-추정이진-분류" id="toc-모델-추정이진-분류" class="nav-link" data-scroll-target="#모델-추정이진-분류">모델 추정(이진 분류)</a></li>
+  <li><a href="#model-2.-다중분류" id="toc-model-2.-다중분류" class="nav-link" data-scroll-target="#model-2.-다중분류">model 2. 다중분류</a></li>
+  </ul></li>
+  <li><a href="#판별분석discriminant-analysis" id="toc-판별분석discriminant-analysis" class="nav-link" data-scroll-target="#판별분석discriminant-analysis">2. 판별분석(discriminant analysis)</a>
+  <ul class="collapse">
+  <li><a href="#ldalinear-discriminant-analysis" id="toc-ldalinear-discriminant-analysis" class="nav-link" data-scroll-target="#ldalinear-discriminant-analysis">(1) LDA(Linear discriminant analysis)</a></li>
+  <li><a href="#qdaquadratic-discriminant-analysis" id="toc-qdaquadratic-discriminant-analysis" class="nav-link" data-scroll-target="#qdaquadratic-discriminant-analysis">(2) QDA(Quadratic discriminant analysis)</a></li>
+  </ul></li>
+  <li><a href="#knnk-nearest-neighbors" id="toc-knnk-nearest-neighbors" class="nav-link" data-scroll-target="#knnk-nearest-neighbors">3. KNN(K-nearest neighbors)</a></li>
+  <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1">summary</a></li>
+  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes">4. Naive Bayes</a></li>
+  </ul></li>
+  <li><a href="#lab" id="toc-lab" class="nav-link" data-scroll-target="#lab">Lab</a>
+  <ul class="collapse">
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">import</a></li>
+  <li><a href="#data-load" id="toc-data-load" class="nav-link" data-scroll-target="#data-load">data load</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">correlation</a></li>
+  <li><a href="#model1.-logistic" id="toc-model1.-logistic" class="nav-link" data-scroll-target="#model1.-logistic">model1. Logistic</a>
+  <ul class="collapse">
+  <li><a href="#데이터셋-분할" id="toc-데이터셋-분할" class="nav-link" data-scroll-target="#데이터셋-분할">데이터셋 분할</a></li>
+  <li><a href="#모델-적합" id="toc-모델-적합" class="nav-link" data-scroll-target="#모델-적합">모델 적합</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -358,9 +391,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>정확도를 살펴보니 채무이행여부를 판단하기 위해 만든 모델이 적절하게 잘 만들어진 것 같다.</li>
 </ul>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="288">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a>((<span class="dv">9644</span> <span class="op">+</span> <span class="dv">81</span>)<span class="op">/</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="288">
 <pre><code>0.9725</code></pre>
 </div>
 </div>
@@ -371,18 +404,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>그런데 실제 채무를 이행하지 않은 사람들은 <code>333</code>명인데 예측 모델이 채무를 이행하지 않았다고 예측한 사람은 <code>81</code> 명이다.</li>
 </ul>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="289">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="dv">81</span><span class="op">/</span><span class="dv">333</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="289">
 <pre><code>0.24324324324324326</code></pre>
 </div>
 </div>
 <center>
 <img src="4.png" width="500">
 </center>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="290">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>(<span class="dv">81</span><span class="op">/</span><span class="dv">104</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="290">
 <pre><code>0.7788461538461539</code></pre>
 </div>
 </div>
@@ -409,8 +442,624 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Classification</h1>
 <section id="로지스틱-회귀모형" class="level2">
 <h2 class="anchored" data-anchor-id="로지스틱-회귀모형">1. 로지스틱 회귀모형</h2>
+<p><code>-</code> 로지스틱 모형은 target 변수인 <span class="math inline">\(y\)</span>에 대한 직접적 모형화가 아닌 <span class="math inline">\(y\)</span>가 특정 법주에 포함될 확률을 모형화한다.</p>
+<p><span class="math display">\[P(y=1 \,|\, \bf {X})\]</span></p>
+<p><code>-</code> 임계치(threshole)를 정하고 어떤 범주에 포함될 확률이 임계치보다 높으면 <strong>0 or 1</strong>로 예측하는 분류 모형이다. (이진분류에서!)</p>
+<section id="model-1.-이진분류" class="level3">
+<h3 class="anchored" data-anchor-id="model-1.-이진분류">model 1. 이진분류</h3>
+<p>step 1. <span class="math inline">\(P(X)\)</span> : 0과 1사이의 값으로 예측해주는 모형화 작성 <strong>(로지스틱 함수)</strong></p>
+<p><span class="math display">\[P(X) = \frac {\exp (\beta_0 + \beta_{1}X)}{1+\exp (\beta_0 + \beta_{1}X) } \in  (0,1 )\]</span></p>
+<p>step 2. <span class="math inline">\(\frac{P(X)}{ 1- P(X)}\)</span> : odds, 배팅을 하는 분야에서 확률 대신 많이 쓰이는 측도</p>
+<p><span class="math display">\[\frac {P(X)}{ 1- P(X)} =  \exp(\beta_0 + \beta_{1} X  ),\quad  \in (0,\infty)\]</span></p>
+<p>step 3. <span class="math inline">\(\log \frac {P(X)}{1-P(X)}\)</span> : 이와 같은 식을 logit이라고 하며, 해당 함수를 선형회귀처럼 작성하면 다음과 같다.</p>
+<p><span class="math display">\[\log \frac {P(X)}{1-P(X)}  = \beta_0 + \beta_1 X,\quad \in (-\infty, \infty)\]</span></p>
+</section>
+<section id="모델-추정이진-분류" class="level3">
+<h3 class="anchored" data-anchor-id="모델-추정이진-분류">모델 추정(이진 분류)</h3>
+<p><code>-</code> 반응변수는 범주형 변수이나 모형을 통해 예측된 값은 확률이므로 최소제곱법 등은 정당화 되기 어려움</p>
+<ul>
+<li><p>최대우도추정법(maximum likelihood estimation)으로 보통 추정한다.</p></li>
+<li><p>반응변수가 베르누이 (혹은 아항) 분포임을 이용하여 가능도함수를 기술함</p></li>
+</ul>
+<p><span class="math display">\[L = \prod_{i : y_i=1}p(x_i) \prod_{i^{\prime} : y_i^{\prime} =0}(1-p(x_i)) \]</span></p>
+<ul>
+<li><span class="math inline">\((\hat {\beta}_0, \hat {\beta}_1)\)</span> : 위 수식을 최대화 하는 추정치이다.</li>
+</ul>
+</section>
+<section id="model-2.-다중분류" class="level3">
+<h3 class="anchored" data-anchor-id="model-2.-다중분류">model 2. 다중분류</h3>
+<p><span class="math display">\[\log \frac {P(X)}{1-P(X)}  = \beta_0 + \beta_1 X + \dots \beta_{p}X_{p},\quad \in (-\infty, \infty)\]</span></p>
+<p><span class="math display">\[p(X) = \frac { \beta_0 + \beta_1 X + \dots \beta_{p}X_{p}}{1+exp\,( \beta_0 + \beta_1 X + \dots \beta_{p}X_{p})},\quad \in (0,1)\]</span></p>
+<hr>
+</section>
+</section>
+<section id="판별분석discriminant-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="판별분석discriminant-analysis">2. 판별분석(discriminant analysis)</h2>
+<p><code>-</code> 반응변수가 셋 이상의 범주를 가질 떄, 로지스틱 모형을 확장하여 위와 같이 고려할 수 있다.</p>
+<p><code>-</code> 그러나 다른 대안들의 존재로 인해 이 경우 로지스틱 모형은 폭넓게 스이지는 않는다.</p>
+<p><code>-</code> 대표적인 대안 중 하나는 <strong>선형판별분석</strong>이다.</p>
+<ul>
+<li><p>반응변수와 예측변수들의 결합분포에 기반한 방법</p></li>
+<li><p><span class="math inline">\(n\)</span>이작고 <span class="math inline">\(X\)</span>의 분포가 정규분포에 가까울 때 판별분석의 성능이 로지스틱보다 좋다.</p></li>
+</ul>
+<p><code>-</code> 베이즈 정리</p>
+<ul>
+<li><span class="math inline">\(k\)</span>번째 범주로부터 관측된 <span class="math inline">\(X\)</span>의 분포를 <span class="math inline">\(f_k(x)= P(X=x|Y =k) = P(X=x,Y =k)\)</span> 라 하고, <span class="math inline">\(\pi_k= P(Y=k)\)</span> 를 각 범주의 사전확률이라고 하면, 베이즈 정리에 의하여 다음을 얻는다.</li>
+</ul>
+<p><span class="math display">\[P(Y=k | X=x) = \frac{\pi_k f_k(x)}{\sum_{i=1}^{K} \pi_{i}f_{i}(x)}\]</span></p>
+<section id="ldalinear-discriminant-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="ldalinear-discriminant-analysis">(1) LDA(Linear discriminant analysis)</h3>
+<p><code>-</code> <span class="math inline">\(p=1, f_k(x)\)</span>가 정규분포임과 동시에 각 범주에 해당하는 분포의 분산은 동일하다 가정</p>
+<ul>
+<li><span class="math inline">\(p\)</span> 는 예측변수의 개수</li>
+</ul>
+<p><span class="math display">\[X \sim N(\mu_k, \sigma_k^{2})\]</span></p>
+<p><code>-</code> 조건부 확률 <span class="math inline">\(P(Y=k | X=x))\)</span>를 최대화 시키는 <span class="math inline">\(k\)</span>를 찾는 것은 아래의 판별함수를 최대화하는 <span class="math inline">\(k\)</span>를 찾는 것이다.</p>
+<ul>
+<li><span class="math inline">\(\hat{\delta}_{k}\)</span> 를 최대화시키는 범주 <span class="math inline">\(k\)</span>로 관측치를 할당.</li>
+</ul>
+<p><span class="math display">\[\delta_k(x) = x \frac {\mu_k}{\sigma^2} - \frac {\mu_{k}^2}{2\sigma^2}+ \log \pi_k\]</span></p>
+<p><code>-</code> <span class="math inline">\(K=2\)</span>인 경우, 분류를 위한 경계치는</p>
+<p><span class="math display">\[x = \frac {\mu_1+\mu_2}{2}\]</span></p>
+<center>
+<img src="5.png" width="400">
+</center>
+<p><code>-</code> 또한, <span class="math inline">\(p=1\)</span>인 경우, LDA는 다음과 같이 베이즈 분류기를 근사하게 된다.</p>
+<p><span class="math display">\[\hat {\delta}_k(x) = x \frac {\hat {\mu}_k}{\hat{\sigma}^2} - \frac {\hat{\mu}_{k}^2}{2\hat{\sigma}^2}+ \log \hat{\pi}_k\]</span></p>
+<p><span class="math display">\[\hat {\mu}_k = \frac{1}{n_k} \sum_{i : y_i=k} x_i\]</span></p>
+<p><span class="math display">\[\hat {\sigma}^2 = \frac{1}{n-K} \sum_{k=1}^K \sum_{i:y_i = k} (x_i - \hat {\mu}_k)^2\]</span></p>
+<p><span class="math display">\[\hat {P}(Y=k) = \hat {\pi}_k  = \frac{n_k}{n}\]</span></p>
+<p><code>-</code> LDA의 <code>linear</code>라는 단어는 판별함수 <span class="math inline">\(\hat {\delta}_k(x)\)</span>가 <span class="math inline">\(x\)</span>의 선형함수로 표현된다는 사실로부터 유래한다.</p>
+<section id="if-p1" class="level4">
+<h4 class="anchored" data-anchor-id="if-p1">if, p&gt;1?</h4>
+<p><code>-</code> 예측변수가 다변량인 경우 <span class="math inline">\(k\)</span>번째 범주에서 예측변수가 다변량 정규분포를 따른다는 가정으로부터 출발한다.</p>
+<p><span class="math display">\[f_k(x) \sim N(\mu_k, \Sigma)\]</span></p>
+<p><code>-</code> <span class="math inline">\(p=1\)</span> 일 때와 마찬기지로 모든 범주에서 공분산 행렬 <span class="math inline">\(\sum\)</span>는 동일하다고 가정</p>
+<p><span class="math display">\[\delta_k(x) = x ^{\top}{\Sigma}^{-1} {\mu_k}- \frac {1}{2} \mu_{k}^{\top}{\Sigma}^{-1}\mu_k+ \log \pi_k\]</span></p>
+</section>
+</section>
+<section id="qdaquadratic-discriminant-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="qdaquadratic-discriminant-analysis">(2) QDA(Quadratic discriminant analysis)</h3>
+<p><code>-</code> LDA와 다르게 각 범주를 특정하는 정규분포의 분산에 이질성을 허용한다.</p>
+<p><span class="math display">\[X \sim N(\mu_k, {\Sigma}_k)\]</span></p>
+<p><code>-</code> 판별함수는 다음과 같다.</p>
+<p><span class="math display">\[\delta_k(x) = -\frac{1}{2}(x-\mu_k) ^{\top}{\Sigma}_{k}^{-1}(x-\mu_k)- \frac {1}{2}\log |{\Sigma}_k|\log \pi_k\]</span></p>
+</section>
+</section>
+<section id="knnk-nearest-neighbors" class="level2">
+<h2 class="anchored" data-anchor-id="knnk-nearest-neighbors">3. KNN(K-nearest neighbors)</h2>
+<p><code>-</code> 조건부 확률을 인접한 <span class="math inline">\(K\)</span>개의 data points의 상대비율로 추정</p>
+<p><span class="math display">\[P(y=j | X = x_0) = \frac{1}{K} \sum_{i\in N_0} I(y_i=j)\]</span></p>
+<p><span class="math display">\[N_0  : x_0  \text{와 가장 가까운} K \text{개의 자료의 집합}\]</span></p>
+<p><code>-</code> 위 확률을 최대로 하는 <span class="math inline">\(j\)</span>로 관측치를 분류</p>
+<p><code>-</code> K의 선택이 분류기의 성능을 결정하는데 매우 핵심적인 역할을 수행한다,</p>
+</section>
+<section id="summary-1" class="level2">
+<h2 class="anchored" data-anchor-id="summary-1">summary</h2>
+<p><code>-</code> 범주가 2개일 때, LDA와 로지스틱모형은 선형적인 decision boundary를 생성한다는 측면에서 동일함</p>
+<p><code>-</code> 각 범주의 분포가 정규분포로 잘 근사되는지 여부에 의해서 두 방식의 성능이 엇갈릴 수 있음</p>
+<p><code>-</code> KNN은 decision boundary에 어떠한 가정도 하지 않음. 즉, decision boundary가 비선형인 경우 위 두 방식에 비해 우월성을 보임</p>
+<p><code>-</code> QDA는 qudratic decision boundary를 설정한다는 면에서 KNN과 LDA 혹은 로지스틱의 중간쯤에 위치하는 방법으로 볼 수 있음</p>
+<ul>
+<li><strong>모든 상황에서 항상 우월한 분류기는 없다</strong></li>
+</ul>
+</section>
+<section id="naive-bayes" class="level2">
+<h2 class="anchored" data-anchor-id="naive-bayes">4. Naive Bayes</h2>
+<p><code>-</code> 사실 LDA, QDA의 경우 <span class="math inline">\(X\)</span>의 확률분포가 정규분포라고 추정하는 것은 어렵다.</p>
+<ol type="1">
+<li><p>예측변수 <span class="math inline">\(X_j\)</span> 간의 어떠한 연관성이 있을수가 있음. 즉 독립이 아님</p></li>
+<li><p>따라서 추정이 어려움, 독립이 아닐경우, 결합분포, 주변확률 분포 등등 사전, 사후 확률 계산시 고려해야할 사항들이 너무 많고 복잡함.</p></li>
+<li><p>그래서 나이브 베이즈에서는 각각의 클래스안에서 예측변수들은 서로 독립이다. 라는 가정에서 출발</p></li>
+<li><p><span class="math inline">\(k\)</span>번째 클래스 안에서 <span class="math inline">\(X_j\)</span>에 대한 확률분포는 다음과 같다.</p></li>
+</ol>
+<p><span class="math display">\[X_j|Y = k \sim N(\mu_{jk},\sigma^{2}_{jk})\]</span></p>
+<p><code>-</code> 아래는 <span class="math inline">\(k\)</span>번째 클래스의 확률분포이다.</p>
+<p><span class="math display">\[f_k(x) = f_{k1}(x_1) \times \dots  \times f_{kp}(x_p) \]</span></p>
+<p><code>-</code> 이제 사후 확률을 계산식을 살펴보자</p>
+<p><span class="math display">\[P(Y=k|X=x ) = \frac{\pi_k \times f_{k1}(x_1) \times f_{k2}(x_2) \times f_{kp}(x_p)}{\sum_{i=1}^{k}\pi_i \times f_{i1}(x_1) \times f_{i2}(x_2) \times f_{ip}(x_p) }\]</span></p>
+<p><code>-</code> example : <span class="math inline">\(\pi_1= \pi_2= 0.5\)</span></p>
+<p>$K=1, (<em>{11}(0.4) = 0.368, ,</em>{12}(1.5) = 0.484, , _{13}(1) = 0.226) $</p>
+<p>$K=2, (<em>{21}(0.4) = 0.030, ,</em>{22}(1.5) = 0.130, , _{23}(1) = 0.616) $</p>
+<p>위 공식을 이용하여 각각에 대한 사후활률을 추정하면?</p>
+<div class="cell" data-execution_count="291">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>k1<span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span><span class="fl">0.368</span><span class="op">*</span><span class="fl">0.484</span><span class="op">*</span><span class="fl">0.226</span><span class="op">/</span>(<span class="fl">0.5</span><span class="op">*</span><span class="fl">0.368</span><span class="op">*</span><span class="fl">0.484</span><span class="op">*</span><span class="fl">0.226</span><span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span><span class="fl">0.030</span><span class="op">*</span><span class="fl">0.130</span><span class="op">*</span><span class="fl">0.616</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>k2 <span class="op">=</span> <span class="fl">0.5</span><span class="op">*</span><span class="fl">0.030</span><span class="op">*</span><span class="fl">0.130</span><span class="op">*</span><span class="fl">0.616</span><span class="op">/</span>(<span class="fl">0.5</span><span class="op">*</span><span class="fl">0.368</span><span class="op">*</span><span class="fl">0.484</span><span class="op">*</span><span class="fl">0.226</span><span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span><span class="fl">0.030</span><span class="op">*</span><span class="fl">0.130</span><span class="op">*</span><span class="fl">0.616</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="bu">print</span>(<span class="ss">f"P(y=1) =</span><span class="sc">{</span>k1 <span class="sc">: .3f}</span><span class="ss">, P(y=2) =</span><span class="sc">{</span>k2 <span class="sc">: .3f}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(y=1) = 0.944, P(y=2) = 0.056 </code></pre>
+</div>
+</div>
+<ul>
+<li>나이브 베이즈 분류기는 확실이 LDA, QDA보다 계산이 간단하고 모델링 시 더 빠르게 수행될 것 같음</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="lab" class="level1">
+<h1>Lab</h1>
+<section id="import" class="level2">
+<h2 class="anchored" data-anchor-id="import">import</h2>
+<div class="cell" data-execution_count="292">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="im">from</span> matplotlib.pyplot <span class="im">import</span> subplots</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="im">from</span> ISLP <span class="im">import</span> load_data</span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
+<span id="cb9-7"><a href="#cb9-7"></a>summarize)</span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="im">from</span> ISLP <span class="im">import</span> confusion_table</span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="im">from</span> ISLP.models <span class="im">import</span> contrast</span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="im">from</span> sklearn.discriminant_analysis <span class="im">import</span> <span class="op">\</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a>(LinearDiscriminantAnalysis <span class="im">as</span> LDA,</span>
+<span id="cb9-13"><a href="#cb9-13"></a>QuadraticDiscriminantAnalysis <span class="im">as</span> QDA)</span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> classification_report</span>
+<span id="cb9-20"><a href="#cb9-20"></a></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
+<span id="cb9-23"><a href="#cb9-23"></a>pio.renderers.default <span class="op">=</span> <span class="st">"plotly_mimetype+notebook_connected"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-load" class="level2">
+<h2 class="anchored" data-anchor-id="data-load">data load</h2>
+<div class="cell" data-execution_count="293">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>Smarket <span class="op">=</span> load_data(<span class="st">'Smarket'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>Smarket.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1250 entries, 0 to 1249
+Data columns (total 9 columns):
+ #   Column     Non-Null Count  Dtype  
+---  ------     --------------  -----  
+ 0   Year       1250 non-null   int64  
+ 1   Lag1       1250 non-null   float64
+ 2   Lag2       1250 non-null   float64
+ 3   Lag3       1250 non-null   float64
+ 4   Lag4       1250 non-null   float64
+ 5   Lag5       1250 non-null   float64
+ 6   Volume     1250 non-null   float64
+ 7   Today      1250 non-null   float64
+ 8   Direction  1250 non-null   object 
+dtypes: float64(7), int64(1), object(1)
+memory usage: 88.0+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="294">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>Smarket.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="294">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Lag1</th>
+<th data-quarto-table-cell-role="th">Lag2</th>
+<th data-quarto-table-cell-role="th">Lag3</th>
+<th data-quarto-table-cell-role="th">Lag4</th>
+<th data-quarto-table-cell-role="th">Lag5</th>
+<th data-quarto-table-cell-role="th">Volume</th>
+<th data-quarto-table-cell-role="th">Today</th>
+<th data-quarto-table-cell-role="th">Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2001</td>
+<td>0.381</td>
+<td>-0.192</td>
+<td>-2.624</td>
+<td>-1.055</td>
+<td>5.010</td>
+<td>1.1913</td>
+<td>0.959</td>
+<td>Up</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2001</td>
+<td>0.959</td>
+<td>0.381</td>
+<td>-0.192</td>
+<td>-2.624</td>
+<td>-1.055</td>
+<td>1.2965</td>
+<td>1.032</td>
+<td>Up</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2001</td>
+<td>1.032</td>
+<td>0.959</td>
+<td>0.381</td>
+<td>-0.192</td>
+<td>-2.624</td>
+<td>1.4112</td>
+<td>-0.623</td>
+<td>Down</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2001</td>
+<td>-0.623</td>
+<td>1.032</td>
+<td>0.959</td>
+<td>0.381</td>
+<td>-0.192</td>
+<td>1.2760</td>
+<td>0.614</td>
+<td>Up</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2001</td>
+<td>0.614</td>
+<td>-0.623</td>
+<td>1.032</td>
+<td>0.959</td>
+<td>0.381</td>
+<td>1.2057</td>
+<td>0.213</td>
+<td>Up</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>-</code> 해당 데이터는 2001년 부터 2005년까지 주식 데이터이다.</p>
+<ul>
+<li><p>Year는 해당 데이터가 관측된 년도</p></li>
+<li><p>Lag1은 하루 전의 수익률</p></li>
+<li><p>Lag2는 이틀 전의 수익률</p></li>
+<li><p>이렇게 Lag5까지 5일 전까지의 수익률을 가지고 있다.</p></li>
+<li><p>Volume은 하루에 평균적으로 몇 주가 거래되었는지</p></li>
+<li><p>Today는 오늘의 수익률</p></li>
+<li><p>Direction은 오늘 시장이 Up인지 Down인지 (target)</p></li>
+</ul>
+</section>
+<section id="correlation" class="level2">
+<h2 class="anchored" data-anchor-id="correlation">correlation</h2>
+<div class="cell" data-execution_count="295">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a>Smarket.select_dtypes(<span class="st">"number"</span>).corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="295">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Lag1</th>
+<th data-quarto-table-cell-role="th">Lag2</th>
+<th data-quarto-table-cell-role="th">Lag3</th>
+<th data-quarto-table-cell-role="th">Lag4</th>
+<th data-quarto-table-cell-role="th">Lag5</th>
+<th data-quarto-table-cell-role="th">Volume</th>
+<th data-quarto-table-cell-role="th">Today</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Year</td>
+<td>1.000000</td>
+<td>0.029700</td>
+<td>0.030596</td>
+<td>0.033195</td>
+<td>0.035689</td>
+<td>0.029788</td>
+<td>0.539006</td>
+<td>0.030095</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Lag1</td>
+<td>0.029700</td>
+<td>1.000000</td>
+<td>-0.026294</td>
+<td>-0.010803</td>
+<td>-0.002986</td>
+<td>-0.005675</td>
+<td>0.040910</td>
+<td>-0.026155</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Lag2</td>
+<td>0.030596</td>
+<td>-0.026294</td>
+<td>1.000000</td>
+<td>-0.025897</td>
+<td>-0.010854</td>
+<td>-0.003558</td>
+<td>-0.043383</td>
+<td>-0.010250</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Lag3</td>
+<td>0.033195</td>
+<td>-0.010803</td>
+<td>-0.025897</td>
+<td>1.000000</td>
+<td>-0.024051</td>
+<td>-0.018808</td>
+<td>-0.041824</td>
+<td>-0.002448</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Lag4</td>
+<td>0.035689</td>
+<td>-0.002986</td>
+<td>-0.010854</td>
+<td>-0.024051</td>
+<td>1.000000</td>
+<td>-0.027084</td>
+<td>-0.048414</td>
+<td>-0.006900</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Lag5</td>
+<td>0.029788</td>
+<td>-0.005675</td>
+<td>-0.003558</td>
+<td>-0.018808</td>
+<td>-0.027084</td>
+<td>1.000000</td>
+<td>-0.022002</td>
+<td>-0.034860</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Volume</td>
+<td>0.539006</td>
+<td>0.040910</td>
+<td>-0.043383</td>
+<td>-0.041824</td>
+<td>-0.048414</td>
+<td>-0.022002</td>
+<td>1.000000</td>
+<td>0.014592</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Today</td>
+<td>0.030095</td>
+<td>-0.026155</td>
+<td>-0.010250</td>
+<td>-0.002448</td>
+<td>-0.006900</td>
+<td>-0.034860</td>
+<td>0.014592</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li><p><code>Lag_i, todayt</code> 간 상관계수는 거의 0에 가깝다.</p></li>
+<li><p>유일하게 의미가 있아보이는 상관관계는 <code>Year, Volume</code>로 계산된 <span class="math inline">\(r\)</span>이 <strong>‘0.539’</strong> 이다.</p></li>
+<li><p>다시 말해서, 2001년부터 2005년까지, 하루 평균 거래량이 증가하고 있다.</p></li>
+</ul>
+<div class="cell" data-execution_count="296">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>Smarket.plot( y<span class="op">=</span><span class="st">"Volume"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="296">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2023-09-09-01. classification_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="model1.-logistic" class="level2">
+<h2 class="anchored" data-anchor-id="model1.-logistic">model1. Logistic</h2>
+<p><code>-</code> Lag1 ~ Lag5 까지의 변수로 금일 시장이 <code>up</code>인지 <code>down</code>인지 예측해보자.</p>
+<div class="cell" data-execution_count="297">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># step 1. x,y를 저장</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>allvars <span class="op">=</span> Smarket.columns.drop([<span class="st">"Today"</span>,<span class="st">"Year"</span>,<span class="st">"Direction"</span>])</span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a>X <span class="op">=</span> MS(allvars).fit_transform(Smarket) </span>
+<span id="cb16-5"><a href="#cb16-5"></a>y <span class="op">=</span> Smarket.Direction <span class="op">==</span> <span class="st">"Up"</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># step 2.  모형 적합</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a>glm <span class="op">=</span> sm.GLM(y,X , family <span class="op">=</span> sm.families.Binomial())</span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="co"># step 3. 모형에 대한 유의성 확인</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a>results <span class="op">=</span> glm.fit()</span>
+<span id="cb16-13"><a href="#cb16-13"></a>results.pvalues</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="297">
+<pre><code>intercept    0.600700
+Lag1         0.145232
+Lag2         0.398352
+Lag3         0.824334
+Lag4         0.851445
+Lag5         0.834998
+Volume       0.392404
+dtype: float64</code></pre>
+</div>
+</div>
+<ul>
+<li><p>유의미한 변수가 한개도 없다..</p></li>
+<li><p>그나마 p-value가 낮은, lag1, lag2만 포함시켜보자</p></li>
+</ul>
+<p><code>-</code> predict() : 데이터 집합을 인자로 전달해주지 않으면 훈련 데이터를 이용하여 예측을 수행</p>
+<div class="cell" data-execution_count="298">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># step 1. x,y를 저장</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a>X <span class="op">=</span> MS([<span class="st">"Lag1"</span>,<span class="st">"Lag2"</span>]).fit_transform(Smarket) </span>
+<span id="cb18-4"><a href="#cb18-4"></a>y <span class="op">=</span> Smarket.Direction <span class="op">==</span> <span class="st">"Up"</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co"># step 2.  모형 적합</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a>glm <span class="op">=</span> sm.GLM(y,X , family <span class="op">=</span> sm.families.Binomial())</span>
+<span id="cb18-9"><a href="#cb18-9"></a></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="co"># step 3. 모형에 대한 유의성 확인</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>results <span class="op">=</span> glm.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="299">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>probs <span class="op">=</span> results.predict()</span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a>labels <span class="op">=</span> np.array([<span class="st">"Down"</span>]<span class="op">*</span><span class="dv">1250</span>)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>labels[probs <span class="op">&gt;</span> <span class="fl">0.5</span>] <span class="op">=</span> <span class="st">"Up"</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>label <span class="op">=</span> [<span class="st">"Up"</span>,<span class="st">"Down"</span>]</span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a>confusion_table(labels, Smarket.Direction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="299">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Truth</th>
+<th data-quarto-table-cell-role="th">Down</th>
+<th data-quarto-table-cell-role="th">Up</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Predicted</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Down</td>
+<td>114</td>
+<td>102</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Up</td>
+<td>488</td>
+<td>546</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="데이터셋-분할" class="level3">
+<h3 class="anchored" data-anchor-id="데이터셋-분할">데이터셋 분할</h3>
+<p><code>-</code> 2005년 이전을 train, 이후를 test로 전환</p>
+<div class="cell" data-execution_count="300">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>train <span class="op">=</span> (Smarket.Year <span class="op">&lt;</span> <span class="dv">2005</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>Smarket_train <span class="op">=</span> Smarket.loc[train]</span>
+<span id="cb20-3"><a href="#cb20-3"></a>Smarket_test <span class="op">=</span> Smarket.loc[<span class="op">-</span>train]</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a>X_train, X_test <span class="op">=</span> X.loc[train], X.loc[<span class="op">-</span>train]</span>
+<span id="cb20-6"><a href="#cb20-6"></a>y_train, y_test <span class="op">=</span> y.loc[train], y.loc[<span class="op">-</span>train]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="모델-적합" class="level3">
+<h3 class="anchored" data-anchor-id="모델-적합">모델 적합</h3>
+<div class="cell" data-execution_count="302">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>glm_train <span class="op">=</span> sm.GLM(y_train,</span>
+<span id="cb21-2"><a href="#cb21-2"></a>                  X_train,</span>
+<span id="cb21-3"><a href="#cb21-3"></a>                family<span class="op">=</span>sm.families.Binomial())</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a>results <span class="op">=</span> glm_train.fit()</span>
+<span id="cb21-6"><a href="#cb21-6"></a>probs <span class="op">=</span> results.predict(exog<span class="op">=</span>X_test)</span>
+<span id="cb21-7"><a href="#cb21-7"></a>labels <span class="op">=</span> np.array([<span class="st">'Down'</span>]<span class="op">*</span><span class="dv">252</span>)</span>
+<span id="cb21-8"><a href="#cb21-8"></a></span>
+<span id="cb21-9"><a href="#cb21-9"></a>labels[probs <span class="op">&gt;</span><span class="fl">0.5</span>] <span class="op">=</span> <span class="st">'Up'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="304">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>D <span class="op">=</span> Smarket.Direction</span>
+<span id="cb22-2"><a href="#cb22-2"></a>L_train, L_test <span class="op">=</span> D.loc[train], D.loc[<span class="op">-</span>train]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="306">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>np.mean(labels <span class="op">==</span> L_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="306">
+<pre><code>0.5595238095238095</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="307">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>report <span class="op">=</span> classification_report(y_true <span class="op">=</span> L_test, y_pred <span class="op">=</span> labels,target_names<span class="op">=</span>label,output_dict<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-2"><a href="#cb25-2"></a>result_acc_logistic <span class="op">=</span> pd.DataFrame({<span class="st">"acc"</span> : [report[<span class="st">"accuracy"</span>]],</span>
+<span id="cb25-3"><a href="#cb25-3"></a>                             <span class="st">"model"</span> : [<span class="st">"로지스틱"</span>]})</span>
+<span id="cb25-4"><a href="#cb25-4"></a>result_acc_logistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="307">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">acc</th>
+<th data-quarto-table-cell-role="th">model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.559524</td>
+<td>로지스틱</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="309">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>result_logistic <span class="op">=</span> pd.DataFrame(report).<span class="op">\</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>                                    <span class="bu">eval</span>(<span class="st">"model = '로지스틱'"</span>)[[<span class="st">"Up"</span>,<span class="st">"model"</span>]].<span class="op">\</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>                                                reset_index().iloc[:<span class="op">-</span><span class="dv">1</span>,]</span>
+<span id="cb26-4"><a href="#cb26-4"></a>result_logistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="309">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th">Up</th>
+<th data-quarto-table-cell-role="th">model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>precision</td>
+<td>0.500000</td>
+<td>로지스틱</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>recall</td>
+<td>0.315315</td>
+<td>로지스틱</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>f1-score</td>
+<td>0.386740</td>
+<td>로지스틱</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+
+</section>
 </section>
 </section>
 
