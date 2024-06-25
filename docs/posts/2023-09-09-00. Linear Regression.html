@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -92,29 +98,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
 
-
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Gangcheol</span>
     </a>
@@ -126,46 +159,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="https://gangcheol.github.io/mysite/" rel="" target="">
- <span class="menu-text">Lecture</span></a>
+    <a class="nav-link" href="https://gangcheol.github.io/mysite/"> 
+<span class="menu-text">Lecture</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://gangcheol.github.io/TI2023/" rel="" target="">
- <span class="menu-text">Tableau</span></a>
+    <a class="nav-link" href="https://gangcheol.github.io/TI2023/"> 
+<span class="menu-text">Tableau</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://gangcheol.github.io/mysite2/" rel="" target="">
- <span class="menu-text">DX</span></a>
+    <a class="nav-link" href="https://gangcheol.github.io/mysite2/"> 
+<span class="menu-text">DX</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://gangcheol.github.io/IA2023/" rel="" target="">
- <span class="menu-text">IA2023</span></a>
+    <a class="nav-link" href="https://gangcheol.github.io/IA2023/"> 
+<span class="menu-text">IA2023</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://gangcheol.github.io/ISLP2023/" rel="" target="">
- <span class="menu-text">ISLP2023</span></a>
+    <a class="nav-link" href="https://gangcheol.github.io/ISLP2023/"> 
+<span class="menu-text">ISLP2023</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/gangcheol/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/gangcheol/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">Posts</a></li><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">00. Linear Regression</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">Posts</a></li><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">00. Linear Regression</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -173,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">Posts</a></li><li class="breadcrumb-item"><a href="../posts/2023-09-09-00. Linear Regression.html">00. Linear Regression</a></li></ol></nav>
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">00. Linear Regression</h1>
@@ -206,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -217,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../about.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><strong>About Me</strong></span></a>
+ <span class="menu-text"><strong>About me</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -250,12 +283,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../posts/study/2023-08-28-Extra 00. tidydata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Extra 00. tidydata</span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../posts/study/2023-09-03-00. 단순선형회귀분석.html" class="sidebar-item-text sidebar-link">
@@ -298,6 +325,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">06. net 설계 (2)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../posts/study/2023-10-10-07.  summary (1).html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">07. summary (1)</span></a>
+  </div>
+</li>
       </ul>
   </li>
       </ul>
@@ -305,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -359,6 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+
 <section id="import" class="level1">
 <h1>import</h1>
 <p><code>-</code> 코랩환경에서 아래 순서대로 진행해야 <code>ISLP</code> 패키지 설치시 오류가 발생하지 않는다.</p>
@@ -370,10 +404,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">from</span> google.colab <span class="im">import</span> drive</span>
 <span id="cb1-2"><a href="#cb1-2"></a>drive.mount(<span class="st">'/content/drive'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>cd <span class="op">/</span>content<span class="op">/</span>drive<span class="op">/</span>MyDrive<span class="op">/</span>Colab Notebooks<span class="op">/</span>ISLP<span class="op">/</span>Linear Regression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418124654,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-execution_count="1">
+<div id="c77V1xqf96o8" class="cell" data-executioninfo="{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418124654,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#pip install ISLP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:5583,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418133940,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="26">
+<div id="835a1d85-8d7e-40f9-a25e-3bd9a0423f59" class="cell" data-executioninfo="{&quot;elapsed&quot;:5583,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418133940,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -498,7 +532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>medv : 본인 소유의 주택가격(중앙값) (단위 : $ 1,000)</li>
 </ul></li>
 </ul>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:285,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418295016,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9149e5ae-7ea3-455e-ca53-0b3a5808dc6e" data-tags="[]" data-execution_count="2">
+<div id="427014be-442a-4551-ad30-c62c261db93c" class="cell" data-executioninfo="{&quot;elapsed&quot;:285,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418295016,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9149e5ae-7ea3-455e-ca53-0b3a5808dc6e" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a>Boston <span class="op">=</span> load_data(<span class="st">"Boston"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a>Boston.columns</span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#len(Boston.columns)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -516,12 +550,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><code>lstat</code> 변수를 예측변수로, <code>medv</code>변수를 반응변수로 사용</li>
 </ul>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:367,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418296890,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="f944789d-4e28-4573-d367-427f6d4879c0" data-tags="[]" data-execution_count="3">
+<div id="57e77576-8419-427b-81fb-c8c997fc167c" class="cell" data-executioninfo="{&quot;elapsed&quot;:367,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418296890,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="f944789d-4e28-4573-d367-427f6d4879c0" data-tags="[]" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>X <span class="op">=</span> pd.DataFrame({<span class="st">"intercept"</span> : np.ones(Boston.shape[<span class="dv">0</span>]),</span>
 <span id="cb7-2"><a href="#cb7-2"></a>                  <span class="st">"lstat"</span> : Boston[<span class="st">"lstat"</span>]})</span>
 <span id="cb7-3"><a href="#cb7-3"></a>y <span class="op">=</span> Boston[<span class="st">"medv"</span>]</span>
 <span id="cb7-4"><a href="#cb7-4"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
+<div>
 <div>
 
 
@@ -565,20 +600,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</div>
 <p><code>-</code> OLS : Ordinary Least Squares의 약자로, 주어진 데이터에서 오차의 제곱을 최소화하는 <span class="math inline">\(\beta_i\)</span>를 추정한다.</p>
 </section>
 <section id="모델-적합" class="level2">
 <h2 class="anchored" data-anchor-id="모델-적합">모델 적합</h2>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418298191,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="5">
+<div id="d91d0e18-6275-4e28-9069-2b121fcb9beb" class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418298191,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>results <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:458,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418299090,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="6">
+<div id="0b729f87-0ae4-4943-b831-0e94e2ed42ee" class="cell" data-executioninfo="{&quot;elapsed&quot;:458,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418299090,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a>s_result <span class="op">=</span> summarize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418299090,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9470f95a-83af-46d6-ce2d-88294e9e35dc" data-tags="[]" data-execution_count="7">
+<div id="67e7fd1c-8211-4e8f-a856-4c6bce44f7d3" class="cell" data-executioninfo="{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418299090,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="9470f95a-83af-46d6-ce2d-88294e9e35dc" data-tags="[]" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a>s_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
+<div>
 <div>
 
 
@@ -613,49 +650,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</div>
 <p><code>-</code> 적합된 모델을 해석하면 다음과 같다.</p>
 <p><span class="math display">\[\hat {\text{medv}} = -0.95 \times \text{lstat} + 34
 .5538\]</span></p>
 </section>
 <section id="시각화" class="level2">
 <h2 class="anchored" data-anchor-id="시각화">시각화</h2>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418300127,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="8">
+<div id="235181d7-2db0-42cb-8148-688ae5fe91ea" class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418300127,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a>x <span class="op">=</span> Boston[<span class="st">"lstat"</span>]</span>
 <span id="cb11-2"><a href="#cb11-2"></a>yhat <span class="op">=</span> results.predict()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:974,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418301507,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="a1188bb9-5489-430d-fcdd-8d16ce5e6788" data-tags="[]" data-execution_count="9">
-<details>
+<div id="ac41997f-0fbc-4d5e-82e0-ea992069ddfa" class="cell" data-executioninfo="{&quot;elapsed&quot;:974,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418301507,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="a1188bb9-5489-430d-fcdd-8d16ce5e6788" data-tags="[]" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>plt.plot(x,y,<span class="st">"o"</span>,label <span class="op">=</span> <span class="vs">r"$(x,y)$"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb12-2"><a href="#cb12-2"></a>plt.plot(x,yhat,<span class="st">"--"</span>,label <span class="op">=</span> <span class="vs">r"$(x,\hat </span><span class="sc">{y}</span><span class="vs">)$"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;matplotlib.legend.Legend at 0x163b69b88d0&gt;</code></pre>
-</div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-09-09-00. Linear Regression_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-09-09-00. Linear Regression_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="modelspec-starstarstar" class="level2">
 <h2 class="anchored" data-anchor-id="modelspec-starstarstar"><code>ModelSpec()</code> (<span class="math inline">\(\star\star\star\)</span>)</h2>
 <p><code>-</code> 우리는 앞서 다음과 같은 module을 import 했다</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
-<span id="cb14-2"><a href="#cb14-2"></a>summarize,poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
+<span id="cb13-2"><a href="#cb13-2"></a>summarize,poly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>-</code> ModelSpec이라는 모듈을 <code>MS</code>로 사용할 것으로 지칭</p>
 <p><code>-</code> 이 모듈은 예측변수 <span class="math inline">\(x\)</span>를 컴퓨터가 이해할 수 있게끔 변환해준다.</p>
 <p><code>-</code> step1. 전달할 <span class="math inline">\(x\)</span>를 다음과 같이 전달</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418303684,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>design <span class="op">=</span> MS([<span class="st">'lstat'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="313b716d-2b97-4068-89ad-f994bd6a38cd" class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418303684,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1"></a>design <span class="op">=</span> MS([<span class="st">'lstat'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> step2. 컴퓨터가 이해할 수 있는 형태에 맞게 <span class="math inline">\(x\)</span>를 변환 <span class="math inline">\(\to\)</span> 주어진 <span class="math inline">\(x\)</span>를 매트릭스 형태로 변환해줌</p>
-<div class="cell" data-tags="[]" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>X <span class="op">=</span> design.fit_transform(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="17bd6943-9ee7-4432-8a46-1d484df3d447" class="cell" data-tags="[]" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a>X <span class="op">=</span> design.fit_transform(Boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:3,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418304836,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="8397293e-2576-455b-af07-b1f872b62b59" data-tags="[]" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="5807bba0-c8a1-45bf-adcf-f1f23a48e9ed" class="cell" data-executioninfo="{&quot;elapsed&quot;:3,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418304836,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="8397293e-2576-455b-af07-b1f872b62b59" data-tags="[]" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a>X.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
+<div>
 <div>
 
 
@@ -699,21 +739,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</div>
 <section id="모델-적합-1" class="level3">
 <h3 class="anchored" data-anchor-id="모델-적합-1">모델 적합</h3>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418305709,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>model <span class="op">=</span> sm.OLS(y, X)</span>
-<span id="cb18-2"><a href="#cb18-2"></a>results <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="2819b70a-262a-439c-a46f-651d92520e2c" class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418305709,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a>model <span class="op">=</span> sm.OLS(y, X)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>results <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="모델-요약" class="level3">
 <h3 class="anchored" data-anchor-id="모델-요약">모델 요약</h3>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:282,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418306910,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>report <span class="op">=</span> results.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d1d08c06-cfd3-4601-827d-7d9145d9c0f4" class="cell" data-executioninfo="{&quot;elapsed&quot;:282,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418306910,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1"></a>report <span class="op">=</span> results.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:3,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418307229,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="8fa53537-4f7e-4944-d85c-08a7080c4240" data-tags="[]" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>report.tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e966562c-e7d4-4717-b8ff-11ab8559b505" class="cell" data-executioninfo="{&quot;elapsed&quot;:3,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418307229,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="8fa53537-4f7e-4944-d85c-08a7080c4240" data-tags="[]" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>report.tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
@@ -775,9 +817,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+</div>
 <p><code>-</code> 이런식으로 위의 표에 대한 데이터도 확인할 수 있음</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418308330,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="4eaf52f9-81bb-41d0-aa92-75e999ad92bb" data-tags="[]" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a>report.tables[<span class="dv">0</span>].data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b4a1650b-9613-4b22-9824-d69b06181b49" class="cell" data-executioninfo="{&quot;elapsed&quot;:2,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418308330,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="4eaf52f9-81bb-41d0-aa92-75e999ad92bb" data-tags="[]" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a>report.tables[<span class="dv">0</span>].data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>[['Dep. Variable:', 'medv', '  R-squared:         ', '   0.544'],
  ['Model:', 'OLS', '  Adj. R-squared:    ', '   0.543'],
@@ -791,8 +834,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><code>-</code> 추정된 회귀계수값 확인</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418309619,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="d2d63192-13b9-46d4-b4c3-4d54e5792013" data-tags="[]" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>results.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="aec8dce8-43ab-4e98-8ab5-f133769d5921" class="cell" data-executioninfo="{&quot;elapsed&quot;:1,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418309619,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="d2d63192-13b9-46d4-b4c3-4d54e5792013" data-tags="[]" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>results.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>intercept    34.553841
 lstat        -0.950049
@@ -802,9 +845,10 @@ dtype: float64</code></pre>
 </section>
 <section id="모델-해석1-모델의-유의성" class="level3">
 <h3 class="anchored" data-anchor-id="모델-해석1-모델의-유의성">모델 해석1 (모델의 유의성)</h3>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:449,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418310485,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="e25bd048-2142-4031-d092-dff498233970" data-tags="[]" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>report.tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3d83dad6-9af6-4bc8-88fe-dff9edba6830" class="cell" data-executioninfo="{&quot;elapsed&quot;:449,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418310485,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="e25bd048-2142-4031-d092-dff498233970" data-tags="[]" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a>report.tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
@@ -866,14 +910,16 @@ dtype: float64</code></pre>
 </table>
 </div>
 </div>
+</div>
 <p><code>-</code> 결정계수 (<span class="math inline">\(R^2\)</span>) 값을 살펴보니 약 54%의 설명력을 가진 모델이다.</p>
 <p><code>-</code> 또한, F통계량에 근거한 <code>p-value</code> 값을 살펴보았을 때 주어진 표본으로 부터 추출된 모형은 통계적으로 유의하다.</p>
 </section>
 <section id="모델-해석2-예측변수의-유의성" class="level3">
 <h3 class="anchored" data-anchor-id="모델-해석2-예측변수의-유의성">모델 해석2 (예측변수의 유의성)</h3>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:306,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418312489,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="0ff19035-9a00-4847-e0cd-9e77a47b84b9" data-tags="[]" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>report.tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="10db0a0d-cca0-412a-ac1a-bcba982e6cdf" class="cell" data-executioninfo="{&quot;elapsed&quot;:306,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418312489,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="0ff19035-9a00-4847-e0cd-9e77a47b84b9" data-tags="[]" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a>report.tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
@@ -907,6 +953,7 @@ dtype: float64</code></pre>
 </table>
 </div>
 </div>
+</div>
 <p><code>-</code> <code>lstat</code>의 coef <span class="math inline">\(\to\)</span> 즉, 회귀계수에 대한 유의성 검정결과</p>
 <ul>
 <li><code>p-value</code>값을 살펴본 결과 유의수준 0.05에서 유의성을 만족한다. 따라서 <code>lstat</code>의 회귀계수는 통계적으로 유의하다.</li>
@@ -914,23 +961,24 @@ dtype: float64</code></pre>
 </section>
 <section id="시각화-1" class="level3">
 <h3 class="anchored" data-anchor-id="시각화-1">시각화</h3>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:279,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418313976,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>yhat <span class="op">=</span> results.predict()</span>
-<span id="cb27-2"><a href="#cb27-2"></a>x <span class="op">=</span> X[<span class="st">"lstat"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e42086e2-aa45-49c3-86dc-db333dd89799" class="cell" data-executioninfo="{&quot;elapsed&quot;:279,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418313976,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-tags="[]" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1"></a>yhat <span class="op">=</span> results.predict()</span>
+<span id="cb26-2"><a href="#cb26-2"></a>x <span class="op">=</span> X[<span class="st">"lstat"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> 적합된 <span class="math inline">\((x,\hat y)\)</span>와 <span class="math inline">\((x,y)\)</span>를 시각화한 결과 몇몇 이상치를 제외하고 잘 예측하고 있는것 같다.</p>
-<div class="cell" data-executioninfo="{&quot;elapsed&quot;:1102,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418316354,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="72809662-e872-4986-c0e4-1e63a2d4b76f" data-tags="[]" data-execution_count="21">
-<details>
+<div id="2e61fe3c-0486-450e-8bb7-fd2fea5a7059" class="cell" data-executioninfo="{&quot;elapsed&quot;:1102,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1692418316354,&quot;user&quot;:{&quot;displayName&quot;:&quot;ccc flkwerkdai&quot;,&quot;userId&quot;:&quot;13507850890638580947&quot;},&quot;user_tz&quot;:-540}" data-outputid="72809662-e872-4986-c0e4-1e63a2d4b76f" data-tags="[]" data-execution_count="21">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>plt.plot(x,y,<span class="st">"o"</span>,label <span class="op">=</span> <span class="vs">r"$(x,y)$"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb28-2"><a href="#cb28-2"></a>plt.plot(x,yhat,<span class="st">"--"</span>,label <span class="op">=</span> <span class="vs">r"$(x,\hat </span><span class="sc">{y}</span><span class="vs">)$"</span>)</span>
-<span id="cb28-3"><a href="#cb28-3"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1"></a>plt.plot(x,y,<span class="st">"o"</span>,label <span class="op">=</span> <span class="vs">r"$(x,y)$"</span>,alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb27-2"><a href="#cb27-2"></a>plt.plot(x,yhat,<span class="st">"--"</span>,label <span class="op">=</span> <span class="vs">r"$(x,\hat </span><span class="sc">{y}</span><span class="vs">)$"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>&lt;matplotlib.legend.Legend at 0x163b6c7cd10&gt;</code></pre>
-</div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-09-09-00. Linear Regression_files/figure-html/cell-22-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-09-09-00. Linear Regression_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -942,13 +990,14 @@ dtype: float64</code></pre>
 <ul>
 <li>음…. 모두 유의미하게 나왔음!</li>
 </ul>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1"></a>X <span class="op">=</span>MS([<span class="st">"lstat"</span>,<span class="st">"age"</span>]).fit_transform(Boston)</span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a>model1 <span class="op">=</span> sm.OLS(y,X)</span>
-<span id="cb30-4"><a href="#cb30-4"></a>results1 <span class="op">=</span> model1.fit()</span>
-<span id="cb30-5"><a href="#cb30-5"></a>summarize(results1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="71f6882f" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>X <span class="op">=</span>MS([<span class="st">"lstat"</span>,<span class="st">"age"</span>]).fit_transform(Boston)</span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a>model1 <span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb28-4"><a href="#cb28-4"></a>results1 <span class="op">=</span> model1.fit()</span>
+<span id="cb28-5"><a href="#cb28-5"></a>summarize(results1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
+<div>
 <div>
 
 
@@ -990,23 +1039,25 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p><code>-</code> 이번엔 반응변수를 제외한 모든 변수를 사용</p>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>terms <span class="op">=</span> Boston.columns.drop(<span class="st">"medv"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2"></a>terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="538fd521" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a>terms <span class="op">=</span> Boston.columns.drop(<span class="st">"medv"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a>terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>Index(['crim', 'zn', 'indus', 'chas', 'nox', 'rm', 'age', 'dis', 'rad', 'tax',
        'ptratio', 'lstat'],
       dtype='object')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>X <span class="op">=</span> MS(terms).fit_transform(Boston)</span>
-<span id="cb33-2"><a href="#cb33-2"></a>model <span class="op">=</span> sm.OLS(y, X)</span>
-<span id="cb33-3"><a href="#cb33-3"></a></span>
-<span id="cb33-4"><a href="#cb33-4"></a>results <span class="op">=</span> model.fit()</span>
-<span id="cb33-5"><a href="#cb33-5"></a>summarize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4bef263f" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>X <span class="op">=</span> MS(terms).fit_transform(Boston)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>model <span class="op">=</span> sm.OLS(y, X)</span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb31-5"><a href="#cb31-5"></a>summarize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
+<div>
 <div>
 
 
@@ -1118,16 +1169,18 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p><code>-</code> 모델 적합결과 : <code>indus, age</code> 변수를 제외하고 모든 변수의 회귀계수가 유의미하게 나왔다.</p>
 <p><code>-</code> 근데, 우리는 유의미하게 나오지 않은 변수를 제외하고 모델을 만들고 싶음.</p>
-<div class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a>minus_age <span class="op">=</span> Boston.columns.drop([<span class="st">"medv"</span>,<span class="st">"age"</span>,<span class="st">"indus"</span>])</span>
-<span id="cb34-2"><a href="#cb34-2"></a></span>
-<span id="cb34-3"><a href="#cb34-3"></a>X <span class="op">=</span> MS(minus_age).fit_transform(Boston)</span>
-<span id="cb34-4"><a href="#cb34-4"></a></span>
-<span id="cb34-5"><a href="#cb34-5"></a>model1<span class="op">=</span> sm.OLS(y,X)</span>
-<span id="cb34-6"><a href="#cb34-6"></a>summarize(model1.fit())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="024e631e" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>minus_age <span class="op">=</span> Boston.columns.drop([<span class="st">"medv"</span>,<span class="st">"age"</span>,<span class="st">"indus"</span>])</span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a>X <span class="op">=</span> MS(minus_age).fit_transform(Boston)</span>
+<span id="cb32-4"><a href="#cb32-4"></a></span>
+<span id="cb32-5"><a href="#cb32-5"></a>model1<span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb32-6"><a href="#cb32-6"></a>summarize(model1.fit())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
+<div>
 <div>
 
 
@@ -1225,10 +1278,12 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p><code>-</code> 적합결과 모두 유의미하게 나왔다.</p>
-<div class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>model1.fit().summary().tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d62aa328" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>model1.fit().summary().tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
@@ -1290,6 +1345,7 @@ dtype: float64</code></pre>
 </table>
 </div>
 </div>
+</div>
 </section>
 <section id="lab-3.-vif" class="level1">
 <h1>Lab 3. VIF</h1>
@@ -1303,16 +1359,17 @@ dtype: float64</code></pre>
 <li><p>보통 <code>5~ 10</code>을 초과하면 다중공선성의 문제가 있다고 본다.</p></li>
 </ul>
 <p><code>-</code> 코드 작성</p>
-<div class="cell" data-execution_count="76">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># step 1.  X 생성</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a></span>
-<span id="cb36-3"><a href="#cb36-3"></a>term  <span class="op">=</span> Boston.columns.drop(<span class="st">"medv"</span>) </span>
-<span id="cb36-4"><a href="#cb36-4"></a>X <span class="op">=</span> MS(terms).fit_transform(Boston)</span>
-<span id="cb36-5"><a href="#cb36-5"></a>col <span class="op">=</span> X.columns</span>
-<span id="cb36-6"><a href="#cb36-6"></a></span>
-<span id="cb36-7"><a href="#cb36-7"></a><span class="co"># step 2.  각 예측변수의 분산팽창지수 계산</span></span>
-<span id="cb36-8"><a href="#cb36-8"></a>pd.DataFrame({col[i]: [VIF(X,i)] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,X.shape[<span class="dv">1</span>])})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b904b192" class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># step 1.  X 생성</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a>term  <span class="op">=</span> Boston.columns.drop(<span class="st">"medv"</span>) </span>
+<span id="cb34-4"><a href="#cb34-4"></a>X <span class="op">=</span> MS(terms).fit_transform(Boston)</span>
+<span id="cb34-5"><a href="#cb34-5"></a>col <span class="op">=</span> X.columns</span>
+<span id="cb34-6"><a href="#cb34-6"></a></span>
+<span id="cb34-7"><a href="#cb34-7"></a><span class="co"># step 2.  각 예측변수의 분산팽창지수 계산</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>pd.DataFrame({col[i]: [VIF(X,i)] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,X.shape[<span class="dv">1</span>])})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="76">
+<div>
 <div>
 
 
@@ -1356,6 +1413,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
+</div>
 <p><code>-</code> 음… 결과를 보니 <code>tax, rad</code>의 경우 분산팽창지수가 높게 나왔다.</p>
 <ul>
 <li><p>주성분 분석이나, 요인 분석을 통해 해당 변수를 합쳐서 해결하는 방안이 있다.</p></li>
@@ -1366,23 +1424,24 @@ dtype: float64</code></pre>
 <section id="lab-4.-qualitative-predictors" class="level1">
 <h1>Lab 4. Qualitative Predictors</h1>
 <p><code>MS</code> 함수는 범주형 변수를 자동으로 <code>원핫 인코딩</code>을 수행해준다!! 얼마나 편한가~~</p>
-<div class="cell" data-execution_count="100">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>Carseats <span class="op">=</span> load_data(<span class="st">'Carseats'</span>)</span>
-<span id="cb37-2"><a href="#cb37-2"></a>Carseats.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d962c800" class="cell" data-execution_count="100">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>Carseats <span class="op">=</span> load_data(<span class="st">'Carseats'</span>)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>Carseats.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="100">
 <pre><code>Index(['Sales', 'CompPrice', 'Income', 'Advertising', 'Population', 'Price',
        'ShelveLoc', 'Age', 'Education', 'Urban', 'US'],
       dtype='object')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="122">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>x <span class="op">=</span> <span class="bu">list</span>(Carseats.columns.drop(<span class="st">'Sales'</span>))</span>
-<span id="cb39-2"><a href="#cb39-2"></a>y <span class="op">=</span> Carseats[<span class="st">'Sales'</span>]</span>
-<span id="cb39-3"><a href="#cb39-3"></a></span>
-<span id="cb39-4"><a href="#cb39-4"></a>X <span class="op">=</span> MS(x).fit_transform(Carseats)</span>
-<span id="cb39-5"><a href="#cb39-5"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
-<span id="cb39-6"><a href="#cb39-6"></a>model.fit().summary().tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="80fce155" class="cell" data-execution_count="122">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1"></a>x <span class="op">=</span> <span class="bu">list</span>(Carseats.columns.drop(<span class="st">'Sales'</span>))</span>
+<span id="cb37-2"><a href="#cb37-2"></a>y <span class="op">=</span> Carseats[<span class="st">'Sales'</span>]</span>
+<span id="cb37-3"><a href="#cb37-3"></a></span>
+<span id="cb37-4"><a href="#cb37-4"></a>X <span class="op">=</span> MS(x).fit_transform(Carseats)</span>
+<span id="cb37-5"><a href="#cb37-5"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb37-6"><a href="#cb37-6"></a>model.fit().summary().tables[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="122">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>OLS Regression Results</caption>
 <tbody>
@@ -1444,9 +1503,11 @@ dtype: float64</code></pre>
 </table>
 </div>
 </div>
-<div class="cell" data-execution_count="123">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>model.fit().summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="7d66b7a9" class="cell" data-execution_count="123">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1"></a>model.fit().summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="123">
+<div>
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
@@ -1570,30 +1631,31 @@ dtype: float64</code></pre>
 </table>
 </div>
 </div>
+</div>
 <section id="summary-lab" class="level2">
 <h2 class="anchored" data-anchor-id="summary-lab">summary : Lab</h2>
 <p><code>-</code> 구구절절 말이 많았지만, 회귀모형 적합 시 아래의 step을 기억하자.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="co"># step 0. import</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb41-4"><a href="#cb41-4"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
-<span id="cb41-5"><a href="#cb41-5"></a>summarize,poly)</span>
-<span id="cb41-6"><a href="#cb41-6"></a></span>
-<span id="cb41-7"><a href="#cb41-7"></a><span class="co"># step 1. x, y를 저장</span></span>
-<span id="cb41-8"><a href="#cb41-8"></a>x <span class="op">=</span> data.columns.drop(<span class="st">"target"</span>) </span>
-<span id="cb41-9"><a href="#cb41-9"></a>y <span class="op">=</span> data[<span class="st">"target"</span>]</span>
-<span id="cb41-10"><a href="#cb41-10"></a></span>
-<span id="cb41-11"><a href="#cb41-11"></a><span class="co"># step 2.  matrix 형태의 X 생성</span></span>
-<span id="cb41-12"><a href="#cb41-12"></a>X <span class="op">=</span> MS(final).fit_transform(data)</span>
-<span id="cb41-13"><a href="#cb41-13"></a></span>
-<span id="cb41-14"><a href="#cb41-14"></a><span class="co"># step 3. 최소제곱법(OLS)를 이용하여 모델을 적합하겠다고 선언</span></span>
-<span id="cb41-15"><a href="#cb41-15"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
-<span id="cb41-16"><a href="#cb41-16"></a></span>
-<span id="cb41-17"><a href="#cb41-17"></a><span class="co"># step 4. 모형에 대한 유의성 확인</span></span>
-<span id="cb41-18"><a href="#cb41-18"></a>model.fit().summary().tables[<span class="dv">0</span>]</span>
-<span id="cb41-19"><a href="#cb41-19"></a></span>
-<span id="cb41-20"><a href="#cb41-20"></a><span class="co"># step 5. 개별 회귀계수에 대한 유의성 확인</span></span>
-<span id="cb41-21"><a href="#cb41-21"></a>model.fit().summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="co"># step 0. import</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="im">from</span> ISLP.models <span class="im">import</span> (ModelSpec <span class="im">as</span> MS,</span>
+<span id="cb39-5"><a href="#cb39-5"></a>summarize,poly)</span>
+<span id="cb39-6"><a href="#cb39-6"></a></span>
+<span id="cb39-7"><a href="#cb39-7"></a><span class="co"># step 1. x, y를 저장</span></span>
+<span id="cb39-8"><a href="#cb39-8"></a>x <span class="op">=</span> data.columns.drop(<span class="st">"target"</span>) </span>
+<span id="cb39-9"><a href="#cb39-9"></a>y <span class="op">=</span> data[<span class="st">"target"</span>]</span>
+<span id="cb39-10"><a href="#cb39-10"></a></span>
+<span id="cb39-11"><a href="#cb39-11"></a><span class="co"># step 2.  matrix 형태의 X 생성</span></span>
+<span id="cb39-12"><a href="#cb39-12"></a>X <span class="op">=</span> MS(final).fit_transform(data)</span>
+<span id="cb39-13"><a href="#cb39-13"></a></span>
+<span id="cb39-14"><a href="#cb39-14"></a><span class="co"># step 3. 최소제곱법(OLS)를 이용하여 모델을 적합하겠다고 선언</span></span>
+<span id="cb39-15"><a href="#cb39-15"></a>model <span class="op">=</span> sm.OLS(y,X)</span>
+<span id="cb39-16"><a href="#cb39-16"></a></span>
+<span id="cb39-17"><a href="#cb39-17"></a><span class="co"># step 4. 모형에 대한 유의성 확인</span></span>
+<span id="cb39-18"><a href="#cb39-18"></a>model.fit().summary().tables[<span class="dv">0</span>]</span>
+<span id="cb39-19"><a href="#cb39-19"></a></span>
+<span id="cb39-20"><a href="#cb39-20"></a><span class="co"># step 5. 개별 회귀계수에 대한 유의성 확인</span></span>
+<span id="cb39-21"><a href="#cb39-21"></a>model.fit().summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
@@ -1679,10 +1741,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1692,8 +1771,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1705,7 +1793,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1749,6 +1960,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1774,6 +1986,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1835,17 +2073,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../about.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><strong>About Me</strong></span>
+      <a href="../about.html" class="pagination-link" aria-label="**About me**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><strong>About me</strong></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../posts/2023-09-09-01. classification.html" class="pagination-link">
+      <a href="../posts/2023-09-09-01. classification.html" class="pagination-link" aria-label="01. Classification">
         <span class="nav-page-text">01. Classification</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
